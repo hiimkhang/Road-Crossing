@@ -3,16 +3,18 @@
 #include <Windows.h>
 #include <thread>
 #include <conio.h>
+#include "CGame.h"
+#include "console.h"
 using namespace std;
 
 int e = 3;
-
-void gotoxy(int x, int y) {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
+// already definded in console.h
+//void gotoxy(int x, int y) {
+//    COORD coord;
+//    coord.X = x;
+//    coord.Y = y;
+//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+//}
 class Human
 {
 public:
@@ -89,7 +91,7 @@ int main()
     thread t1(subThread);
     while (1)
     {
-        int x = toupper(getch());
+        int x = toupper(_getch());
         switch (x)
         {
         case 'W':
