@@ -3,12 +3,26 @@
 #include <Windows.h>
 #include <thread>
 #include <conio.h>
+<<<<<<< HEAD
+=======
+#include "CGame.h"
+>>>>>>> 263100914b68528f4f6714c5d6df2b17f50779c6
 #include "console.h"
 using namespace std;
 
 int e = 3;
+<<<<<<< HEAD
 
 
+=======
+// already definded in console.h
+//void gotoxy(int x, int y) {
+//    COORD coord;
+//    coord.X = x;
+//    coord.Y = y;
+//    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+//}
+>>>>>>> 263100914b68528f4f6714c5d6df2b17f50779c6
 class Human
 {
 public:
