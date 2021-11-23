@@ -3,16 +3,12 @@
 #include <Windows.h>
 #include <thread>
 #include <conio.h>
+#include "console.h"
 using namespace std;
 
 int e = 3;
 
-void gotoxy(int x, int y) {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
+
 class Human
 {
 public:
@@ -85,11 +81,21 @@ void subThread()
 }
 
 int main()
-{
-    thread t1(subThread);
+{   
+
+    setScreenSize(0, 0, 800, 650);
+    gotoxy(30, 11);
+    cout << "  X  ";
+    gotoxy(30, 12);
+    cout << "XXXXX";
+    gotoxy(30, 13);
+    cout << "XX XX";
+    gotoxy(30, 14);
+    cout << "XX XX";
+    /*thread t1(subThread);
     while (1)
     {
-        int x = toupper(getch());
+        int x = toupper(_getch());
         switch (x)
         {
         case 'W':
@@ -105,6 +111,6 @@ int main()
             khang.moveleft();
             break;
         }
-    }
+    }*/
     return 0;
 }
