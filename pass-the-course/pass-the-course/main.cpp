@@ -3,59 +3,16 @@
 #include <Windows.h>
 #include <thread>
 #include <conio.h>
-#include "CGame.h"
+//#include "CGame.h"k
 #include "console.h"
 #include "Obstacle.h"
+#include "Figure.h"
 
 // #include "console.cpp"
 using namespace std;
 
 int e = 3;
-class Human
-{
-public:
-    int curX = 7, curY = 7, preX = 0, preY = 0, step;
-    void moveup()
-    {
-        preX = curX;
-        preY = curY;
-        curY -= 1;
-    }
-    void movedown()
-    {
-        preX = curX;
-        preY = curY;
-        curY += 1;
-    }
-    void moveleft()
-    {
-        preX = curX;
-        preY = curY;
-        curX -= 1;
-    }
-    void moveright()
-    {
-        preX = curX;
-        preY = curY;
-        curX += 1;
-    }
-    void print()
-    {
-        gotoxy(preX, preY);
-        cout << "   ";
-        gotoxy(preX, preY + 1);
-        cout << "   ";
-        gotoxy(preX, preY + 2);
-        cout << "   ";
-        //display human
-        gotoxy(curX, curY);
-        cout << "XXX";
-        gotoxy(curX, curY + 1);
-        cout << "XXX";
-        gotoxy(curX, curY + 2);
-        cout << "XXX";
-    }
-};
+
 void obstacleMove(int& x, int y)
 {
     gotoxy(x, y);
@@ -66,24 +23,10 @@ void obstacleMove(int& x, int y)
     gotoxy(x, y);
     cout << "ooo";
 }
-Human khang;
-void subThread()
-{
-    int a = 1;//obstacle 1
-    int b = 3; //obstacle 2
-    int c = 5; //obstacle 3
-    while (1)
-    {
-        obstacleMove(a, 3);
-        obstacleMove(b, 6);
-        obstacleMove(c, 9);
-        khang.print();
-        Sleep(100);
-    }
-}
 
 int main()
 {   
+    
     setScreenSize(0, 0, 800, 650);
     
     Obstacle *O1;
@@ -107,7 +50,7 @@ int main()
     O1->move(5, 0);
 
     cout << "\n\n\n\n\n";
-    Textcolor(Black);
+    Textcolor(0);
     // system("pause");
     return 0;
 }

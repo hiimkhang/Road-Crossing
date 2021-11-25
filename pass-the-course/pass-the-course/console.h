@@ -27,35 +27,11 @@ void gotoxy(int x, int y);
 
 void setScreenSize(SHORT x, SHORT y, SHORT width, SHORT height);
 
-void fixConsoleWindow() {
-	HWND consoleWindow = GetConsoleWindow();
-	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
-	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
-	SetWindowLong(consoleWindow, GWL_STYLE, style);
-}
+void fixConsoleWindow();
 
-void Textcolor(int color)
-{
-	HANDLE hConsoleColor;
-	hConsoleColor = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hConsoleColor, color);
-}
+void Textcolor(int color);
 
-void clrscr()
-{
-	CONSOLE_SCREEN_BUFFER_INFO	csbiInfo;                  
-	HANDLE	hConsoleOut;
-	COORD	Home = {0,0};
-	DWORD	dummy;
-
-	hConsoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	GetConsoleScreenBufferInfo(hConsoleOut,&csbiInfo);
-
-	FillConsoleOutputCharacter(hConsoleOut,' ',csbiInfo.dwSize.X * csbiInfo.dwSize.Y,Home,&dummy);
-	csbiInfo.dwCursorPosition.X = 0;
-	csbiInfo.dwCursorPosition.Y = 0;
-	SetConsoleCursorPosition(hConsoleOut,csbiInfo.dwCursorPosition);
-}
+void clrscr();
 
 void drawBoard(int color);
 #endif // !_console_h_

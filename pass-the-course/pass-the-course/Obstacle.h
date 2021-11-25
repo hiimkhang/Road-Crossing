@@ -133,7 +133,7 @@ public:
         Textcolor(DarkYellow);
         gotoxy(x, y + 2);
         cout << char(222);
-        Textcolor(Yellow);
+        Textcolor(Yellow);  
         gotoxy(x + 1, y + 2); 
         cout << char(222);
         gotoxy(x + 2, y + 2); 
