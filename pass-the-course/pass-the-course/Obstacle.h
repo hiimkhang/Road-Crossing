@@ -2,6 +2,8 @@
 #define _OBSTACLE_H
 
 #include "console.h"
+#include "Figure.h"
+
 
 class Obstacle {
 private:
@@ -82,6 +84,8 @@ public:
 };
 
 class Cop : public Obstacle {
+private:
+    Figure fig = Figure(".//Figure//Obstacle//cop.txt");
 public:
     Cop() : Obstacle() {
         setSize(5, 5);
@@ -120,40 +124,40 @@ public:
 
     void print() {
         int x = getCurX(), y = getCurY();
-
+        fig.print(x, y);
         // Head
-        Textcolor(Yellow);
-        gotoxy(x + 2, y);
-        cout << char(203);
-        Textcolor(White);
-        gotoxy(x + 2, y + 1);
-        cout << char(223);
+        //Textcolor(Yellow);
+        //gotoxy(x + 2, y);
+        //cout << char(203);
+        //Textcolor(White);
+        //gotoxy(x + 2, y + 1);
+        //cout << char(223);
 
-        // Body
-        Textcolor(DarkYellow);
-        gotoxy(x, y + 2);
-        cout << char(222);
-        Textcolor(Yellow);  
-        gotoxy(x + 1, y + 2); 
-        cout << char(222);
-        gotoxy(x + 2, y + 2); 
-        cout << char(219);
-        gotoxy(x + 3, y + 2); 
-        cout << char(221);
-        Textcolor(DarkYellow);
-        gotoxy(x + 4, y + 2);
-        cout << char(221);
+        //// Body
+        //Textcolor(DarkYellow);
+        //gotoxy(x, y + 2);
+        //cout << char(222);
+        //Textcolor(Yellow);  
+        //gotoxy(x + 1, y + 2); 
+        //cout << char(222);
+        //gotoxy(x + 2, y + 2); 
+        //cout << char(219);
+        //gotoxy(x + 3, y + 2); 
+        //cout << char(221);
+        //Textcolor(DarkYellow);
+        //gotoxy(x + 4, y + 2);
+        //cout << char(221);
 
-        // Legs
-        gotoxy(x + 1, y + 3); 
-        cout << char(222);
-        gotoxy(x + 3, y + 3); 
-        cout << char(221);
-        Textcolor(White);
-        gotoxy(x + 1, y + 4); 
-        cout << char(188);
-        gotoxy(x + 3, y + 4); 
-        cout << char(200);
+        //// Legs
+        //gotoxy(x + 1, y + 3); 
+        //cout << char(222);
+        //gotoxy(x + 3, y + 3); 
+        //cout << char(221);
+        //Textcolor(White);
+        //gotoxy(x + 1, y + 4); 
+        //cout << char(188);
+        //gotoxy(x + 3, y + 4); 
+        //cout << char(200);
  
         Textcolor(7);
     }

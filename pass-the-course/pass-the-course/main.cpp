@@ -9,24 +9,26 @@
 #include "Figure.h"
 
 // #include "console.cpp"
-using namespace std;
+//using namespace std;
 
 int e = 3;
-
-void obstacleMove(int& x, int y)
-{
-    gotoxy(x, y);
-    cout << "   ";
-    x += 1;
-    if (x > 80)
-        x = 0;
-    gotoxy(x, y);
-    cout << "ooo";
-}
+//
+//void obstacleMove(int& x, int y)
+//{
+//    gotoxy(x, y);
+//    cout << "   ";
+//    x += 1;
+//    if (x > 80)
+//        x = 0;
+//    gotoxy(x, y);
+//    cout << "ooo";
+//}
 
 int main()
 {   
-    
+    /*Figure cop(".//Figure//Obstacle//cop.txt");
+    cop.print(6, 6);*/
+    ShowCursor(true);
     setScreenSize(0, 0, 800, 650);
     
     Obstacle *O1;
