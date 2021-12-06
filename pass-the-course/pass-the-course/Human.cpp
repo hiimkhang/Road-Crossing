@@ -1,5 +1,10 @@
 #include "Human.h"
 
+Human::Human()
+{
+    fig = Figure(".//Figure//Human//human-test.txt");
+}
+
 void Human::moveUp()
 {
     preX = curX;
@@ -30,11 +35,13 @@ void Human::moveRight()
 
 void Human::move()
 {
+    fig.deleteFootprint(preX, preY);
+    fig.print(curX, curY);
 }
 
 void Human::initial()
 {
-       
+    fig.print(curX, curY);
 }
 bool Human::getIsDead() {
     return isDead;

@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h" />
+    <ClInclude Include="CLane.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Human.h" />

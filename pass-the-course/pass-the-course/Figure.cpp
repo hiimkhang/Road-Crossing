@@ -1,6 +1,11 @@
 
 #include "Figure.h"
 
+Figure::Figure()
+{
+
+}
+
 Figure::Figure(std::string dir)
 {
 	std::ifstream fig(dir);
@@ -42,6 +47,18 @@ void Figure::print(int x, int y)
 				gotoxy(x + j, y + i);
 				std::cout << char(symbol[i][j]);
 			}
+		}
+	}
+}
+
+void Figure::deleteFootprint(int x, int y)
+{
+	for (int i = 0; i < sizeY; i++)
+	{
+		for (int j = 0; j < sizeX; j++)
+		{
+			gotoxy(x + j, y + i);
+			std::cout << " ";
 		}
 	}
 }
