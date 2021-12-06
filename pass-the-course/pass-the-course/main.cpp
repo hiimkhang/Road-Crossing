@@ -7,25 +7,26 @@
 #include "console.h"
 #include "Obstacle.h"
 #include "Figure.h"
+#include <string>
+#include <fstream>
+using namespace std;
 
 char MOVING;
 bool IS_RUNNING = true;
 CGame cg;
-// #include "console.cpp"
-//using namespace std;
 
 int e = 3;
-//
-//void obstacleMove(int& x, int y)
-//{
-//    gotoxy(x, y);
-//    cout << "   ";
-//    x += 1;
-//    if (x > 80)
-//        x = 0;
-//    gotoxy(x, y);
-//    cout << "ooo";
-//}
+
+void obstacleMove(int& x, int y)
+{
+    gotoxy(x, y);
+    cout << "   ";
+    x += 1;
+    if (x > 80)
+        x = 0;
+    gotoxy(x, y);
+    cout << "ooo";
+}
 
 void exitGame(thread* t) {
     system("cls");
@@ -40,7 +41,8 @@ void SubThread() {
         MOVING = ' ';   // reset the moving, stop the human, if user dont input -> the humam still stop
         cg.updatePosObstacle(); // update the position of each obstacle in the list
         
-        //cg.drawGame();
+
+        //cg.drawGame();    // draw the game box skeleton
 
         /*if (cg.getPeople().isImpact(cg.getListObstacle())) {
 
@@ -82,17 +84,16 @@ int main() {
 }
 
 
-
-
-
-//int main()    // KHANGGGGGGGGG
-//{   
+//int main()
+//{
 //    /*Figure cop(".//Figure//Obstacle//cop.txt");
 //    cop.print(6, 6);*/
-//    ShowCursor(true);
-//    setScreenSize(0, 0, 800, 650);
 //    
-//    Obstacle *O1;
+//
+//    ShowCursor(1);
+//    setScreenSize(0, 0, 800, 650);
+//
+//    Obstacle* O1;
 //
 //    O1 = new Rock(20, 20);
 //    O1->print();
@@ -114,12 +115,9 @@ int main() {
 //
 //    cout << "\n\n\n\n\n";
 //    Textcolor(0);
-//    delete O1;
 //    // system("pause");
 //    return 0;
 //}
-
-
 
 
 
