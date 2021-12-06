@@ -125,6 +125,7 @@ public:
     void print() {
         int x = getCurX(), y = getCurY();
         fig.print(x, y);
+        cout << "COP";
         // Head
         //Textcolor(Yellow);
         //gotoxy(x + 2, y);

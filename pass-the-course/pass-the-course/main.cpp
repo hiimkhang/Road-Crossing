@@ -3,11 +3,14 @@
 #include <Windows.h>
 #include <thread>
 #include <conio.h>
-//#include "CGame.h"k
+#include "CGame.h"
 #include "console.h"
 #include "Obstacle.h"
 #include "Figure.h"
 
+char MOVING;
+bool IS_RUNNING = true;
+CGame cg;
 // #include "console.cpp"
 //using namespace std;
 
@@ -24,40 +27,104 @@ int e = 3;
 //    cout << "ooo";
 //}
 
-int main()
-{   
-    /*Figure cop(".//Figure//Obstacle//cop.txt");
-    cop.print(6, 6);*/
-    ShowCursor(true);
-    setScreenSize(0, 0, 800, 650);
-    
-    Obstacle *O1;
+void exitGame(thread* t) {
+    system("cls");
+    IS_RUNNING = false;
+    t->join();
+}
+void SubThread() {
+    while (IS_RUNNING) {
+        if (!cg.getPeople().getIsDead()) {
+            //cg.updatePosPeople(MOVING);   // take the input form user -> assign to MOVING = temp -> update position
+        }
+        MOVING = ' ';   // reset the moving, stop the human, if user dont input -> the humam still stop
+        cg.updatePosObstacle(); // update the position of each obstacle in the list
+        
+        //cg.drawGame();
 
-    O1 = new Rock(20, 20);
-    O1->print();
+        /*if (cg.getPeople().isImpact(cg.getListObstacle())) {
 
-    O1 = new Potion(70, 20);
-    O1->print();
+        }
+        if (cg.getPeople().isFinish()) {
 
-    gotoxy(12, 10);
-    cout << "Cop's speed 2: ";
-    O1 = new Cop(30, 10);
-    O1->print();
-    O1->move(2, 0);
-
-    gotoxy(12, 18);
-    cout << "Cop's speed 5: ";
-    O1 = new Cop(30, 18);
-    O1->print();
-    O1->move(5, 0);
-
-    cout << "\n\n\n\n\n";
-    Textcolor(0);
-    // system("pause");
-    return 0;
+        }*/
+        Sleep(100);
+    }
 }
 
-// gotoxy(30, 11);
+
+
+int main() {
+
+    int temp;
+    fixConsoleWindow();
+    cg.startGame();
+    thread t1(SubThread);
+    
+    while (1) {
+        cout << "Use WASD to move your character\n";
+        temp = toupper(_getch());
+        
+        if (!cg.getPeople().getIsDead()) {
+            if (temp == 27) {   // exit
+                
+            }
+            else if (temp == 'P') { // pause game
+
+            }
+            else {  // continue / resume
+                MOVING = temp;
+            }
+        }
+        
+    }
+
+}
+
+
+
+
+
+//int main()    // KHANGGGGGGGGG
+//{   
+//    /*Figure cop(".//Figure//Obstacle//cop.txt");
+//    cop.print(6, 6);*/
+//    ShowCursor(true);
+//    setScreenSize(0, 0, 800, 650);
+//    
+//    Obstacle *O1;
+//
+//    O1 = new Rock(20, 20);
+//    O1->print();
+//
+//    O1 = new Potion(70, 20);
+//    O1->print();
+//
+//    gotoxy(12, 10);
+//    cout << "Cop's speed 2: ";
+//    O1 = new Cop(30, 10);
+//    O1->print();
+//    O1->move(2, 0);
+//
+//    gotoxy(12, 18);
+//    cout << "Cop's speed 5: ";
+//    O1 = new Cop(30, 18);
+//    O1->print();
+//    O1->move(5, 0);
+//
+//    cout << "\n\n\n\n\n";
+//    Textcolor(0);
+//    delete O1;
+//    // system("pause");
+//    return 0;
+//}
+
+
+
+
+
+
+// gotoxy(30, 11);  // Danggggggggggg
     // cout << "  X  ";
     // gotoxy(30, 12);
     // cout << "XXXXX";

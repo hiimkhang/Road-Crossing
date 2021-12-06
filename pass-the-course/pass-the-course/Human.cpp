@@ -35,3 +35,6 @@ void Human::move()
 void Human::initial()
 {
 }
+bool Human::getIsDead() {
+    return isDead;
+}

@@ -13,5 +13,6 @@ public:
 	void moveRight();
 	virtual void move();
 	virtual void initial();
+	bool getIsDead();
 };
 #endif
