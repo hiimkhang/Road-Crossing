@@ -3,12 +3,13 @@
 #include <Windows.h>
 #include <thread>
 #include <conio.h>
-//#include "CGame.h"k
+#include "CGame.h"
 #include "console.h"
 #include "Obstacle.h"
 #include "Figure.h"
 
 // #include "console.cpp"
+// #include "Figure.cpp"
 //using namespace std;
 
 int e = 3;
@@ -28,7 +29,7 @@ int main()
 {   
     /*Figure cop(".//Figure//Obstacle//cop.txt");
     cop.print(6, 6);*/
-    ShowCursor(true);
+    ShowCursor(1);
     setScreenSize(0, 0, 800, 650);
     
     Obstacle *O1;
