@@ -43,3 +43,4 @@ void Human::initial()
 {
     fig.print(curX, curY);
 }
+
