@@ -43,4 +43,10 @@ void Human::initial()
 {
     fig.print(curX, curY);
 }
+<<<<<<< HEAD
 
+=======
+bool Human::getIsDead() {
+    return isDead;
+}
+>>>>>>> a23cae8940b7d4a70fa5f70be8ab4a301691d9f9

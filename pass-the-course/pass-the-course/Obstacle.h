@@ -85,7 +85,9 @@ public:
 
 class Cop : public Obstacle {
 private:
-    Figure fig = Figure(".//Figure//Obstacle//cop.txt");
+    //Figure fig = Figure(".//Figure//Obstacle//cop.txt");
+    Figure fig = Figure(".//Figure/Obstacle//cop.txt");
+    
     // Figure* fig;
 
 public:

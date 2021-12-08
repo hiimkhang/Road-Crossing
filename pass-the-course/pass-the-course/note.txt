@@ -1,0 +1,6 @@
+cách 1: 
+Tất cả object trong cùng 1 thread
+
+-> sửa hàm move của từng obstacle lại, để move sẽ là dich chuyển sang trái phải bao nhiêu đó ô 
+vì tất cả object sẽ di chuyển trong cùn 1 thread, dihcj chuyển với sô sô khác nhau sễ làm thành tốt độ khác nhau
+do sleep(100); // gióng như Dâng làm hồi trc
