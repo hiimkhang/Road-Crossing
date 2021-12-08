@@ -1,14 +1,17 @@
 #include "CLane.h"
 
-void CLane::run()
+void CLane::move()
 {
-	auto lpr = [](int x)
+	for (auto& obs : list)
 	{
-		while (1)
-		{
-			std::cout << 
-		}
-	};
-	th = std::thread(lpr);
+		obs->move(speedX, 0);
+		obs->print();
+	}
 
+}
+
+CLane::CLane()
+{
+	Obstacle* temp1 = new Cop();
+	list.push_back(temp1);
 }

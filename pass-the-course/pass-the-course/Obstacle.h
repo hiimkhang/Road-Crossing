@@ -6,7 +6,7 @@
 
 
 class Obstacle {
-private:
+protected:
     int curX, curY;
     int prevX, prevY;
     // hitbox size
@@ -103,7 +103,11 @@ public:
     
     // Override 
     void move(int speedX, int speedY) {
-        int initX = getCurX();
+        prevX = curX;
+        prevY = curY;
+        curX += speedX;
+        curY += speedY;
+        /*int initX = getCurX();
         int initY = getCurY();
         int i = 0;
 
@@ -124,7 +128,7 @@ public:
                 Sleep(100);
                 ++i;
             }
-        }
+        }*/
     }
 
     void print() {

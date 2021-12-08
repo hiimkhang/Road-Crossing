@@ -7,9 +7,11 @@ class CLane
 {
 private:
 	std::vector<Obstacle*> list;
-	std::thread th;
+	bool redLight;
+	int speedX;
 public:
-	void run();
+	void move();
+	CLane();
 };
 
 #endif // !_cLane_h_
