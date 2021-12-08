@@ -6,7 +6,7 @@
 
 
 class Obstacle {
-private:
+protected:
     int curX, curY;
     int prevX, prevY;
     // hitbox size
@@ -51,6 +51,8 @@ public:
     // ? idk 
     virtual void collisonSound() = 0;  
     virtual void print() = 0;
+    virtual void unPrint() = 0;
+    
 };
 
 class Rock : public Obstacle {
@@ -103,7 +105,24 @@ public:
     
     // Override 
     void move(int speedX, int speedY) {
-        int initX = getCurX();
+        prevX = curX;
+        prevY = curY;
+        curX += speedX;
+        curY += speedY;
+        if (prevY <= curY) {
+            if (curY >= 40)
+                curY = 0;
+            if (curX >= 40)
+                curX = 0;
+        }
+        else {
+            if (curY <= 0)
+                curY = 40;
+            if (curX <= 0)
+                curX = 40;
+        }
+        
+        /*int initX = getCurX();
         int initY = getCurY();
         int i = 0;
 
@@ -124,9 +143,9 @@ public:
                 Sleep(100);
                 ++i;
             }
-        }
+        }*/
     }
-
+    
     void print() {
         int x = getCurX(), y = getCurY();
         ShowConsoleCursor(false);

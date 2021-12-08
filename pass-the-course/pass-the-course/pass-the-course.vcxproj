@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CLane.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="Human.cpp" />

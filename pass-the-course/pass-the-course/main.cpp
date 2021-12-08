@@ -15,18 +15,18 @@ char MOVING;
 bool IS_RUNNING = true;
 CGame cg;
 
-int e = 3;
+//int e = 3;
 
-void obstacleMove(int& x, int y)
-{
-    gotoxy(x, y);
-    cout << "   ";
-    x += 1;
-    if (x > 80)
-        x = 0;
-    gotoxy(x, y);
-    cout << "ooo";
-}
+//void obstacleMove(int& x, int y)  // Danggggggg
+//{
+//    gotoxy(x, y);
+//    cout << "   ";
+//    x += 1;
+//    if (x > 80)
+//        x = 0;
+//    gotoxy(x, y);
+//    cout << "ooo";
+//}
 
 void exitGame(thread* t) {
     system("cls");
@@ -39,7 +39,7 @@ void SubThread() {
             //cg.updatePosPeople(MOVING);   // take the input form user -> assign to MOVING = temp -> update position
         }
         MOVING = ' ';   // reset the moving, stop the human, if user dont input -> the humam still stop
-        cg.updatePosObstacle(); // update the position of each obstacle in the list
+        cg.updatePosCLane(); // update the position of each obstacle in the list
         
 
         //cg.drawGame();    // draw the game box skeleton
@@ -60,6 +60,8 @@ int main() {
 
     int temp;
     fixConsoleWindow();
+    cout << "enter sth to start\n";
+    cin.get();
     cg.startGame();
     thread t1(SubThread);
     

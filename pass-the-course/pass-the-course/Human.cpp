@@ -43,6 +43,9 @@ void Human::initial()
 {
     fig.print(curX, curY);
 }
+
+
 bool Human::getIsDead() {
     return isDead;
 }
+

@@ -5,6 +5,7 @@
 #include "console.h"
 #include "Human.h"
 #include "Obstacle.h"
+#include "CLane.h"
 
 class CGame
 {
@@ -12,9 +13,9 @@ class CGame
 		CGame();
 		~CGame(); 
 		Human getPeople();
-		vector<Obstacle*>& getListObstacle();
+		vector<CLane*>& getListCLane();
 		void startGame(); 
-		void updatePosObstacle();
+		void updatePosCLane();
 		void drawGame();
 		/* 
 		void resetGame(); 
@@ -28,7 +29,7 @@ class CGame
 		void updatePosAnimal();*/
 	private:	
 		Human human;
-		vector<Obstacle*> listObstacle;
+		vector<CLane*> listCLane;
 		bool isPause;
 		bool isCollised;
 
