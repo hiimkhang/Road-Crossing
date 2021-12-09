@@ -17,6 +17,11 @@ class CGame
 		void startGame(); 
 		void updatePosCLane();
 		void drawGame();
+		void updatePosPeople(char); 
+		bool isCollided();
+		bool isFinish();
+		void resetPeople();
+		void levelUp();
 		/* 
 		void resetGame(); 
 		void exitGame(HANDLE); 
@@ -24,9 +29,7 @@ class CGame
 		void saveGame(istream); 
 		void pauseGame(HANDLE); 
 		void resumeGame(HANDLE); 
-		void updatePosPeople(char); 
-		void updatePosVehicle(); 
-		void updatePosAnimal();*/
+		*/
 	private:	
 		Human human;
 		vector<CLane*> listCLane;

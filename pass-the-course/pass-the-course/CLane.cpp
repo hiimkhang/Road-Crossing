@@ -1,5 +1,8 @@
 #include "CLane.h"
 
+vector<Obstacle*>& CLane::getListObstacle() {
+	return list;
+}
 void CLane::move()
 {
 	for (auto& obs : list)

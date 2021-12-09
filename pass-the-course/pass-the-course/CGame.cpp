@@ -22,12 +22,20 @@ CGame::CGame() :  isPause(false), isCollised(false)
 	pO->print();
 	listObstacle.push_back(pO);*/
 
+	// initial HUMAN
+
+	human = Human(20, 20);
+	human.initial();
+
+
 	// new version with clane
-	CLane* pC = new CLane(1,0);
+	CLane* pC = new CLane(1,0);	// clane with 1 cop, y-coordinate of the lane is 0
 	listCLane.push_back(pC);
-	pC = new CLane(2,8);
+	pC = new CLane(2,8);		// clane with 2 cop, y-coordinate is 8
 	listCLane.push_back(pC);
-	cout << endl << "CGame::CGame()" << endl;
+
+
+	//cout << endl << "CGame::CGame()" << endl;
 }
 CGame::~CGame() {
 	int n = listCLane.size();
@@ -43,14 +51,8 @@ vector<CLane*>& CGame::getListCLane() {
 }
 
 void CGame::startGame() {
-	// show the start intro, if this the first time play
-	// else quick screen like "game start" then the game run
-	/*int n = listObstacle.size();
-	for (int i = 0; i < n; ++i) {
-		listObstacle[i]->unPrint();
-		listObstacle[i]->move(2, 0);
-		listObstacle[i]->print();
-	}*/
+	// show the start intro, 
+	// draw the box, the point life, ....
 	
 }
 void CGame::updatePosCLane() {
@@ -58,7 +60,56 @@ void CGame::updatePosCLane() {
 	{
 		item->move();
 	}
+	// anthoer method
+	// use an 0 1 2D array for storing the place of obstacle
 }
 void CGame::drawGame() {
+
+}
+void CGame::updatePosPeople(char MOVING) {
+
+	int x = toupper(MOVING);
+	switch (x)
+	{
+		case 'W':
+			human.moveUp();
+			break;
+		case 'D':
+			human.moveRight();
+			break;
+		case 'S':
+			human.moveDown();
+			break;
+		case 'A':
+			human.moveLeft();
+			break;
+		default:
+			return;
+	}
+	human.move();
+}
+bool CGame::isCollided() {
+	// simple method, loop through all object to chek x, y with x,y of human
+	for (auto& clane : listCLane) {
+		vector<Obstacle*>& listObstacle = clane->getListObstacle();
+		for (auto& obstacle : listObstacle) {
+			if (human.isCollided(obstacle)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool CGame::isFinish() {
+	if (human.isFinish()) {
+		return true;
+	}
+	return false;
+}
+void CGame::resetPeople() {
+	human.reset();
+	human.move();
+}
+void CGame::levelUp() {
 
 }

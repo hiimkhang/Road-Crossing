@@ -1,6 +1,7 @@
 #ifndef _human_h_
 #define _human_h_
 #include "console.h"
+#include "Obstacle.h"
 #include "Figure.h"
 class Human
 {
@@ -9,7 +10,7 @@ private:
 	bool isDead;
 	Figure fig;
 public:
-	Human();
+	Human(int x = 0, int y = 0);
 	void moveUp();
 	void moveDown();
 	void moveLeft();
@@ -17,5 +18,8 @@ public:
 	virtual void move();
 	virtual void initial();
 	bool getIsDead();
+	bool isCollided(Obstacle*);
+	bool isFinish();
+	void reset();
 };
 #endif

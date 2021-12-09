@@ -36,20 +36,38 @@ void exitGame(thread* t) {
 void SubThread() {
     while (IS_RUNNING) {
         if (!cg.getPeople().getIsDead()) {
-            //cg.updatePosPeople(MOVING);   // take the input form user -> assign to MOVING = temp -> update position
+            cg.updatePosPeople(MOVING);     // take the input form user -> assign to MOVING = temp -> update position
         }
-        MOVING = ' ';   // reset the moving, stop the human, if user dont input -> the humam still stop
-        cg.updatePosCLane(); // update the position of each obstacle in the list
-        
+        MOVING = ' ';                       // reset the moving, stop the human, if user dont input -> the humam still stop
+        cg.updatePosCLane();                // update the position of each obstacle in the list (move the clane)
 
-        //cg.drawGame();    // draw the game box skeleton
+        //cg.drawGame();                    // draw ?
 
-        /*if (cg.getPeople().isImpact(cg.getListObstacle())) {
-
+        if (cg.isCollided()) {              // human collide with obstacle
+            cout << "\n------------OH NO-------------\n";
+            cout << "\n------------YOU LOSE-----------\n";
+            cin.get();
         }
-        if (cg.getPeople().isFinish()) {
+        // method 1 - as pdf slide
+        //if (cg.getPeople().isFinish()) {    
+        //  cout << "\n------------YOU WIN-------------\n";
+        //    // human touch the top line -> Viktory
+        //    // Ask them if they want to continue with new level or not
+        //    // use cg.getPeople().isFinish() because they will create new people if the previous has been victory
+        //    // come to new level
+        //    // player will play with new human, cg.getPeople() now is new People
+        //}
 
-        }*/
+        // method 2
+        if (cg.isFinish()) {
+            cout << "\n------------YOU WIN-------------\n";
+            cout << "\n------------NEW LEVEL-----------\n";
+            cin.get();
+            // we reset the human state (curX, curY = 0), isFinish = false, isCollide = false;
+            cg.resetPeople();
+            // then just reset the game with new level
+            cg.levelUp();
+        }
         Sleep(100);
     }
 }
@@ -60,13 +78,15 @@ int main() {
 
     int temp;
     fixConsoleWindow();
-    cout << "enter sth to start\n";
-    cin.get();
+    //cout << "Type something and enter to start\n";
+    //cin.get();
     cg.startGame();
+
     thread t1(SubThread);
-    
+
+    cout << "\n\n\n Use WASD to move your character\n";
     while (1) {
-        cout << "Use WASD to move your character\n";
+        
         temp = toupper(_getch());
         
         if (!cg.getPeople().getIsDead()) {

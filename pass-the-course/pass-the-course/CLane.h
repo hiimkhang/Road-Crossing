@@ -11,8 +11,10 @@ private:
 	int speedX;
 	int curY;
 public:
-	void move();	// ham move t nghi them tham so int, de cho cai cung lane move voi toc do tuy y
-	// them ham add obstacle vo list nua Dang
+	vector<Obstacle*>& getListObstacle();
+	void move();
+	void updateSpeed(int newSpeed);
+	void changeLight();
 	CLane(int numOfCop = 1, int newY = 0);
 };
 
