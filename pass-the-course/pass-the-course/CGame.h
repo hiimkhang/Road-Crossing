@@ -28,12 +28,12 @@ class CGame
 		void setupLevel1();
 		void setupLevel2();
 		void setupLevel3();
-		/* 
-		void exitGame(HANDLE); 
-		void loadGame(istream); 
-		void saveGame(istream); 
 		void pauseGame(HANDLE); 
 		void resumeGame(HANDLE); 
+		void exitGame(HANDLE); 
+		/* 
+		void loadGame(istream); 
+		void saveGame(istream); 
 		*/
 	private:	
 		Human human;

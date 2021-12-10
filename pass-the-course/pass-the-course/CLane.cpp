@@ -1,6 +1,6 @@
 #include "CLane.h"
 
-CLane::CLane(int numOfCop, int newY) : speedX(1), curY(newY)
+CLane::CLane(int numOfCop, int newY) : speedX(1), curY(newY), redLight(false)
 {
 	Obstacle* temp1 = nullptr;
 	for (int i = 1; i <= numOfCop; ++i) {
@@ -27,4 +27,7 @@ void CLane::move()
 
 void CLane::updateSpeed(int newSpeed) {
 	speedX = newSpeed;
+}
+void CLane::changeLight() {
+	redLight = !redLight;
 }

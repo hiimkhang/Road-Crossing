@@ -4,7 +4,6 @@ CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
 	// initial HUMAN
 	human = Human(32, 24);
-	human.initial();
 
 	level = newLevel;
 	switch (level) {
@@ -43,7 +42,7 @@ vector<CLane*>& CGame::getListCLane() {
 void CGame::startGame() {
 	// show the start intro, 
 	// draw the box, the point life, ....
-	
+	drawGame();
 }
 void CGame::updatePosCLane() {
 	if (!isPause) {
@@ -54,7 +53,7 @@ void CGame::updatePosCLane() {
 	}
 }
 void CGame::drawGame() {
-
+	human.initial();
 }
 void CGame::updatePosPeople(char MOVING) {
 
@@ -156,4 +155,16 @@ bool CGame::isCollided() {
 	// another method
 	// use an 0 1 2D array for storing the place of obstacle
 	return false;
+}
+void CGame::pauseGame(HANDLE h) {
+	SuspendThread(h);
+}
+void CGame::resumeGame(HANDLE h) {
+	ResumeThread(h);
+}
+void CGame::exitGame(HANDLE h) {
+	TerminateThread(h, 0);
+	system("cls");
+	cout << "Thanks for playing the game\n";
+	cout << "Good bye\n";
 }

@@ -15,24 +15,7 @@ char MOVING;
 bool IS_RUNNING = true;
 CGame cg;
 
-//int e = 3;
 
-//void obstacleMove(int& x, int y)  // Danggggggg
-//{
-//    gotoxy(x, y);
-//    cout << "   ";
-//    x += 1;
-//    if (x > 80)
-//        x = 0;
-//    gotoxy(x, y);
-//    cout << "ooo";
-//}
-
-void exitGame(thread* t) {
-    system("cls");
-    IS_RUNNING = false;
-    t->join();
-}
 void SubThread() {
     while (IS_RUNNING) {
         if (!cg.getPeople().getIsDead()) {
@@ -105,15 +88,27 @@ int main() {
         temp = toupper(_getch());
         
         if (!cg.getPeople().getIsDead()) {
-            if (temp == 27) {   // exit
-                //cg.exitGame(t1.native_handle());
+            if (temp == 27) {   // Esc = Exit
+                cg.exitGame(t1.native_handle());
+                return 0;
             }
             else if (temp == 'P') { // pause game
-                //cg.pauseGame(t1.native_handle());
+                IS_RUNNING = false;
+                cg.pauseGame(t1.native_handle());
             }
             else {  // continue / resume
-                //cg.resumeGame((HANDLE)t1.native_handle());
+                IS_RUNNING = true;
+                cg.resumeGame((HANDLE)t1.native_handle());
                 MOVING = temp;
+            }
+        }
+        else {
+            if (temp == 'Y') {
+                cg.startGame();
+            }
+            else {
+                cg.exitGame(t1.native_handle());
+                return 0;
             }
         }
         
@@ -188,3 +183,17 @@ int main() {
             break;
         }
     }*/
+
+
+    //int e = 3;
+
+    //void obstacleMove(int& x, int y)  // Danggggggg
+    //{
+    //    gotoxy(x, y);
+    //    cout << "   ";
+    //    x += 1;
+    //    if (x > 80)
+    //        x = 0;
+    //    gotoxy(x, y);
+    //    cout << "ooo";
+    //}
