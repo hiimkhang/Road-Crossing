@@ -1,6 +1,8 @@
 #ifndef _cgame_h_
 #define _cgame_h_
 
+#include <Windows.h>
+#include <conio.h>
 #include <vector>
 #include "console.h"
 #include "Human.h"
@@ -10,9 +12,10 @@
 class CGame
 {
 	public:
-		CGame();
+		CGame(int newLevel = 1);
 		~CGame(); 
 		Human getPeople();
+		int getLevel();
 		vector<CLane*>& getListCLane();
 		void startGame(); 
 		void updatePosCLane();
@@ -20,10 +23,12 @@ class CGame
 		void updatePosPeople(char); 
 		bool isCollided();
 		bool isFinish();
-		void resetPeople();
 		void levelUp();
-		/* 
 		void resetGame(); 
+		void setupLevel1();
+		void setupLevel2();
+		void setupLevel3();
+		/* 
 		void exitGame(HANDLE); 
 		void loadGame(istream); 
 		void saveGame(istream); 
@@ -35,6 +40,7 @@ class CGame
 		vector<CLane*> listCLane;
 		bool isPause;
 		bool isCollised;
+		int level;
 
 };
 

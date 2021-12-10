@@ -2,7 +2,8 @@
 
 Human::Human(int x, int y) : isDead(false)
 {
-    fig = Figure(".//Figure//Human//human-test.txt");
+    //fig = Figure(".//Figure//Human//human-test.txt");
+    fig = Figure(".//Figure//Human//block.txt");
     curX = x;
     curY = y;
 }
@@ -54,20 +55,20 @@ bool Human::isCollided(Obstacle* pObs) {
         return true;
     }
 
-    tempX += 4;
+    tempX += width;
     if (tempX >= pObs->getCurX() && tempX <= (pObs->getCurX() + 4)    //  top right corner
         && tempY >= pObs->getCurY() && tempY <= (pObs->getCurY() + 4)) {
         return true;
     }
 
-    tempX -= 4;
-    tempY += 4;
+    tempX -= width;
+    tempY += height;
     if (tempX >= pObs->getCurX() && tempX <= (pObs->getCurX() + 4)    //  bottom left corner
         && tempY >= pObs->getCurY() && tempY <= (pObs->getCurY() + 4)) {
         return true;
     }
 
-    tempX += 4;
+    tempX += width;
     if (tempX >= pObs->getCurX() && tempX <= (pObs->getCurX() + 4)    //  bottom right corner
         && tempY >= pObs->getCurY() && tempY <= (pObs->getCurY() + 4)) {
         return true;
@@ -85,9 +86,8 @@ bool Human::isFinish() {
     return false;
 }
 void Human::reset() {
-
     isDead = false;
-    curX = 20;
-    curY = 20;
+    curX = 32;
+    curY = 24;
     --preY;
 }

@@ -46,7 +46,15 @@ void SubThread() {
         if (cg.isCollided()) {              // human collide with obstacle
             cout << "\n------------OH NO-------------\n";
             cout << "\n------------YOU LOSE-----------\n";
-            cin.get();
+            cout << "Enter C to new game. S or other to exit and return to menu\n";
+            char temp = _getch();
+            if (toupper(temp) == 'C') {
+                cg.resetGame();
+            }
+            else {
+                // exit, return to menu
+                //break;
+            }
         }
         // method 1 - as pdf slide
         //if (cg.getPeople().isFinish()) {    
@@ -62,11 +70,18 @@ void SubThread() {
         if (cg.isFinish()) {
             cout << "\n------------YOU WIN-------------\n";
             cout << "\n------------NEW LEVEL-----------\n";
-            cin.get();
             // we reset the human state (curX, curY = 0), isFinish = false, isCollide = false;
-            cg.resetPeople();
+            // also reset the game
+            cg.resetGame();
             // then just reset the game with new level
-            cg.levelUp();
+            if (cg.getLevel() <= 2) {
+                cg.levelUp();
+            }
+            else {
+                cout << "\n---------FINISH ALL LEVEL----------\n";
+                cout << "\n----------CONGRATULATIONS----------\n";
+                break;
+            }
         }
         Sleep(100);
     }
@@ -91,12 +106,13 @@ int main() {
         
         if (!cg.getPeople().getIsDead()) {
             if (temp == 27) {   // exit
-                
+                //cg.exitGame(t1.native_handle());
             }
             else if (temp == 'P') { // pause game
-
+                //cg.pauseGame(t1.native_handle());
             }
             else {  // continue / resume
+                //cg.resumeGame((HANDLE)t1.native_handle());
                 MOVING = temp;
             }
         }

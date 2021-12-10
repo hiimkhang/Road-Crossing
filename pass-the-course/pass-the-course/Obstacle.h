@@ -4,6 +4,7 @@
 #include "console.h"
 #include "Figure.h"
 
+const int MAX_WIDTH = 60;
 
 class Obstacle {
 protected:
@@ -110,16 +111,16 @@ public:
         curX += speedX;
         curY += speedY;
         if (prevY <= curY) {
-            if (curY >= 40)
+            if (curY >= MAX_WIDTH)
                 curY = 0;
-            if (curX >= 40)
+            if (curX >= MAX_WIDTH)
                 curX = 0;
         }
         else {
             if (curY <= 0)
-                curY = 40;
+                curY = MAX_WIDTH;
             if (curX <= 0)
-                curX = 40;
+                curX = MAX_WIDTH;
         }
         
         /*int initX = getCurX();

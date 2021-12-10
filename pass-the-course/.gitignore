@@ -2,3 +2,6 @@
 Debug
 .git 
 .vscode
+.vs/
+.git/
+pass-the-course/.vs
