@@ -4,7 +4,10 @@
 #include <Windows.h>
 #include <conio.h>
 #include <vector>
+#include <chrono>	// for time related work
+#include <ctime>	// for time related work
 #include "console.h"
+
 #include "Human.h"
 #include "Obstacle.h"
 #include "CLane.h"
@@ -21,6 +24,7 @@ class CGame
 		void updatePosCLane();
 		void drawGame();
 		void updatePosPeople(char); 
+		void updateRedLight();
 		bool isCollided();
 		bool isFinish();
 		void levelUp();
@@ -41,6 +45,7 @@ class CGame
 		bool isPause;
 		bool isCollised;
 		int level;
+		clock_t clockStart;
 
 };
 

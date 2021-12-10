@@ -40,21 +40,53 @@ vector<CLane*>& CGame::getListCLane() {
 }
 
 void CGame::startGame() {
+	clockStart = std::clock();
 	// show the start intro, 
 	// draw the box, the point life, ....
 	drawGame();
 }
-void CGame::updatePosCLane() {
-	if (!isPause) {
-		for (auto& item : listCLane)
-		{
-			item->move();
+void CGame::drawGame() {
+	human.initial();
+	int n = listCLane.size();
+	for (int i = 0; i < n; ++i) {
+		gotoxy(69, i * 8 + 2);
+		if (listCLane[i]->getRedLight()) {
+			Textcolor(2);
+			cout << "RED SKULL   ";
+		}
+		else {
+			Textcolor(12);
+			cout << "GREEN GOBLIN";
 		}
 	}
 }
-void CGame::drawGame() {
-	human.initial();
+void CGame::updatePosCLane() {
+	if (!isPause) {
+		for (auto& clane : listCLane)
+		{
+			if(clane->getRedLight() == false)
+				clane->move();
+		}
+	}
 }
+void CGame::updateRedLight() {
+	int n = listCLane.size();
+	for (int i = 0; i < n; ++i) {
+		if (i % 2 == 0) {
+			listCLane[i]->changeLight();
+		}
+		gotoxy(69, i*8 + 2);
+		if (listCLane[i]->getRedLight()) {
+			Textcolor(2);
+			cout << "RED SKULL   ";
+		}
+		else {
+			Textcolor(12);
+			cout << "GREEN GOBLIN";
+		}
+	}
+}
+
 void CGame::updatePosPeople(char MOVING) {
 
 	int x = toupper(MOVING);

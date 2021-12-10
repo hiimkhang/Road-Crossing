@@ -12,6 +12,7 @@ private:
 	int curY;
 public:
 	vector<Obstacle*>& getListObstacle();
+	bool getRedLight();
 	void move();
 	void updateSpeed(int newSpeed);
 	void changeLight();

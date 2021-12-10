@@ -13,6 +13,9 @@ CLane::CLane(int numOfCop, int newY) : speedX(1), curY(newY), redLight(false)
 vector<Obstacle*>& CLane::getListObstacle() {
 	return list;
 }
+bool CLane::getRedLight() {
+	return redLight;
+}
 
 void CLane::move()
 {
@@ -22,7 +25,6 @@ void CLane::move()
 		obs->move(speedX, 0);
 		obs->print();
 	}
-
 }
 
 void CLane::updateSpeed(int newSpeed) {

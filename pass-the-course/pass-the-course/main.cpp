@@ -15,9 +15,19 @@ char MOVING;
 bool IS_RUNNING = true;
 CGame cg;
 
+auto t_start = std::chrono::high_resolution_clock::now();
 
 void SubThread() {
     while (IS_RUNNING) {
+
+        auto t_now = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_now - t_start).count();
+        if (elapsed_time_ms > 3000) {   // every 3 second light will change
+            t_start = t_now;
+            //cout << "elapsed_time_ms: " << elapsed_time_ms << endl;
+            cg.updateRedLight();
+        }
+
         if (!cg.getPeople().getIsDead()) {
             cg.updatePosPeople(MOVING);     // take the input form user -> assign to MOVING = temp -> update position
         }
@@ -74,6 +84,7 @@ void SubThread() {
 
 int main() {
 
+
     int temp;
     fixConsoleWindow();
     //cout << "Type something and enter to start\n";
@@ -84,7 +95,7 @@ int main() {
 
     cout << "\n\n\n Use WASD to move your character\n";
     while (1) {
-        
+
         temp = toupper(_getch());
         
         if (!cg.getPeople().getIsDead()) {
