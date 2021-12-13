@@ -15,6 +15,13 @@ void setScreenSize(SHORT x, SHORT y, SHORT width, SHORT height)
 	MoveWindow(GetConsoleWindow(), x, y, width, height, TRUE);
 }
 
+void resizeConsole(int width, int height) {
+	HWND console = GetConsoleWindow();
+	RECT edge;
+	GetWindowRect(console, &edge);
+	MoveWindow(console, edge.left, edge.top, width, height, TRUE);
+}
+
 void drawBoard(int color)
 {
 
