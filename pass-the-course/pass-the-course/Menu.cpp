@@ -1,10 +1,11 @@
 #include "Menu.h"
 
 void Menu::menu() {
-    while (true) {
+    bool stayinMenu = true;
+    while (stayinMenu) {
         clrscr();
         logoMenu();
-
+        
         // if (soundStatus == 1)
         // play sound
 
@@ -44,7 +45,7 @@ void Menu::menu() {
         gotoxy(x + 9, y + 7); cout << "EXIT";
 
         int cnt = 0;
-        while (true)
+        while (stayinMenu)
         {
             char choice = _getch();
             Textcolor(15);
@@ -73,7 +74,7 @@ void Menu::menu() {
                 gotoxy(x + 6, y + 1); cout << " NEW GAME ";
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
-                    // newGame();
+                    stayinMenu = false;
                     clrscr();
                     break;
                 }

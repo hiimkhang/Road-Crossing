@@ -19,8 +19,9 @@ CGame cg;
 auto t_start = std::chrono::high_resolution_clock::now();
 
 void SubThread() {
+    int i = 15;
     while (IS_RUNNING) {
-
+        i--;
         auto t_now = std::chrono::high_resolution_clock::now();
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_now - t_start).count();
         if (elapsed_time_ms > 3000) {   // every 3 second light will change
@@ -82,84 +83,87 @@ void SubThread() {
 }
 
 
-int main() {
-    resizeConsole(1000, 700);
-    fixConsoleWindow();
-    Menu m;
-    try {
-        // Display win logo
-        for (int i = 0; i < 15; ++i) {
-            ShowConsoleCursor(0);
-            clrscr();
-            m.logoLose();
-            Sleep(100);
-        }
-        while (_kbhit())
-            _getch();
-        Textcolor(White);
-        gotoxy(54, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
-        Textcolor(15);
-        _getch();
-
-
-        // Display menu
-        m.menu();
-    }
-    catch (string s) {
-        cout << "Error: " + s;
-    }
-
-    cout << endl;
-    return 0;
-}
+//int main() {
+//    resizeConsole(1000, 700);
+//    fixConsoleWindow();
+//    Menu m;
+//    try {
+//        //// Display win logo
+//        //for (int i = 0; i < 15; ++i) {
+//        //    ShowConsoleCursor(0);
+//        //    clrscr();
+//        //    m.logoLose();
+//        //    Sleep(100);
+//        //}
+//        //while (_kbhit())
+//        //    _getch();
+//        //Textcolor(White);
+//        //gotoxy(54, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
+//        //Textcolor(15);
+//        //_getch();
+//
+//
+//        //// Display menu
+//        //m.menu();
+//       
+//    }
+//    catch (string s) {
+//        cout << "Error: " + s;
+//    }
+//
+//    cout << endl;
+//    return 0;
+//}
 
 
 
 
 // Tri
-// 
-//int main() {
-//    int temp;
-//    fixConsoleWindow();
-//    //cout << "Type something and enter to start\n";
-//    //cin.get();
-//    cg.startGame();
-//
-//    thread t1(SubThread);
-//
-//    cout << "\n\n\n Use WASD to move your character\n";
-//    while (1) {
-//
-//        temp = toupper(_getch());
-//        
-//        if (!cg.getPeople().getIsDead()) {
-//            if (temp == 27) {   // Esc = Exit
-//                cg.exitGame(t1.native_handle());
-//                return 0;
-//            }
-//            else if (temp == 'P') { // pause game
-//                IS_RUNNING = false;
-//                cg.pauseGame(t1.native_handle());
-//            }
-//            else {  // continue / resume
-//                IS_RUNNING = true;
-//                cg.resumeGame((HANDLE)t1.native_handle());
-//                MOVING = temp;
-//            }
-//        }
-//        else {
-//            if (temp == 'Y') {
-//                cg.startGame();
-//            }
-//            else {
-//                cg.exitGame(t1.native_handle());
-//                return 0;
-//            }
-//        }
-//        
-//    }
-//
-//}
+ 
+int main() {
+    int temp;
+    fixConsoleWindow();
+    Menu m;
+    m.menu();
+    //cout << "Type something and enter to start\n";
+    //cin.get();
+    cg.startGame();
+
+    thread t1(SubThread);
+
+    cout << "\n\n\n Use WASD to move your character\n";
+    while (1) {
+
+        temp = toupper(_getch());
+        
+        if (!cg.getPeople().getIsDead()) {
+            if (temp == 27) {   // Esc = Exit
+                cg.exitGame(t1.native_handle());
+                return 0;
+            }
+            else if (temp == 'P') { // pause game
+                IS_RUNNING = false;
+                cg.pauseGame(t1.native_handle());
+            }
+            else {  // continue / resume
+                IS_RUNNING = true;
+                cg.resumeGame((HANDLE)t1.native_handle());
+                MOVING = temp;
+            }
+        }
+        else {
+            if (temp == 'Y') {
+                cg.startGame();
+            }
+            else {
+                cg.exitGame(t1.native_handle());
+                return 0;
+            }
+        }
+        
+    }
+
+}
 
 
 //int main()
