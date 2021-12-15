@@ -115,10 +115,15 @@ void SubThread() {
 //    return 0;
 //}
 
+////Dang
+//int main()
+//{
+//    cg.loadGame("text2.txt");
+//    
+//}
 
 
-
-// Tri
+ //Tri
  
 int main() {
     int temp;
@@ -127,8 +132,8 @@ int main() {
     m.menu();
     //cout << "Type something and enter to start\n";
     //cin.get();
+    cg.loadGame("test2.txt");
     cg.startGame();
-
     thread t1(SubThread);
 
     cout << "\n\n\n Use WASD to move your character\n";

@@ -200,3 +200,78 @@ void CGame::exitGame(HANDLE h) {
 	cout << "Thanks for playing the game\n";
 	cout << "Good bye\n";
 }
+
+void CGame::loadGame(string fn)
+{
+	ifstream in(".//Save//" + fn);
+	//human
+	string humanFigDir;
+	in >> humanFigDir;
+	human.setFigDir(humanFigDir);
+	int* curHuman = new int[2];
+	in >> *curHuman >> *(curHuman + 1);
+	human.setHumanPosition(curHuman);
+	int numOfLane;
+	in >> numOfLane;
+	listCLane.clear();
+	for (int i = 0; i < numOfLane; i++)
+	{
+		CLane* lane = new CLane;
+		int numOfObs;
+		in >> numOfObs;
+		for (int j = 0; j < numOfObs; j++)
+		{
+			int id; 
+			in >> id;
+			Obstacle* obs = nullptr;
+			int tX, tY;
+			in >> tX >> tY;
+			switch(id)
+			{
+			case 1:
+				obs = new Rock(tX, tY);
+				break;
+			case 3:
+				obs = new Potion(tX, tY);
+				break;
+			case 2: 
+				obs = new Cop(tX, tY);
+				break;
+			default:
+				obs = new Cop(tX, tY);
+				break;
+			}
+			lane->add(obs);
+		}
+		int y, x;
+		bool rl;
+		in >> y >> x >> rl;
+		lane->set(y, x, rl);
+		listCLane.push_back(lane);
+	}
+	int lv;
+	in >> lv;
+	level = level;
+}
+
+void CGame::saveGame(string fn)
+{
+	ofstream out(".//Save//" + fn);
+	//from human
+	out << human.getFigDir() << endl; //dir of figure
+	int* pos = human.getHumanPosition();
+	out << *(pos) << " " << *(pos + 1) << endl; //position
+	out << listCLane.size() << endl;
+	for (auto& lane : listCLane)
+	{
+		vector<Obstacle*> tempObL = lane->getListObstacle();
+		out << tempObL.size() << endl;
+		for (auto& obs : tempObL)
+		{	
+			out << obs->getID() << endl;
+			out << obs->getCurX() << " " << obs->getCurY() << endl;
+		}
+		out << lane->getCurY() << " " << lane->getSpeedX() << " " << lane->getRedLight() << endl;
+	}
+	out << level;
+}

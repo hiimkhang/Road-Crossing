@@ -12,7 +12,7 @@ protected:
     int prevX, prevY;
     // hitbox size
     int sizeX, sizeY;
-
+    Figure fig;
 public:
     Obstacle() : 
         curX(0), curY(0),
@@ -42,7 +42,8 @@ public:
         prevX = curX, prevY = curY;
         curX = x; curY = y;
     }
-
+    string getFigDir() { return fig.getDir(); }
+    void setFigDig(string dir) { fig.setDir(dir); }
     int getSizeX() { return sizeX;}
     int getSizeY() { return sizeY;}
     void setSize(int x, int y) {
@@ -50,6 +51,10 @@ public:
     }
 
     // ? idk 
+    virtual int getID()
+    {
+        return 0;
+    }
     virtual void collisonSound() = 0;  
     virtual void print() = 0;
     virtual void unPrint() = 0;
@@ -69,7 +74,10 @@ public:
     
     // Override 
     void move(int speedX, int speedY) {}
-    
+    int getID()
+    {
+        return 1;
+    }
     void print() {
         int x = getCurX(), y = getCurY();
 
@@ -80,7 +88,10 @@ public:
         }
         Textcolor(7);
     }
+    void unPrint()
+    {
 
+    }
     void collisonSound() {
         // Ae kiếm sound bỏ vào chứ mình chịu                  
     }
@@ -89,18 +100,18 @@ public:
 class Cop : public Obstacle {
 private:
     //Figure fig = Figure(".//Figure//Obstacle//cop.txt");
-    Figure fig = Figure(".//Figure/Obstacle//cop.txt");
     
     // Figure* fig;
 
 public:
     Cop() : Obstacle() {
+        fig.setDir(".//Figure/Obstacle//cop.txt");
         setSize(5, 5);
     }
 
     // Init location
     Cop(int x, int y) : Obstacle(x, y) {
-        // fig = new Figure("cac");
+        fig.setDir(".//Figure/Obstacle//cop.txt");
         setSize(5, 5);
     }
     
@@ -146,7 +157,10 @@ public:
             }
         }*/
     }
-    
+    int getID()
+    {
+        return 2;
+    }
     void print() {
         int x = getCurX(), y = getCurY();
         ShowConsoleCursor(false);
@@ -203,6 +217,7 @@ public:
 };
 
 class Potion : public Obstacle {
+private:
 public:
     Potion() : Obstacle() {
         setSize(3, 1);
@@ -215,7 +230,10 @@ public:
     
     // Override 
     void move(int speedX, int speedY) {}
-
+    int getID()
+    {
+        return 3;
+    }
     void print() {
         int x = getCurX(), y = getCurY();
 
@@ -226,7 +244,10 @@ public:
         }
         Textcolor(7);
     }
+    void unPrint()
+    {
 
+    }
     void collisonSound() {
         // Ae kiếm sound bỏ vào chứ mình chịu                  
     }

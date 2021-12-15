@@ -17,6 +17,16 @@ bool CLane::getRedLight() {
 	return redLight;
 }
 
+int CLane::getSpeedX()
+{
+	return speedX;
+}
+
+int CLane::getCurY()
+{
+	return curY;
+}
+
 void CLane::move()
 {
 	for (auto& obs : list)
@@ -32,4 +42,16 @@ void CLane::updateSpeed(int newSpeed) {
 }
 void CLane::changeLight() {
 	redLight = !redLight;
+}
+
+void CLane::add(Obstacle* ob)
+{
+	list.push_back(ob);
+}
+
+void CLane::set(int y, int x, bool rl)
+{
+	curY = y;
+	speedX = x;
+	redLight = rl;
 }
