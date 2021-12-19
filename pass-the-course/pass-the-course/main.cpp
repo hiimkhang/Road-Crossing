@@ -127,6 +127,7 @@ void SubThread() {
  
 int main() {
     int temp;
+    resizeConsole(1000, 700);
     fixConsoleWindow();
     Menu m;
     m.menu();
