@@ -64,5 +64,6 @@
     <Text Include="Logo\logoLose.txt" />
     <Text Include="Logo\logoMenu.txt" />
     <Text Include="Logo\logoWin.txt" />
+    <Text Include="Figure\Obstacle\copColli.txt" />
   </ItemGroup>
 </Project>

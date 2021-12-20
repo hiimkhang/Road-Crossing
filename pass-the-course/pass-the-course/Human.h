@@ -3,8 +3,8 @@
 #include "console.h"
 #include "Obstacle.h"
 #include "Figure.h"
-const int width = 4;
-const int height = 2;
+const int width = 5;
+const int height = 5;
 class Human
 {
 private:

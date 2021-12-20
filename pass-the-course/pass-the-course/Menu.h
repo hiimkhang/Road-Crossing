@@ -26,6 +26,8 @@ public:
     void logoMenu();
     void logoWin();
     void logoLose();
+
+    void loadingScreen();
 };
 
 #endif

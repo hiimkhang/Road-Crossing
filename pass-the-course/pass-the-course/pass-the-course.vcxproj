@@ -158,6 +158,7 @@
     <ClInclude Include="Obstacle.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Figure\Obstacle\copColli.txt" />
     <Text Include="Logo\logoLose.txt" />
     <Text Include="Logo\logoMenu.txt" />
     <Text Include="Logo\logoWin.txt" />

@@ -3,7 +3,7 @@
 Human::Human(int x, int y) : isDead(false)
 {
     //fig = Figure(".//Figure//Human//human-test.txt");
-    fig = Figure(".//Figure//Human//block.txt");
+    fig = Figure(".//Figure//Human//player.txt");
     curX = x;
     curY = y;
 }
@@ -12,28 +12,28 @@ void Human::moveUp()
 {
     preX = curX;
     preY = curY;
-    curY -= 1;
+    curY -= 2;
 }
 
 void Human::moveDown()
 {
     preX = curX;
     preY = curY;
-    curY += 1;
+    curY += 2;
 }
 
 void Human::moveLeft()
 {
     preX = curX;
     preY = curY;
-    curX -= 1;
+    curX -= 2;
 }
 
 void Human::moveRight()
 {
     preX = curX;
     preY = curY;
-    curX += 1;
+    curX += 2;
 }
 
 void Human::move()

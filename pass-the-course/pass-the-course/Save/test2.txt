@@ -1,4 +1,4 @@
-.//Figure//Human//block.txt
+.//Figure//Human//player.txt
 60 24
 1
 3

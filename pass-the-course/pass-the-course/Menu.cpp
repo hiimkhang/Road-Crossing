@@ -76,6 +76,7 @@ void Menu::menu() {
                     Textcolor(15);
                     stayinMenu = false;
                     clrscr();
+                    loadingScreen();
                     break;
                 }
             }
@@ -165,7 +166,7 @@ void Menu::loadGame() {
         Sleep(2000);
 
         gotoxy(x + 1, y + 4);
-        for (int i = 0; i < 12 + filename.length(); ++i)
+        for (unsigned i = 0; i < 12 + filename.length(); ++i)
             cout << " ";
         menu();
     }
@@ -384,4 +385,53 @@ void Menu::logoLose() {
         in.close();
     }
     else throw "Can't open file logoLose.txt\n";
+}
+
+void Menu::loadingScreen() {
+    int x = 50;
+    int y = 19;
+
+    clearMenu();
+
+    gotoxy(x + 4, y);
+
+    Textcolor(8);
+    cout << "Cho mot xiu nhaa...";
+
+    ShowConsoleCursor(0);
+    unsigned char a = 177, b = 219;
+
+    // Darker progess bar
+    gotoxy(x + 3, y + 3);
+    for (int i = 0; i <= 21; i++)
+        cout << a;
+    cout << "\r";
+
+    // Progess bar
+    for (int i = 0; i <= 20; i++) {
+        gotoxy(x - 2, y + 3);
+        cout << i * 100 / 20 << "%";
+        gotoxy(x + i + 3, y + 3);
+        if (i < 14) {
+            cout << b;
+            Sleep(150);
+        }
+        else if (i == 14) {
+            Sleep(600);
+            cout << b;
+        }
+        else {
+            cout << b << b;
+            Sleep(150);
+        }
+    }
+
+    // Clear progress bar
+    for (int j = 0; j < 5; ++j) {
+        gotoxy(x - 3, y + j);
+        for (int i = 0; i <= 30; i++)
+            cout << " ";
+    }
+
+    Textcolor(7);
 }
