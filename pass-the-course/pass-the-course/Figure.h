@@ -9,10 +9,13 @@ class Figure
 private:
 	std::vector<std::vector<int>> symbol, color;
 	int sizeX, sizeY;
+	string dir;
 public:
 	Figure();
 	Figure(std::string dir);
 	void print(int x, int y);
 	void deleteFootprint(int x, int y);
+	string getDir();
+	void setDir(string d);
 };
 #endif // _Figure_h_

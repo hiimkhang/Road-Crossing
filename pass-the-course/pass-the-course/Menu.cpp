@@ -1,12 +1,13 @@
 #include "Menu.h"
 
 void Menu::menu() {
-    while (true) {
+    bool stayinMenu = true;
+    while (stayinMenu) {
         clrscr();
         logoMenu();
-
-        // if (soundStatus == 1)
-        // play sound
+        
+        if (soundStatus == 1 && outMenu == true)
+            PlaySound(TEXT("Sound\\Undertale.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
         ShowConsoleCursor(0);
 
@@ -44,7 +45,7 @@ void Menu::menu() {
         gotoxy(x + 9, y + 7); cout << "EXIT";
 
         int cnt = 0;
-        while (true)
+        while (stayinMenu)
         {
             char choice = _getch();
             Textcolor(15);
@@ -73,7 +74,7 @@ void Menu::menu() {
                 gotoxy(x + 6, y + 1); cout << " NEW GAME ";
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
-                    // newGame();
+                    stayinMenu = false;
                     clrscr();
                     break;
                 }
@@ -83,6 +84,7 @@ void Menu::menu() {
                 gotoxy(x + 8, y + 3); cout << " LOAD  ";
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
+                    outMenu = false;
                     loadGame();
                     break;
                 }
@@ -92,6 +94,7 @@ void Menu::menu() {
                 gotoxy(x + 6, y + 5); cout << " SETTINGS ";
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
+                    outMenu = false;
                     setting();
                 }
             }
@@ -265,11 +268,13 @@ void Menu::setting() {
                     Textcolor(15);
                     gotoxy(x + 13, y + 3); cout << "ON ";
                     // play sound here
+                    PlaySound(TEXT("Sound\\Undertale.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
                 }
                 else {
                     Textcolor(15);
                     gotoxy(x + 13, y + 3); cout << "OFF";
                     // turn off sound here
+                    PlaySound(NULL, NULL, SND_ASYNC);
                 }
             }
         }

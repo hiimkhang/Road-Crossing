@@ -5,6 +5,7 @@
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
+#include <mmsystem.h>
 
 using namespace std;
 

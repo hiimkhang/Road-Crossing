@@ -9,9 +9,11 @@
 class Menu {
 private:
     int mode = 0; // 0: easy, 1: hard
-    bool soundStatus = 0; // 0: off, 1: on
+    bool soundStatus = 1; // 0: off, 1: on
     bool isLoad = 0;
     bool isSave = 0;
+
+    bool outMenu = 1;
 
 public:
     void menu();

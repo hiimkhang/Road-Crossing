@@ -7,7 +7,7 @@
 #include <chrono>	// for time related work
 #include <ctime>	// for time related work
 #include "console.h"
-
+#include <fstream>
 #include "Human.h"
 #include "Obstacle.h"
 #include "CLane.h"
@@ -35,13 +35,14 @@ class CGame
 		void pauseGame(HANDLE); 
 		void resumeGame(HANDLE); 
 		void exitGame(HANDLE); 
-		/* 
-		void loadGame(istream); 
-		void saveGame(istream); 
-		*/
+		
+		void loadGame(string fn); 
+		
+		void saveGame(string fn); 
 	private:	
 		Human human;
 		vector<CLane*> listCLane;
+		vector<string> saveFile;
 		bool isPause;
 		bool isCollised;
 		int level;

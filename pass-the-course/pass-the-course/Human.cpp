@@ -85,9 +85,34 @@ bool Human::isFinish() {
     } 
     return false;
 }
+
+string Human::getFigDir()
+{
+    return fig.getDir();
+}
+
+int* Human::getHumanPosition()
+{
+    int* res = new int[2];
+    *res = curX;
+    *(res + 1) = curY;
+    return res;
+}
+
+void Human::setHumanPosition(int* cur)
+{
+    curX = *(cur);
+    curY = *(cur + 1);
+}
+
 void Human::reset() {
     isDead = false;
     curX = 32;
     curY = 24;
     --preY;
+}
+
+void Human::setFigDir(string dir)
+{
+    fig.setDir(dir);
 }

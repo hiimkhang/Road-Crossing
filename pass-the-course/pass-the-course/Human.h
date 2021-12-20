@@ -22,6 +22,10 @@ public:
 	bool getIsDead();
 	bool isCollided(Obstacle*);
 	bool isFinish();
+	string getFigDir();
+	int* getHumanPosition();
+	void setHumanPosition(int* cur);
 	void reset();
+	void setFigDir(string dir);
 };
 #endif
