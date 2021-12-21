@@ -21,6 +21,7 @@ public:
 	void add(Obstacle* ob);
 	void set(int y, int x, bool rl);
 	CLane(int numOfCop = 1, int newY = 0);
+	~CLane();
 };
 
 #endif // !_cLane_h_

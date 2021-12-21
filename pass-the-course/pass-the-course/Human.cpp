@@ -79,6 +79,9 @@ bool Human::isCollided(Obstacle* pObs) {
 bool Human::getIsDead() {
     return isDead;
 }
+void Human::setIsDead(bool nIsDead) {
+    isDead = nIsDead;
+}
 bool Human::isFinish() {
     if (curY <= 0) {
         return true;
