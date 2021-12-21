@@ -139,11 +139,12 @@ void CGame::resetLevel() {
 }
 void CGame::setupLevel1() {
 	CLane* pC = new CLane(1, 0);	// clane 1 with 1 cop, y-coordinate of the lane is 0
-	pC->updateSpeed(2);				// speed 2
+	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
 	pC = new CLane(2, 8);			// clane 2 with 2 cop, y-coordinate is 8
 	listCLane.push_back(pC);
 	pC = new CLane(1, 16);			// clane 3 with 1 cop, y-coordinate is 16
+	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
 }
 void CGame::setupLevel2() {

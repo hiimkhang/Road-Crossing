@@ -138,8 +138,10 @@ int main() {
         lg = m.menu();
         //cout << "Type something and enter to start\n";
         //cin.get();
-        if (lg != "")
+        if (lg != "") {
+            cg.resetGame();
             cg.loadGame(lg);
+        }
         t_start = std::chrono::high_resolution_clock::now();
         cg.startGame();
         IS_RUNNING = true;

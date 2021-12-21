@@ -121,15 +121,11 @@ public:
         prevY = curY;
         curX += speedX;
         curY += speedY;
-        if (prevY <= curY) {
-            if (curY >= MAX_WIDTH)
-                curY = 0;
+        if (speedX >= 0) {
             if (curX >= MAX_WIDTH)
                 curX = 0;
         }
         else {
-            if (curY <= 0)
-                curY = MAX_WIDTH;
             if (curX <= 0)
                 curX = MAX_WIDTH;
         }
