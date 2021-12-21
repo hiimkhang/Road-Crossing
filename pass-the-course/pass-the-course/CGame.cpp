@@ -40,7 +40,6 @@ vector<CLane*>& CGame::getListCLane() {
 }
 
 void CGame::startGame() {
-	clockStart = std::clock();
 	// show the start intro, 
 	// draw the box, the point life, ....
 	drawGame();
@@ -123,6 +122,21 @@ void CGame::resetGame() {
 	listCLane.clear();
 
 }
+void CGame::resetLevel() {
+	switch (level) {
+	case 1:
+		setupLevel1();
+		break;
+	case 2:
+		setupLevel2();
+		break;
+	case 3:
+		setupLevel3();
+		break;
+	default:
+		setupLevel1();
+	}
+}
 void CGame::setupLevel1() {
 	CLane* pC = new CLane(1, 0);	// clane 1 with 1 cop, y-coordinate of the lane is 0
 	pC->updateSpeed(2);				// speed 2
@@ -164,7 +178,6 @@ void CGame::levelUp() {
 			break;
 		default:
 			cout << "Out of level\n";
-			_getch();
 			return;
 	}
 }
@@ -194,16 +207,25 @@ void CGame::pauseGame(HANDLE h) {
 void CGame::resumeGame(HANDLE h) {
 	ResumeThread(h);
 }
-void CGame::exitGame(HANDLE h) {
-	TerminateThread(h, 0);
+//void CGame::exitGame(HANDLE h) {
+//	TerminateThread(h, 0);
+//	system("cls");
+//	cout << "Thanks for playing the game\n";
+//	cout << "Good bye\n";
+//}
+void CGame::exitThread(thread* t, bool& IS_RUNNING) {
 	system("cls");
-	cout << "Thanks for playing the game\n";
-	cout << "Good bye\n";
+	IS_RUNNING = false;
+	t->join();
+	cout << "\nEXIT game\n";
 }
-
-void CGame::loadGame(string fn)
+bool CGame::loadGame(string fn)
 {
 	ifstream in(".//Save//" + fn);
+	if (!in.is_open()) {
+		cout << "We cannot find this file\n";
+		return false;
+	}
 	//human
 	string humanFigDir;
 	in >> humanFigDir;
@@ -252,6 +274,7 @@ void CGame::loadGame(string fn)
 	int lv;
 	in >> lv;
 	level = level;
+	return true;
 }
 
 void CGame::saveGame(string fn)

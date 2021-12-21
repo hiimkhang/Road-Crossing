@@ -9,7 +9,12 @@ CLane::CLane(int numOfCop, int newY) : speedX(1), curY(newY), redLight(false)
 		list.push_back(temp1);
 	}
 }
-
+CLane::~CLane() {
+	for (auto& obs : list)
+	{
+		delete obs;
+	}
+}
 vector<Obstacle*>& CLane::getListObstacle() {
 	return list;
 }

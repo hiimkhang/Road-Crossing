@@ -20,6 +20,7 @@ public:
 	virtual void move();
 	virtual void initial();
 	bool getIsDead();
+	void setIsDead(bool nIsDead);
 	bool isCollided(Obstacle*);
 	bool isFinish();
 	string getFigDir();

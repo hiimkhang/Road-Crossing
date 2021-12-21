@@ -4,8 +4,6 @@
 #include <Windows.h>
 #include <conio.h>
 #include <vector>
-#include <chrono>	// for time related work
-#include <ctime>	// for time related work
 #include "console.h"
 #include <fstream>
 #include "Human.h"
@@ -29,14 +27,15 @@ class CGame
 		bool isFinish();
 		void levelUp();
 		void resetGame(); 
+		void resetLevel();
 		void setupLevel1();
 		void setupLevel2();
 		void setupLevel3();
 		void pauseGame(HANDLE); 
 		void resumeGame(HANDLE); 
 		void exitGame(HANDLE); 
-		
-		void loadGame(string fn); 
+		void exitThread(thread* t, bool& IS_RUNNING);
+		bool loadGame(string fn); 
 		
 		void saveGame(string fn); 
 	private:	
@@ -46,8 +45,6 @@ class CGame
 		bool isPause;
 		bool isCollised;
 		int level;
-		clock_t clockStart;
-
 };
 
 #endif // !_cgame_h_
