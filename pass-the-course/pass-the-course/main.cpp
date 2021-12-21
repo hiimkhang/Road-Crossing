@@ -118,7 +118,8 @@ void SubThread() {
 ////Dang
 //int main()
 //{
-//    cg.loadGame("text2.txt");
+//    Menu m;
+//    m.loadGame();
 //    
 //}
 
@@ -130,10 +131,12 @@ int main() {
     resizeConsole(1000, 700);
     fixConsoleWindow();
     Menu m;
-    m.menu();
+    string lg;
+    lg = m.menu();
     //cout << "Type something and enter to start\n";
     //cin.get();
-    cg.loadGame("test2.txt");
+    if (lg != "")
+    cg.loadGame(lg);
     cg.startGame();
     thread t1(SubThread);
 

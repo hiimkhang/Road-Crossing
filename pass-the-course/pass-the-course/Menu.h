@@ -4,6 +4,7 @@
 #include "console.h"
 #include <fstream>
 #include <string>
+#include <filesystem>
 
 
 class Menu {
@@ -16,9 +17,9 @@ private:
     bool outMenu = 1;
 
 public:
-    void menu();
+    string menu();
     void setting();
-    void loadGame();
+    string loadGame();
 
     // clear Menu instead of clear screen, for optimizing
     void clearMenu();

@@ -1,11 +1,12 @@
 #include "Menu.h"
 
-void Menu::menu() {
+string Menu::menu() {
     bool stayinMenu = true;
+    string result = "";
     while (stayinMenu) {
         clrscr();
-        logoMenu();
-        
+        logoMenu(); //tam thoi thoi
+        soundStatus = 0;
         if (soundStatus == 1 && outMenu == true)
             PlaySound(TEXT("Sound\\Undertale.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
@@ -86,8 +87,9 @@ void Menu::menu() {
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
                     outMenu = false;
-                    loadGame();
-                    break;
+                    result = loadGame();
+                    if (result != "")
+                        return result;
                 }
             }
             if (cnt == 3) {
@@ -110,56 +112,92 @@ void Menu::menu() {
             }
         }
     }
+    return result;
 }
 
-void Menu::loadGame() {
+string Menu::loadGame() {
     clearMenu();
     int x = 38;
-    int y = 23;
-
-    for (int i = 56; i < 77; ++i) {
-        gotoxy(i, 35); cout << " ";
-        gotoxy(i, 36); cout << " ";
-    }
-
-    Textcolor(DarkYellow);
-    gotoxy(x + 5, y + 10);
-    cout << "Example: save1";
-    gotoxy(x + 3, y + 11);
-    cout << (char)175 << " The directory will become: Data/save1.txt";
-
-    Textcolor(8);
-    gotoxy(x, y);
-    for (int i = 0; i < 50; ++i)
-        cout << UP_BLACK_PIECE;
-
-    gotoxy(x, y + 2);
-    for (int i = 0; i < 50; ++i)
-        cout << DOWN_BLACK_PIECE;
-
-    for (int i = 0; i < 3; ++i) {
-        gotoxy(x - 1, y + i);
-        cout << VERTICAL_BLACK_PIECE;
-    }
-    for (int i = 0; i < 3; ++i) {
-        gotoxy(x + 50, y + i);
-        cout << VERTICAL_BLACK_PIECE;
-    }
-
+    int y = 17;
     Textcolor(White);
-    gotoxy(x + 1, y + 1);
-    cout << "Enter file name here: ";
+    vector<string> lof;
+    int c1 = 0;
+    string path = filesystem::current_path().string() + "\\Save";
+    for (const auto& file : filesystem::directory_iterator(filesystem::path(path)))
+    {
+        lof.push_back(file.path().filename().string());
+    }
 
-    ShowConsoleCursor(1);
-    string file;
+    for (int i = 0; i < lof.size(); i++)
+    {
+        gotoxy(x, y + i);
+        cout << lof[i];
+    }
+    char choice = '0';
+    do
+    {
+        if (choice == KEY_DOWN || choice == 'S' || choice == 's') {
+            c1++;
+            if (c1 >= lof.size() )
+                c1 = 0;
+        }
+        if (choice == KEY_UP || choice == 'W' || choice == 'w') {
+            c1--;
+            if (c1 < 0)
+                c1 = lof.size()-1;
+        }
+        Textcolor(White);
+        for (int i = 0; i < lof.size(); i++)
+        {
+            gotoxy(x, y + i);
+            cout << lof[i];
+        }
+
+        Textcolor(Red);
+        gotoxy(x, y + c1);
+        cout << lof[c1];
+        
+    } while ((choice = toupper(_getch())) != 13);
+    return lof[c1];
+    //for (int i = 56; i < 77; ++i) {
+    //    gotoxy(i, 35); cout << " ";
+    //    gotoxy(i, 36); cout << " ";
+    //}
+
+    //Textcolor(DarkYellow);
+    //gotoxy(x + 5, y + 10);
+    //cout << "Example: save1";
+    //gotoxy(x + 3, y + 11);
+    //cout << (char)175 << " The directory will become: Data/save1.txt";
+
+    //Textcolor(8);
+    //gotoxy(x, y);
+    //for (int i = 0; i < 50; ++i)
+    //    cout << UP_BLACK_PIECE;
+
+    //gotoxy(x, y + 2);
+    //for (int i = 0; i < 50; ++i)
+    //    cout << DOWN_BLACK_PIECE;
+
+    //for (int i = 0; i < 3; ++i) {
+    //    gotoxy(x - 1, y + i);
+    //    cout << VERTICAL_BLACK_PIECE;
+    //}
+    //for (int i = 0; i < 3; ++i) {
+    //    gotoxy(x + 50, y + i);
+    //    cout << VERTICAL_BLACK_PIECE;
+    //}
+
+
+    /*string file;
     getline(cin, file);
     string filename = "Data/";
-    filename += file + ".txt";
+    filename += file + ".txt";*/
 
-    ifstream f(filename.c_str());
+    //ifstream f(filename.c_str());
 
     // Check if the input file name exists
-    if (!f.good()) {
+    /*if (!f.good()) {
         gotoxy(x + 1, y + 4);
         cout << "Can't find " + filename;
         ShowConsoleCursor(0);
@@ -169,7 +207,7 @@ void Menu::loadGame() {
         for (unsigned i = 0; i < 12 + filename.length(); ++i)
             cout << " ";
         menu();
-    }
+    }*/
 
     // map.loadGame(filename);
     isLoad = true;
