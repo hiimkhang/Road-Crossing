@@ -138,6 +138,7 @@ int main() {
         lg = m.menu();
         //cout << "Type something and enter to start\n";
         //cin.get();
+        
         if (lg != "")
             cg.loadGame(lg);
         t_start = std::chrono::high_resolution_clock::now();
@@ -161,7 +162,9 @@ int main() {
                     // save game
                     // on off sound
                     // exit
+                   
                     cg.pauseGame(t1.native_handle());
+                    cg.saveGame("new.txt");
                 }
                 else if (temp == 'T') { // load game
                     IS_RUNNING = false;
