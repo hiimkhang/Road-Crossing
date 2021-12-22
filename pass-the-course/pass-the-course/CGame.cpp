@@ -1,5 +1,5 @@
 #include "CGame.h"
-
+#pragma warning(disable : 4700)
 CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
 	// initial HUMAN
@@ -223,33 +223,41 @@ bool CGame::loadGame(string fn)
 {
 	resetGame();
 	clrscr();
-	ifstream in(".//Save//" + fn);
+	ifstream in(".//Save//" + fn, ios::binary);
 	if (!in.is_open()) {
 		cout << "We cannot find this file\n";
 		return false;
 	}
 	//human
-	string humanFigDir;
-	in >> humanFigDir;
-	human.setFigDir(humanFigDir);
+	
 	int* curHuman = new int[2];
-	in >> *curHuman >> *(curHuman + 1);
+	int temp1 = 0, temp2 = 0;
+	in.read((char*)&temp1, 4);
+	in.read((char*)&temp2, 4);
+	//in >> *curHuman >> *(curHuman + 1);
+	*curHuman = temp1;
+	*(curHuman + 1) = temp2;
 	human.setHumanPosition(curHuman);
-	int numOfLane;
-	in >> numOfLane;
+	int numOfLane = 4;
+	in.read((char*)&numOfLane, 4);
+	//in >> numOfLane;
 	listCLane.clear();
 	for (int i = 0; i < numOfLane; i++)
 	{
 		CLane* lane = new CLane;
-		int numOfObs;
-		in >> numOfObs;
+		int numOfObs = 2;
+		in.read((char*)&numOfObs, 4);
+		//in >> numOfObs;
 		for (int j = 0; j < numOfObs; j++)
 		{
 			int id; 
-			in >> id;
+			//in >> id;
+			in.read((char*)&id, 4);
 			Obstacle* obs = nullptr;
-			int tX, tY;
-			in >> tX >> tY;
+			int tX = 0, tY = 0;
+			in.read((char*)&tX, 4);
+			in.read((char*)&tY, 4);
+			//in >> tX >> tY;
 			switch(id)
 			{
 			case 1:
@@ -269,35 +277,63 @@ bool CGame::loadGame(string fn)
 		}
 		int y, x;
 		bool rl;
-		in >> y >> x >> rl;
+		in.read((char*)&y, 4);
+		in.read((char*)&x, 4);
+		in.read((char*)&rl, 1);
+		//in >> y >> x >> rl;
 		lane->set(y, x, rl);
 		listCLane.push_back(lane);
 	}
 	int lv;
-	in >> lv;
-	level = level;
-	
+	//in >> lv;
+	in.read((char*)&lv, 4);
+	level = lv;
+	in.close();
 	return true;
 }
 
 void CGame::saveGame(string fn)
 {
-	ofstream out(".//Save//" + fn);
+	ofstream out;
+	out.open(".//Save//" + fn, ios::binary);
 	//from human
-	out << human.getFigDir() << endl; //dir of figure
+	//out << human.getFigDir() << endl; //dir of figure
 	int* pos = human.getHumanPosition();
-	out << *(pos) << " " << *(pos + 1) << endl; //position
-	out << listCLane.size() << endl;
+	int t1 = *(pos), t2 = *(pos + 1);
+	out.write((char*)&t1, 4);
+	out.write((char*)&t2, 4);
+	bool b1;
+	//out << *(pos) << " " << *(pos + 1) << endl; //position
+	t1 = listCLane.size();
+	out.write((char*)&t1, 4);
+	/*out << listCLane.size() << endl;*/
 	for (auto& lane : listCLane)
 	{
 		vector<Obstacle*> tempObL = lane->getListObstacle();
-		out << tempObL.size() << endl;
+		t1 = tempObL.size();
+		out.write((char*)&t1, 4);
+		/*out << tempObL.size() << endl;*/
 		for (auto& obs : tempObL)
 		{	
-			out << obs->getID() << endl;
-			out << obs->getCurX() << " " << obs->getCurY() << endl;
+			t1 = obs->getID();
+			out.write((char*)&t1, 4);
+			/*out << obs->getID() << endl;*/
+			t1 = obs->getCurX();
+			out.write((char*)&t1, 4);
+			t1 = obs->getCurY();
+			out.write((char*)&t1, 4);
+			/*out << obs->getCurX() << " " << obs->getCurY() << endl;*/
 		}
-		out << lane->getCurY() << " " << lane->getSpeedX() << " " << lane->getRedLight() << endl;
+		t1 = (lane->getCurY());
+		out.write((char*)&t1, 4);
+		t1 = lane->getSpeedX();
+		out.write((char*)&t1, 4);
+		b1 = lane->getRedLight();
+		out.write((char*)&b1, 1);
+		//out << lane->getCurY() << " " << lane->getSpeedX() << " " << lane->getRedLight() << endl;
 	}
-	out << level;
+
+	out.write((char*)&level, 4);
+	//out << level;
+	out.close();
 }

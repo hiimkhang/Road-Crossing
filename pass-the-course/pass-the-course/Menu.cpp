@@ -77,7 +77,7 @@ string Menu::menu() {
                     Textcolor(15);
                     stayinMenu = false;
                     clrscr();
-                    //loadingScreen();
+                    loadingScreen();
                     break;
                 }
             }
