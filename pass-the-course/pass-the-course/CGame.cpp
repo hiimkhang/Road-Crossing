@@ -222,6 +222,8 @@ void CGame::exitThread(thread* t, bool& IS_RUNNING) {
 }
 bool CGame::loadGame(string fn)
 {
+	resetGame();
+	clrscr();
 	ifstream in(".//Save//" + fn);
 	if (!in.is_open()) {
 		cout << "We cannot find this file\n";
@@ -275,6 +277,7 @@ bool CGame::loadGame(string fn)
 	int lv;
 	in >> lv;
 	level = level;
+	
 	return true;
 }
 

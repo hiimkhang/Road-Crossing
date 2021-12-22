@@ -20,7 +20,7 @@ public:
 	void changeLight();
 	void add(Obstacle* ob);
 	void set(int y, int x, bool rl);
-	CLane(int numOfCop = 1, int newY = 0);
+	CLane(int numOfCop = 0, int newY = 0);
 	~CLane();
 };
 

@@ -138,10 +138,9 @@ int main() {
         lg = m.menu();
         //cout << "Type something and enter to start\n";
         //cin.get();
-        if (lg != "") {
-            cg.resetGame();
+        
+        if (lg != "")
             cg.loadGame(lg);
-        }
         t_start = std::chrono::high_resolution_clock::now();
         cg.startGame();
         IS_RUNNING = true;
@@ -158,26 +157,26 @@ int main() {
                     return 0;
                 }
                 else if (temp == 'P') { // pause game
-                    IS_RUNNING = false;
                     // pause menu
                     // save game
                     // on off sound
                     // exit
+                   
                     cg.pauseGame(t1.native_handle());
+                    cg.saveGame("new.txt");
                 }
                 else if (temp == 'T') { // load game
-                    IS_RUNNING = false;
                     // ask user to enter the file dir have been save to load game from it
                     cg.pauseGame(t1.native_handle());
-                    cout << "Enter file name:\n";
-                    string dir;
-                    getline(cin, dir);
-                    if (cg.loadGame(dir)) {
-                        system("cls");
+                    string dir = "";
+                    dir = m.loadGame();
+                    if (dir != "") {
+                        cg.loadGame(dir);
+                        cg.startGame();
                     }
+                    cg.resumeGame((HANDLE)t1.native_handle());
                 }
                 else if (temp == 'L') { // save game
-                    IS_RUNNING = false;
                     // ask user to enter file dir to save game
                     // ask them want to continue or not
                     cg.pauseGame(t1.native_handle());
@@ -203,6 +202,6 @@ int main() {
         //t1.join();
     }
     
-
+    return 0;
 }
 
