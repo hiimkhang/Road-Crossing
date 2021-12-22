@@ -115,6 +115,120 @@ string Menu::menu() {
     return result;
 }
 
+void Menu::subMenu() {
+    bool stayinMenu = true;
+    string result = "";
+    while (stayinMenu) {
+        clrscr();
+        logoMenu(); //tam thoi thoi
+        soundStatus = 0;
+        if (soundStatus == 1 && outMenu == true)
+            PlaySound(TEXT("Sound\\Undertale.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+
+        ShowConsoleCursor(0);
+
+        int x = 54;
+        int y = 22;
+
+        Textcolor(8);
+        gotoxy(x + 1, y - 1);
+        for (int i = 0; i < 20; ++i)
+            cout << UP_BLACK_PIECE;
+        for (int i = y - 1; i < y + 10; ++i)
+        {
+            gotoxy(x, i);
+            cout << VERTICAL_BLACK_PIECE;
+        }
+        for (int i = y - 1; i < y + 10; ++i)
+        {
+            gotoxy(x + 21, i);
+            cout << VERTICAL_BLACK_PIECE;
+        }
+        gotoxy(x + 1, y + 9);
+        for (int i = 0; i < 20; ++i)
+            cout << DOWN_BLACK_PIECE;
+
+        Textcolor(DarkYellow);
+        gotoxy(x + 2, y + 13);
+        cout << "W - S - Arrow: MOVE";
+        gotoxy(x + 5, y + 14);
+        cout << "Enter: SELECT";
+
+        Textcolor(15);
+        gotoxy(x + 7, y + 1); cout << "NEW GAME";
+        gotoxy(x + 9, y + 3); cout << "LOAD ";
+        gotoxy(x + 7, y + 5); cout << "SETTINGS";
+        gotoxy(x + 9, y + 7); cout << "EXIT";
+
+        int cnt = 0;
+        while (stayinMenu)
+        {
+            char choice = _getch();
+            Textcolor(15);
+            gotoxy(x + 6, y + 1); cout << " NEW GAME ";
+            gotoxy(x + 8, y + 3); cout << " LOAD  ";
+            gotoxy(x + 6, y + 5); cout << " SETTINGS ";
+            gotoxy(x + 8, y + 7); cout << " EXIT ";
+
+            if (choice == KEY_DOWN || choice == 'S' || choice == 's') {
+                cnt++;
+                if (cnt > 4)
+                    cnt = 1;
+            }
+            if (choice == KEY_UP || choice == 'W' || choice == 'w') {
+                cnt--;
+                if (cnt < 1)
+                    cnt = 4;
+            }
+            if (choice == KEY_ESC) {
+                clrscr();
+                exit(0);
+            }
+
+            if (cnt == 1) {
+                Textcolor(12);
+                gotoxy(x + 6, y + 1); cout << " NEW GAME ";
+                if (choice == KEY_ENTER) {
+                    Textcolor(15);
+                    stayinMenu = false;
+                    clrscr();
+                    //loadingScreen();
+                    break;
+                }
+            }
+            if (cnt == 2) {
+                Textcolor(12);
+                gotoxy(x + 8, y + 3); cout << " LOAD  ";
+                if (choice == KEY_ENTER) {
+                    Textcolor(15);
+                    outMenu = false;
+                    result = loadGame();
+                    //if (result != "")
+                        //return result;
+                }
+            }
+            if (cnt == 3) {
+                Textcolor(12);
+                gotoxy(x + 6, y + 5); cout << " SETTINGS ";
+                if (choice == KEY_ENTER) {
+                    Textcolor(15);
+                    outMenu = false;
+                    setting();
+                }
+            }
+            if (cnt == 4) {
+                Textcolor(12);
+                gotoxy(x + 8, y + 7); cout << " EXIT ";
+                if (choice == KEY_ENTER) {
+                    Textcolor(15);
+                    clrscr();
+                    exit(0);
+                }
+            }
+        }
+    }
+    //return result;
+}
 string Menu::loadGame() {
     clearMenu();
     int x = 38;

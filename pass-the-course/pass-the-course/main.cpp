@@ -52,6 +52,7 @@ void SubThread() {
                 cg.resetGame();
                 cg.resetLevel();
                 system("cls");
+                t_start = std::chrono::high_resolution_clock::now();
                 cg.startGame();
             }
             else {
@@ -69,6 +70,7 @@ void SubThread() {
             // we reset the human state (curX, curY = 0), isFinish = false, isCollide = false;
             // also reset the game
             cg.resetGame();
+            cg.startGame();
             // then just reset the game with new level
             if (cg.getLevel() <= 2) {
                 cg.levelUp();
@@ -146,7 +148,7 @@ int main() {
         IS_RUNNING = true;
         thread t1(SubThread);
         int i = 0;
-        cout << "\n\n\n Use WASD to move your character\n";
+        //cout << "\n\n\n Use WASD to move your character\n";
         while (1) {
             ++i;
             temp = toupper(_getch());
@@ -161,25 +163,38 @@ int main() {
                     // save game
                     // on off sound
                     // exit
-                   
+                    
                     cg.pauseGame(t1.native_handle());
-                    cg.saveGame("new.txt");
+                    cg.saveGame("new.dat");
                 }
                 else if (temp == 'T') { // load game
                     // ask user to enter the file dir have been save to load game from it
                     cg.pauseGame(t1.native_handle());
+                    system("cls");
                     string dir = "";
                     dir = m.loadGame();
                     if (dir != "") {
                         cg.loadGame(dir);
+                        t_start = std::chrono::high_resolution_clock::now();
                         cg.startGame();
                     }
+                    system("cls");
+                    cg.drawGame();
                     cg.resumeGame((HANDLE)t1.native_handle());
                 }
                 else if (temp == 'L') { // save game
                     // ask user to enter file dir to save game
                     // ask them want to continue or not
                     cg.pauseGame(t1.native_handle());
+                    system("cls");
+                    string dir = "";
+                    cout << "Enter name of file\n";
+                    getline(cin, dir);
+                    cg.saveGame(dir + ".dat");
+                    Sleep(400);
+                    system("cls");
+                    cg.drawGame();
+                    cg.resumeGame((HANDLE)t1.native_handle());
                 }
                 else {  // continue / resume
                     IS_RUNNING = true;

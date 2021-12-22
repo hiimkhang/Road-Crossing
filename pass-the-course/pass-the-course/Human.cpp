@@ -10,30 +10,38 @@ Human::Human(int x, int y) : isDead(false)
 
 void Human::moveUp()
 {
-    preX = curX;
-    preY = curY;
-    curY -= 2;
+    if (curY >= 3) {
+        preX = curX;
+        preY = curY;
+        curY -= 2;
+    }
 }
 
 void Human::moveDown()
 {
-    preX = curX;
-    preY = curY;
-    curY += 2;
+    if (curY <= 32) {
+        preX = curX;
+        preY = curY;
+        curY += 2;
+    }
 }
 
 void Human::moveLeft()
 {
-    preX = curX;
-    preY = curY;
-    curX -= 2;
+    if (curX >= 6) {
+        preX = curX;
+        preY = curY;
+        curX -= 2;
+    }
 }
 
 void Human::moveRight()
 {
-    preX = curX;
-    preY = curY;
-    curX += 2;
+    if (curX <= 85) {
+        preX = curX;
+        preY = curY;
+        curX += 2;
+    }
 }
 
 void Human::move()
@@ -83,7 +91,7 @@ void Human::setIsDead(bool nIsDead) {
     isDead = nIsDead;
 }
 bool Human::isFinish() {
-    if (curY <= 0) {
+    if (curY <= 3) {
         return true;
     } 
     return false;
@@ -111,7 +119,7 @@ void Human::setHumanPosition(int* cur)
 void Human::reset() {
     isDead = false;
     curX = 32;
-    curY = 24;
+    curY = 33;
     --preY;
 }
 

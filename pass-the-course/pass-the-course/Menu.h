@@ -29,6 +29,8 @@ public:
     void logoLose();
 
     void loadingScreen();
+
+    void subMenu();
 };
 
 #endif
