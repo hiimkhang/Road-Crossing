@@ -171,13 +171,14 @@ int main() {
                     // ask user to enter the file dir have been save to load game from it
                     cg.pauseGame(t1.native_handle());
                     system("cls");
+                    cout << "Loading game\n";
                     string dir = "";
                     dir = m.loadGame();
                     if (dir != "") {
                         cg.loadGame(dir);
                         t_start = std::chrono::high_resolution_clock::now();
-                        cg.startGame();
                     }
+                    Sleep(400);
                     system("cls");
                     cg.drawGame();
                     cg.resumeGame((HANDLE)t1.native_handle());
