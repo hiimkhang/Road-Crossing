@@ -3,7 +3,7 @@
 CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
 	// initial HUMAN
-	human = Human(32, 33);
+	human = Human(36, 33);
 
 	level = newLevel;
 	switch (level) {
@@ -15,6 +15,9 @@ CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 			break;
 		case 3:
 			setupLevel3();
+			break;
+		case 4:
+			setupLevel4();
 			break;
 		default:
 			setupLevel1();
@@ -180,6 +183,9 @@ void CGame::resetLevel() {
 	case 3:
 		setupLevel3();
 		break;
+	case 4:
+		setupLevel4();
+		break;
 	default:
 		setupLevel1();
 	}
@@ -223,6 +229,20 @@ void CGame::setupLevel3() {
 	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
 }
+void CGame::setupLevel4() {
+	CLane* pC = new CLane(3, 9);			// clane 2 with 2 cop, y-coordinate is 8
+	pC->updateSpeed(2);				// speed -1
+	listCLane.push_back(pC);
+	pC = new CLane(4, 15);			// clane 3 with 1 cop, y-coordinate is 16
+	pC->updateSpeed(-2);				// speed -1
+	listCLane.push_back(pC);
+	pC = new CLane(3, 21);
+	pC->updateSpeed(3);				// speed -1
+	listCLane.push_back(pC);
+	pC = new CLane(4, 27);			// clane 3 with 1 cop, y-coordinate is 16
+	pC->updateSpeed(-2);				// speed -1
+	listCLane.push_back(pC);
+}
 void CGame::levelUp() {
 	switch (level) {
 		case 1:
@@ -234,6 +254,11 @@ void CGame::levelUp() {
 			++level;
 			setupLevel3();
 			cout << "\n---------LEVEL 3----------\n";
+			break;
+		case 3:
+			++level;
+			setupLevel4();
+			cout << "\n---------LEVEL 4----------\n";
 			break;
 		default:
 			cout << "Out of level\n";

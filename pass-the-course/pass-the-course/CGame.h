@@ -32,6 +32,7 @@ class CGame
 		void setupLevel1();
 		void setupLevel2();
 		void setupLevel3();
+		void setupLevel4();
 		void pauseGame(HANDLE); 
 		void resumeGame(HANDLE); 
 		void exitGame(HANDLE); 

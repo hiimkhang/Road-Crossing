@@ -28,7 +28,7 @@ void Human::moveDown()
 
 void Human::moveLeft()
 {
-    if (curX >= 6) {
+    if (curX >= 7) {
         preX = curX;
         preY = curY;
         curX -= 2;
@@ -37,7 +37,7 @@ void Human::moveLeft()
 
 void Human::moveRight()
 {
-    if (curX <= 84) {
+    if (curX <= 83) {
         preX = curX;
         preY = curY;
         curX += 2;
@@ -118,7 +118,7 @@ void Human::setHumanPosition(int* cur)
 
 void Human::reset() {
     isDead = false;
-    curX = 32;
+    curX = 36;
     curY = 33;
     --preY;
 }

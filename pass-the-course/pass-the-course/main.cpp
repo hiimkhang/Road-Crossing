@@ -67,18 +67,23 @@ void SubThread() {
                 Sleep(1000);
                 // we reset the human state (curX, curY = 0), isFinish = false, isCollide = false;
                 // also reset the game
-                cg.resetGame();
-                cg.startGame();
+                
                 // then just reset the game with new level
-                if (cg.getLevel() <= 2) {
+                if (cg.getLevel() <= 3) {
+                    cg.resetGame();
                     cg.levelUp();
+                    cg.startGame();
                 }
                 else {
                     gotoxy(x + 9, y + 1); cout << "---------FINISH ALL LEVEL----------";
                     gotoxy(x + 9, y + 3); cout << "----------CONGRATULATIONS----------";
-                    Sleep(1000);
-
-                    IS_RUNNING = false;
+                    IN_THREAD = false;
+                    system("cls");
+                    // win animation
+                    Sleep(400);
+                    system("cls");
+                    gotoxy(x + 9, y + 3);
+                    cout << "Press any key to return to menu\n";
                 }
             }
             Sleep(100);
@@ -157,7 +162,14 @@ int main() {
         while (1) {
             ++i;
             temp = toupper(_getch());
-
+            if (cg.isFinish() && cg.getLevel() >= 4) {
+                
+                //cg.exitGame(t1.native_handle());
+                cg.exitThread(&t1, IS_RUNNING);
+                IS_RUNNING = false;
+                IN_THREAD = true;
+                break;
+            }
             if (!cg.getPeople().getIsDead()) {
                 if (temp == 27) {   // Esc = Exit
                     cg.exitThread(&t1, IS_RUNNING);
