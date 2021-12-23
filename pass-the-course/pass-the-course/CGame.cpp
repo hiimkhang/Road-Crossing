@@ -1,5 +1,4 @@
 #include "CGame.h"
-#include "console.h"
 #pragma warning(disable : 4700)
 CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
@@ -61,6 +60,50 @@ void CGame::drawGame() {
 		}
 	}
 }
+void CGame::drawBoard(int color)
+{
+	int a = 5;
+	int b = 2;
+	gotoxy(a, b);
+	Textcolor(color);
+	// ve duong ngang
+	cout << char(220);
+	for (int i = 1; i <= 121; i++) {
+		if (i == 95) cout << char(220);
+		cout << char(220);
+
+	}
+	cout << char(220) << endl;
+	// ve doc
+	for (int i = 1; i <= 36; i++) {
+		gotoxy(a, b + i);
+
+		for (int j = 1; j < 123; j++) {
+			if (j == 85 || j == 122 || j == 1) cout << char(219);
+			cout << " ";
+
+		}
+		if ((i) % 6 == 0 && (i) != 0) {
+			gotoxy(a + 1, b + i);
+			for (int k = 1; k <= 84; k++) {
+				if (k % 2 == 0 && k != 0) {
+					cout << " ";
+				}
+				else
+					cout << char(205);
+			}
+		}
+	}
+	// ve canh day
+	gotoxy(a, 38);
+	cout << char(223);
+	for (int i = 1; i <= 121; i++) {
+		if (i == 95) cout << char(223);
+		cout << char(223);
+	}
+	cout << char(223);
+
+}
 void CGame::updatePosCLane() {
 	if (!isPause) {
 		for (auto& clane : listCLane)
@@ -114,7 +157,7 @@ void CGame::updatePosPeople(char MOVING) {
 }
 
 void CGame::resetGame() {
-	Sleep(200);
+	//Sleep(200);
 	system("cls");
 	human.reset();
 	human.move();	// return to start position
@@ -209,6 +252,7 @@ bool CGame::isCollided() {
 		vector<Obstacle*>& listObstacle = clane->getListObstacle();
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
+				human.setIsDead(true);
 				return true;
 			}
 		}

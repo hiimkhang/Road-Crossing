@@ -15,6 +15,7 @@ using namespace std;
 char MOVING;
 bool IS_RUNNING = true;
 bool IN_GAME = true;
+bool IN_THREAD = true;
 CGame cg;
 
 auto t_start = std::chrono::high_resolution_clock::now();
@@ -23,65 +24,65 @@ void SubThread() {
     int i = 15;
     while (IS_RUNNING) {
         i--;
-        auto t_now = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_now - t_start).count();
-        if (elapsed_time_ms > 3000) {   // every 3 second light will change
-            t_start = t_now;
-            //cout << "elapsed_time_ms: " << elapsed_time_ms << endl;
-            cg.updateRedLight();
-        }
+        if (IN_THREAD) {
+            auto t_now = std::chrono::high_resolution_clock::now();
+            double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_now - t_start).count();
+            if (elapsed_time_ms > 3000) {   // every 3 second light will change
+                t_start = t_now;
+                //cout << "elapsed_time_ms: " << elapsed_time_ms << endl;
+                cg.updateRedLight();
+            }
 
-        if (!cg.getPeople().getIsDead()) {
-            cg.updatePosPeople(MOVING);     // take the input form user -> assign to MOVING = temp -> update position
-        }
-        MOVING = ' ';                       // reset the moving, stop the human, if user dont input -> the humam still stop
-        cg.updatePosCLane();                // update the position of each obstacle in the list (move the clane)
+            if (!cg.getPeople().getIsDead()) {
+                cg.updatePosPeople(MOVING);     // take the input form user -> assign to MOVING = temp -> update position
+            }
+            MOVING = ' ';                       // reset the moving, stop the human, if user dont input -> the humam still stop
+            cg.updatePosCLane();                // update the position of each obstacle in the list (move the clane)
 
-        //cg.drawGame();                    // draw ?
+            //cg.drawGame();                    // draw ?
 
-        if (cg.isCollided()) {              // human collide with obstacle
-            system("cls");
-            cout << "\n------------OH NO-------------\n";
-            cout << "\n------------YOU LOSE-----------\n";
-            // collide animation
-            cout << "Do you want to new game with the same level?\n";
-            cout << "Enter Y(Yes) or other to return to menu\n";
-            char temp;
-            temp = _getch();
-            if (toupper(temp) == 'Y') {
-                cg.resetGame();
-                cg.resetLevel();
+            if (cg.isCollided()) {              // human collide with obstacle
+                IN_THREAD = false;
                 system("cls");
-                t_start = std::chrono::high_resolution_clock::now();
-                cg.startGame();
-            }
-            else {
-                //system("cls");
-                cg.getPeople().setIsDead(true);
-                IS_RUNNING = false;
-            }
-            
-        }
+                int x = 40;
+                int y = 15;
 
-        if (cg.isFinish()) {
-            cout << "\n------------YOU WIN-------------\n";
-            cout << "\n------------NEW LEVEL-----------\n";
-            Sleep(400);
-            // we reset the human state (curX, curY = 0), isFinish = false, isCollide = false;
-            // also reset the game
-            cg.resetGame();
-            cg.startGame();
-            // then just reset the game with new level
-            if (cg.getLevel() <= 2) {
-                cg.levelUp();
+                gotoxy(x + 9, y + 1); cout << "------------OH NO---------------";
+                gotoxy(x + 9, y + 3); cout << "------------YOU LOSE------------";
+                // collide animation
+                gotoxy(x + 9, y + 7); cout << "Do you want to new game with the same level?";
+                gotoxy(x + 9, y + 9); cout << "Enter Y(Yes) or other to return to menu";
+                /*cg.getPeople().setIsDead(true);
+                cout << "deeeeeeeeeeeee" << cg.getPeople().getIsDead();*/
+                //char temp = toupper(_getch()); // can not use getch here, because the getch in main always call first, so just hanlde value pass in getch in main
             }
-            else {
-                cout << "\n---------FINISH ALL LEVEL----------\n";
-                cout << "\n----------CONGRATULATIONS----------\n";
-                IS_RUNNING = false;
+
+            if (cg.isFinish()) {
+                int x = 54;
+                int y = 22;
+
+                gotoxy(x + 9, y + 1); cout << "------------YOU WIN-------------";
+                gotoxy(x + 9, y + 3); cout << "------------NEW LEVEL-----------";
+                
+                Sleep(1000);
+                // we reset the human state (curX, curY = 0), isFinish = false, isCollide = false;
+                // also reset the game
+                cg.resetGame();
+                cg.startGame();
+                // then just reset the game with new level
+                if (cg.getLevel() <= 2) {
+                    cg.levelUp();
+                }
+                else {
+                    gotoxy(x + 9, y + 1); cout << "---------FINISH ALL LEVEL----------";
+                    gotoxy(x + 9, y + 3); cout << "----------CONGRATULATIONS----------";
+                    Sleep(1000);
+
+                    IS_RUNNING = false;
+                }
             }
+            Sleep(100);
         }
-        Sleep(100);
     }
 }
 
@@ -143,6 +144,10 @@ int main() {
         
         if (lg != "")
             cg.loadGame(lg);
+        else {
+            cg.resetGame();
+            cg.resetLevel();
+        }
         t_start = std::chrono::high_resolution_clock::now();
         cg.startGame();
         IS_RUNNING = true;
@@ -152,33 +157,42 @@ int main() {
         while (1) {
             ++i;
             temp = toupper(_getch());
-            //!cg.getPeople().getIsDead()
-            if (IS_RUNNING) {
+
+            if (!cg.getPeople().getIsDead()) {
                 if (temp == 27) {   // Esc = Exit
                     cg.exitThread(&t1, IS_RUNNING);
                     return 0;
                 }
-                else if (temp == 'P') { // pause game
+                else if (temp == 'P' ) { // pause game
                     // pause menu
                     // save game
                     // on off sound
                     // exit
-                    
+
                     cg.pauseGame(t1.native_handle());
-                    cg.saveGame("new.dat");
+                    m.subMenu(cg);
+                    cg.drawGame();
+                    cg.resumeGame((HANDLE)t1.native_handle());
+
+                    //cg.saveGame("new3.dat");
                 }
                 else if (temp == 'T') { // load game
                     // ask user to enter the file dir have been save to load game from it
                     cg.pauseGame(t1.native_handle());
                     system("cls");
+
                     cout << "Loading game\n";
                     string dir = "";
                     dir = m.loadGame();
                     if (dir != "") {
-                        cg.loadGame(dir);
-                        t_start = std::chrono::high_resolution_clock::now();
+                        if (cg.loadGame(dir)) {
+                            t_start = std::chrono::high_resolution_clock::now();
+                        }
+                        else {
+                            cg.resetGame();
+                        }
                     }
-                    Sleep(400);
+                    //Sleep(1000);
                     system("cls");
                     cg.drawGame();
                     cg.resumeGame((HANDLE)t1.native_handle());
@@ -189,10 +203,12 @@ int main() {
                     cg.pauseGame(t1.native_handle());
                     system("cls");
                     string dir = "";
-                    cout << "Enter name of file\n";
+                    int x = 40;
+                    int y = 15;
+                    gotoxy(x + 9, y + 1); cout << "Enter name of file to save";
                     getline(cin, dir);
                     cg.saveGame(dir + ".dat");
-                    Sleep(400);
+                    gotoxy(x + 9, y + 3); cout << "Saving...";
                     system("cls");
                     cg.drawGame();
                     cg.resumeGame((HANDLE)t1.native_handle());
@@ -202,18 +218,29 @@ int main() {
                     cg.resumeGame((HANDLE)t1.native_handle());
                     MOVING = temp;
                 }
-
             }
             else {
-                system("cls");
-                //cg.exitGame(t1.native_handle());
-                cg.exitThread(&t1, IS_RUNNING);
-                IS_RUNNING = false;
-                cg.resetGame();
-                cg.resetLevel();
-                break;
+                if (temp == 'Y') {
+                    cg.pauseGame(t1.native_handle());
+                    cout << "reset game\n";
+                    Sleep(400);
+                    cg.resetGame();
+                    cg.resetLevel();
+                    system("cls");
+                    t_start = std::chrono::high_resolution_clock::now();
+                    cg.startGame();
+                    cg.resumeGame((HANDLE)t1.native_handle());
+                }
+                else {
+                    system("cls");
+                    //cg.exitGame(t1.native_handle());
+                    cg.exitThread(&t1, IS_RUNNING);
+                    IS_RUNNING = false;
+                    IN_THREAD = true;
+                    break;
+                }
             }
-
+            IN_THREAD = true;
         }
         //t1.join();
     }

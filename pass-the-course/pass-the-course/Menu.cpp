@@ -115,12 +115,11 @@ string Menu::menu() {
     return result;
 }
 
-void Menu::subMenu() {
+void Menu::subMenu(CGame& cg) {
     bool stayinMenu = true;
     string result = "";
     while (stayinMenu) {
         clrscr();
-        logoMenu(); //tam thoi thoi
         soundStatus = 0;
         if (soundStatus == 1 && outMenu == true)
             PlaySound(TEXT("Sound\\Undertale.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
@@ -155,7 +154,7 @@ void Menu::subMenu() {
         cout << "Enter: SELECT";
 
         Textcolor(15);
-        gotoxy(x + 7, y + 1); cout << "NEW GAME";
+        gotoxy(x + 9, y + 1); cout << "SAVE ";
         gotoxy(x + 9, y + 3); cout << "LOAD ";
         gotoxy(x + 7, y + 5); cout << "SETTINGS";
         gotoxy(x + 9, y + 7); cout << "EXIT";
@@ -165,7 +164,7 @@ void Menu::subMenu() {
         {
             char choice = _getch();
             Textcolor(15);
-            gotoxy(x + 6, y + 1); cout << " NEW GAME ";
+            gotoxy(x + 8, y + 1); cout << " SAVE  ";
             gotoxy(x + 8, y + 3); cout << " LOAD  ";
             gotoxy(x + 6, y + 5); cout << " SETTINGS ";
             gotoxy(x + 8, y + 7); cout << " EXIT ";
@@ -187,11 +186,15 @@ void Menu::subMenu() {
 
             if (cnt == 1) {
                 Textcolor(12);
-                gotoxy(x + 6, y + 1); cout << " NEW GAME ";
+                gotoxy(x + 6, y + 1); cout << " SAVE ";
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
                     stayinMenu = false;
                     clrscr();
+                    string dir = "";
+                    cout << "Enter name of file\n";
+                    getline(cin, dir);
+                    cg.saveGame(dir + ".dat");
                     //loadingScreen();
                     break;
                 }
@@ -203,8 +206,10 @@ void Menu::subMenu() {
                     Textcolor(15);
                     outMenu = false;
                     result = loadGame();
-                    //if (result != "")
-                        //return result;
+                    if (result != "") {
+                        cg.loadGame(result);
+                    }
+
                 }
             }
             if (cnt == 3) {
@@ -227,7 +232,6 @@ void Menu::subMenu() {
             }
         }
     }
-    //return result;
 }
 string Menu::loadGame() {
     clearMenu();

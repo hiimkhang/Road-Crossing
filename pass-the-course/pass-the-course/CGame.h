@@ -21,6 +21,7 @@ class CGame
 		void startGame(); 
 		void updatePosCLane();
 		void drawGame();
+		void drawBoard(int color);
 		void updatePosPeople(char); 
 		void updateRedLight();
 		bool isCollided();

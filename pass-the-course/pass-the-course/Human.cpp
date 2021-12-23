@@ -37,7 +37,7 @@ void Human::moveLeft()
 
 void Human::moveRight()
 {
-    if (curX <= 85) {
+    if (curX <= 84) {
         preX = curX;
         preY = curY;
         curX += 2;

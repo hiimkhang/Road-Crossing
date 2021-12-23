@@ -2,6 +2,7 @@
 #define _MENU_H
 
 #include "console.h"
+#include "CGame.h"
 #include <fstream>
 #include <string>
 #include <filesystem>
@@ -30,7 +31,7 @@ public:
 
     void loadingScreen();
 
-    void subMenu();
+    void subMenu(CGame& cg);
 };
 
 #endif
