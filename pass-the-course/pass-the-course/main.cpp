@@ -164,7 +164,7 @@ int main() {
                     // exit
                    
                     cg.pauseGame(t1.native_handle());
-                    cg.saveGame("new.dat");
+                    cg.saveGame("new3.dat");
                 }
                 else if (temp == 'T') { // load game
                     IS_RUNNING = false;

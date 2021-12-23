@@ -156,7 +156,7 @@ void CGame::setupLevel2() {
 }
 void CGame::setupLevel3() {
 	CLane* pC = new CLane(2, 0);
-	pC->updateSpeed(2);
+	pC->updateSpeed(1);
 	listCLane.push_back(pC);
 	pC = new CLane(3, 8);
 	listCLane.push_back(pC);
