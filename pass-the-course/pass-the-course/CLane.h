@@ -18,6 +18,7 @@ public:
 	void move();
 	void updateSpeed(int newSpeed);
 	void changeLight();
+	void print();
 	void add(Obstacle* ob);
 	void set(int y, int x, bool rl);
 	CLane(int numOfCop = 0, int newY = 0);

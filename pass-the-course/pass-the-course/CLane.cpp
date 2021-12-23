@@ -41,7 +41,13 @@ void CLane::move()
 		obs->print();
 	}
 }
-
+void CLane::print()
+{
+	for (auto& obs : list)
+	{
+		obs->print();
+	}
+}
 void CLane::updateSpeed(int newSpeed) {
 	speedX = newSpeed;
 }

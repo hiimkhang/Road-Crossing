@@ -1,9 +1,10 @@
 #include "CGame.h"
+#include "console.h"
 #pragma warning(disable : 4700)
 CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
 	// initial HUMAN
-	human = Human(32, 24);
+	human = Human(32, 33);
 
 	level = newLevel;
 	switch (level) {
@@ -45,10 +46,11 @@ void CGame::startGame() {
 	drawGame();
 }
 void CGame::drawGame() {
+	drawBoard(8);
 	human.initial();
 	int n = listCLane.size();
 	for (int i = 0; i < n; ++i) {
-		gotoxy(69, i * 8 + 2);
+		gotoxy(92, i * 6 + 12);
 		if (listCLane[i]->getRedLight()) {
 			Textcolor(2);
 			cout << "RED SKULL   ";
@@ -63,8 +65,10 @@ void CGame::updatePosCLane() {
 	if (!isPause) {
 		for (auto& clane : listCLane)
 		{
-			if(clane->getRedLight() == false)
+			if (clane->getRedLight() == false)
 				clane->move();
+			else
+				clane->print();
 		}
 	}
 }
@@ -74,7 +78,7 @@ void CGame::updateRedLight() {
 		if (i % 2 == 0) {
 			listCLane[i]->changeLight();
 		}
-		gotoxy(69, i*8 + 2);
+		gotoxy(92, i * 6 + 12);
 		if (listCLane[i]->getRedLight()) {
 			Textcolor(2);
 			cout << "RED SKULL   ";
@@ -138,30 +142,42 @@ void CGame::resetLevel() {
 	}
 }
 void CGame::setupLevel1() {
-	CLane* pC = new CLane(1, 0);	// clane 1 with 1 cop, y-coordinate of the lane is 0
-	pC->updateSpeed(2);				// speed 2
+	CLane* pC = nullptr;
+	pC = new CLane(2, 9);			// clane 2 with 2 cop, y-coordinate is 8
 	listCLane.push_back(pC);
-	pC = new CLane(2, 8);			// clane 2 with 2 cop, y-coordinate is 8
+	pC = new CLane(1, 15);			// clane 3 with 1 cop, y-coordinate is 16
+	pC->updateSpeed(-1);				// speed -1 < 0 -> move to the left
 	listCLane.push_back(pC);
-	pC = new CLane(1, 16);			// clane 3 with 1 cop, y-coordinate is 16
+	pC = new CLane(1, 21);
+	listCLane.push_back(pC);
+	pC = new CLane(2, 27);
+	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
 }
 void CGame::setupLevel2() {
-	CLane* pC = new CLane(2, 0);	
+	CLane* pC = new CLane(3, 9);			// clane 2 with 2 cop, y-coordinate is 8
 	listCLane.push_back(pC);
-	pC = new CLane(2, 8);		
+	pC = new CLane(3, 15);			// clane 3 with 1 cop, y-coordinate is 16
+	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
-	pC = new CLane(1, 16);
+	pC = new CLane(4, 21);
+	listCLane.push_back(pC);
+	pC = new CLane(4, 27);
+	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
 }
 void CGame::setupLevel3() {
-	CLane* pC = new CLane(2, 0);
-	pC->updateSpeed(1);
+	CLane* pC = new CLane(2, 9);			// clane 2 with 2 cop, y-coordinate is 8
+	pC->updateSpeed(2);				// speed -1
 	listCLane.push_back(pC);
-	pC = new CLane(3, 8);
+	pC = new CLane(4, 15);			// clane 3 with 1 cop, y-coordinate is 16
+	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
-	pC = new CLane(2, 16);
-	pC->updateSpeed(2);
+	pC = new CLane(2, 21);
+	pC->updateSpeed(3);				// speed -1
+	listCLane.push_back(pC);
+	pC = new CLane(4, 27);			// clane 3 with 1 cop, y-coordinate is 16
+	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
 }
 void CGame::levelUp() {
@@ -217,7 +233,7 @@ void CGame::exitThread(thread* t, bool& IS_RUNNING) {
 	system("cls");
 	IS_RUNNING = false;
 	t->join();
-	cout << "\nEXIT game\n";
+	//cout << "\nEXIT game\n";
 }
 bool CGame::loadGame(string fn)
 {
