@@ -4,7 +4,7 @@ CLane::CLane(int numOfCop, int newY) : speedX(1), curY(newY), redLight(false)
 {
 	Obstacle* temp1 = nullptr;
 	for (int i = 1; i <= numOfCop; ++i) {
-		temp1 = new Cop(i*14, curY);
+		temp1 = new Cop(i*13, curY);
 		//temp1->print();
 		list.push_back(temp1);
 	}

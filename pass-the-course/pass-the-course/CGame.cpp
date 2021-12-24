@@ -46,17 +46,26 @@ void CGame::startGame() {
 }
 void CGame::drawGame() {
 	drawBoard(8);
+	drawTrafficLight(8);
 	human.initial();
 	int n = listCLane.size();
 	for (int i = 0; i < n; ++i) {
-		gotoxy(92, i * 6 + 12);
+		
 		if (listCLane[i]->getRedLight()) {
-			Textcolor(2);
-			cout << "RED SKULL   ";
+			gotoxy(87, i * 6 + 11);
+			Textcolor(12);
+			cout << char(177)<<char(177);
+			gotoxy(87, i * 6 + 10);
+			Textcolor(8);
+			cout << char(178) << char(178);
 		}
 		else {
-			Textcolor(12);
-			cout << "GREEN GOBLIN";
+			gotoxy(87, i * 6 + 10);
+			Textcolor(2);
+			cout << char(178) << char(178);
+			gotoxy(87, i * 6 + 11);
+			Textcolor(8);
+			cout << char(178) << char(178);
 		}
 	}
 }
@@ -81,7 +90,6 @@ void CGame::drawBoard(int color)
 		for (int j = 1; j < 123; j++) {
 			if (j == 85 || j == 122 || j == 1) cout << char(219);
 			cout << " ";
-
 		}
 		if ((i) % 6 == 0 && (i) != 0) {
 			gotoxy(a + 1, b + i);
@@ -104,6 +112,23 @@ void CGame::drawBoard(int color)
 	cout << char(223);
 
 }
+void CGame::drawTrafficLight(int color) {
+	int a = 86;
+	int b = 9;
+	Textcolor(color);
+	for (int i = 0; i < 4; i++) {
+		gotoxy(a, b);
+		cout << char(201) << char(205) << char(205) << char(187);
+		gotoxy(a, b + 1);
+		cout << char(186) << char(177) << char(177) << char(186);
+		gotoxy(a, b + 2);
+		cout << char(186) << char(178) << char(178) << char(186);
+		gotoxy(a, b + 3);
+		cout << char(200) << char(205) << char(205) << char(188);
+		b = b + 6;
+	}
+
+}
 void CGame::updatePosCLane() {
 	if (!isPause) {
 		for (auto& clane : listCLane)
@@ -121,14 +146,22 @@ void CGame::updateRedLight() {
 		if (i % 2 == 0) {
 			listCLane[i]->changeLight();
 		}
-		gotoxy(92, i * 6 + 12);
+		
 		if (listCLane[i]->getRedLight()) {
-			Textcolor(2);
-			cout << "RED SKULL   ";
+			gotoxy(87, i * 6 + 11);
+			Textcolor(12);
+			cout << char(177) << char(177);
+			gotoxy(87, i * 6 + 10);
+			Textcolor(8);
+			cout << char(178) << char(178);
 		}
 		else {
-			Textcolor(12);
-			cout << "GREEN GOBLIN";
+			gotoxy(87, i * 6 + 10);
+			Textcolor(2);
+			cout << char(178) << char(178);
+			gotoxy(87, i * 6 + 11);
+			Textcolor(8);
+			cout << char(177) << char(177);
 		}
 	}
 }

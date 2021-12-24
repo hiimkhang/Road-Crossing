@@ -66,6 +66,7 @@ void drawBoard(int color)
 	cout << char(223);
 
 }
+
 void clrscr()
 {
 	CONSOLE_SCREEN_BUFFER_INFO	csbiInfo;

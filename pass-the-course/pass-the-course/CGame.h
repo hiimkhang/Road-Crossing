@@ -22,6 +22,7 @@ class CGame
 		void updatePosCLane();
 		void drawGame();
 		void drawBoard(int color);
+		void drawTrafficLight(int color);
 		void updatePosPeople(char); 
 		void updateRedLight();
 		bool isCollided();
