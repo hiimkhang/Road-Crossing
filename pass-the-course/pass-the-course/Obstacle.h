@@ -4,7 +4,7 @@
 #include "console.h"
 #include "Figure.h"
 
-const int MAX_WIDTH = 85;
+const int MAX_WIDTH = 82;
 
 class Obstacle {
 protected:
@@ -127,7 +127,7 @@ public:
         }
         else {
             if (curX <= 6)
-                curX = MAX_WIDTH;
+                curX = MAX_WIDTH -1;
         }
         
         /*int initX = getCurX();
