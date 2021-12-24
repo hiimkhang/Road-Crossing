@@ -190,12 +190,16 @@ void Menu::subMenu(CGame& cg) {
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
                     stayinMenu = false;
-                    clrscr();
+                    //loadingScreen();
+                    system("cls");
                     string dir = "";
-                    cout << "Enter name of file\n";
+                    int x = 40;
+                    int y = 15;
+                    gotoxy(x + 9, y + 1); cout << "Enter name of file to save";
                     getline(cin, dir);
                     cg.saveGame(dir + ".dat");
-                    //loadingScreen();
+                    gotoxy(x + 9, y + 3); cout << "Saving...";
+                    system("cls");
                     break;
                 }
             }
@@ -204,12 +208,12 @@ void Menu::subMenu(CGame& cg) {
                 gotoxy(x + 8, y + 3); cout << " LOAD  ";
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
-                    outMenu = false;
+                    stayinMenu = false;
                     result = loadGame();
                     if (result != "") {
                         cg.loadGame(result);
                     }
-
+                    break;
                 }
             }
             if (cnt == 3) {
@@ -276,7 +280,9 @@ string Menu::loadGame() {
         cout << lof[c1];
         
     } while ((choice = toupper(_getch())) != 13);
-    return lof[c1];
+    string temp = lof[c1];
+    lof.clear();
+    return temp;
     //for (int i = 56; i < 77; ++i) {
     //    gotoxy(i, 35); cout << " ";
     //    gotoxy(i, 36); cout << " ";
