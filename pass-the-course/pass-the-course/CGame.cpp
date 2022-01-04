@@ -1,4 +1,5 @@
 #include "CGame.h"
+#include "Menu.h"
 #pragma warning(disable : 4700)
 CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
@@ -27,8 +28,8 @@ CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 	//cout << endl << "CGame::CGame()" << endl;
 }
 CGame::~CGame() {
-	int n = listCLane.size();
-	for (int i = 0; i < n; ++i) {
+	size_t n = listCLane.size();
+	for (size_t i = 0; i < n; ++i) {
 		delete listCLane[i];
 	}
 }
@@ -50,8 +51,9 @@ void CGame::startGame() {
 void CGame::drawGame() {
 	drawBoard(8);
 	drawTrafficLight(8);
+	Menu::info(*this);
 	human.initial();
-	int n = listCLane.size();
+	size_t n = listCLane.size();
 	for (int i = 0; i < n; ++i) {
 		
 		if (listCLane[i]->getRedLight()) {
@@ -105,6 +107,7 @@ void CGame::drawBoard(int color)
 			}
 		}
 	}
+
 	// ve canh day
 	gotoxy(a, 38);
 	cout << char(223);
@@ -144,7 +147,7 @@ void CGame::updatePosCLane() {
 	}
 }
 void CGame::updateRedLight() {
-	int n = listCLane.size();
+	size_t n = listCLane.size();
 	for (int i = 0; i < n; ++i) {
 		if (i % 2 == 0) {
 			listCLane[i]->changeLight();
@@ -194,18 +197,20 @@ void CGame::updatePosPeople(char MOVING) {
 
 void CGame::resetGame() {
 	//Sleep(200);
-	system("cls");
+	clrscr();
+
 	human.reset();
 	human.move();	// return to start position
 
-	int n = listCLane.size();
-	for (int i = 0; i < n; ++i) {
+	size_t n = listCLane.size();
+	for (size_t i = 0; i < n; ++i) {
 		delete listCLane[i];
 	}
 	listCLane.clear();
 
 }
 void CGame::resetLevel() {
+	level = 1;
 	switch (level) {
 	case 1:
 		setupLevel1();
@@ -277,21 +282,26 @@ void CGame::setupLevel4() {
 	listCLane.push_back(pC);
 }
 void CGame::levelUp() {
+	clrscr();
+	int a = 50, b = 19;
 	switch (level) {
 		case 1:
 			++level;
 			setupLevel2();
-			cout << "\n---------LEVEL 2----------\n";
+			gotoxy(a, b);
+			cout << "------------ LEVEL 2 ------------";
 			break;
 		case 2:
 			++level;
 			setupLevel3();
-			cout << "\n---------LEVEL 3----------\n";
+			gotoxy(a, b);
+			cout << "------------ LEVEL 3 ------------";
 			break;
 		case 3:
 			++level;
 			setupLevel4();
-			cout << "\n---------LEVEL 4----------\n";
+			gotoxy(a, b);
+			cout << "------------ LEVEL 4 ------------";
 			break;
 		default:
 			cout << "Out of level\n";
@@ -310,6 +320,10 @@ bool CGame::isCollided() {
 		vector<Obstacle*>& listObstacle = clane->getListObstacle();
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
+				if (obstacle->getID() == 3) { // Potion 
+					human.life++;
+					human.setIsDead(false);
+				}
 				human.setIsDead(true);
 				return true;
 			}
@@ -417,7 +431,7 @@ void CGame::saveGame(string fn)
 	//from human
 	//out << human.getFigDir() << endl; //dir of figure
 	int* pos = human.getHumanPosition();
-	int t1 = *(pos), t2 = *(pos + 1);
+	size_t t1 = *(pos), t2 = *(pos + 1);
 	out.write((char*)&t1, 4);
 	out.write((char*)&t2, 4);
 	bool b1;
@@ -454,4 +468,16 @@ void CGame::saveGame(string fn)
 	out.write((char*)&level, 4);
 	//out << level;
 	out.close();
+}
+
+void CGame::levelTransfer() {
+	Menu::levelupLogo(30, 17, 11);
+	
+	Textcolor(DarkYellow);
+	gotoxy(50, 25);
+	cout << "Press Space/Enter to continue...";
+
+	while (_kbhit())
+		if (_getch() == 32 || _getch() == 13) 
+			return;
 }

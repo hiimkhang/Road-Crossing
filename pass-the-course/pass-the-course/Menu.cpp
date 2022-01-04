@@ -2,6 +2,7 @@
 
 string Menu::menu() {
     bool stayinMenu = true;
+    isSubMenu = 0;
     string result = "";
     while (stayinMenu) {
         clrscr();
@@ -118,6 +119,7 @@ string Menu::menu() {
 void Menu::subMenu(CGame& cg) {
     bool stayinMenu = true;
     string result = "";
+    isSubMenu = 1;
     while (stayinMenu) {
         clrscr();
         soundStatus = 0;
@@ -156,7 +158,7 @@ void Menu::subMenu(CGame& cg) {
         Textcolor(15);
         gotoxy(x + 9, y + 1); cout << "SAVE ";
         gotoxy(x + 9, y + 3); cout << "LOAD ";
-        gotoxy(x + 7, y + 5); cout << "SETTINGS";
+        gotoxy(x + 7, y + 5); cout << " RESUME";
         gotoxy(x + 9, y + 7); cout << "EXIT";
 
         int cnt = 0;
@@ -166,7 +168,7 @@ void Menu::subMenu(CGame& cg) {
             Textcolor(15);
             gotoxy(x + 8, y + 1); cout << " SAVE  ";
             gotoxy(x + 8, y + 3); cout << " LOAD  ";
-            gotoxy(x + 6, y + 5); cout << " SETTINGS ";
+            gotoxy(x + 6, y + 5); cout << "  RESUME ";
             gotoxy(x + 8, y + 7); cout << " EXIT ";
 
             if (choice == KEY_DOWN || choice == 'S' || choice == 's') {
@@ -186,20 +188,47 @@ void Menu::subMenu(CGame& cg) {
 
             if (cnt == 1) {
                 Textcolor(12);
-                gotoxy(x + 6, y + 1); cout << " SAVE ";
+                gotoxy(x + 8, y + 1); cout << " SAVE ";
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
                     stayinMenu = false;
                     //loadingScreen();
-                    system("cls");
+                    clrscr();
                     string dir = "";
-                    int x = 40;
-                    int y = 15;
-                    gotoxy(x + 9, y + 1); cout << "Enter name of file to save";
+                    int x = 38;
+                    int y = 17;
+
+                    Textcolor(DarkYellow);
+                    gotoxy(x + 5, y + 9);
+                    cout << "Example: save1";
+                    gotoxy(x + 3, y + 7);
+                    cout << (char)175 << " The directory will become: Save/save1.dat";
+
+                    Textcolor(8);
+                    gotoxy(x, y);
+                    for (int i = 0; i < 50; ++i)
+                        cout << UP_BLACK_PIECE;
+
+                    gotoxy(x, y + 2);
+                    for (int i = 0; i < 50; ++i)
+                        cout << DOWN_BLACK_PIECE;
+
+                    for (int i = 0; i < 3; ++i) {
+                        gotoxy(x - 1, y + i);
+                        cout << VERTICAL_BLACK_PIECE;
+                    }
+                    for (int i = 0; i < 3; ++i) {
+                        gotoxy(x + 50, y + i);
+                        cout << VERTICAL_BLACK_PIECE;
+                    }
+
+                    gotoxy(x - 1, y - 2); cout << "Enter name of file to save";
+                    gotoxy(x + 2, y + 1);
                     getline(cin, dir);
                     cg.saveGame(dir + ".dat");
-                    gotoxy(x + 9, y + 3); cout << "Saving...";
-                    system("cls");
+                    gotoxy(x + 14, y + 5); cout << "Saving...";
+                    Sleep(2000);
+                    clrscr();
                     break;
                 }
             }
@@ -218,11 +247,12 @@ void Menu::subMenu(CGame& cg) {
             }
             if (cnt == 3) {
                 Textcolor(12);
-                gotoxy(x + 6, y + 5); cout << " SETTINGS ";
+                gotoxy(x + 6, y + 5); cout << "  RESUME ";
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
+                    stayinMenu = false;
                     outMenu = false;
-                    setting();
+                    break;
                 }
             }
             if (cnt == 4) {
@@ -266,7 +296,7 @@ string Menu::loadGame() {
         if (choice == KEY_UP || choice == 'W' || choice == 'w') {
             c1--;
             if (c1 < 0)
-                c1 = lof.size()-1;
+                c1 = (int)lof.size()-1;
         }
         Textcolor(White);
         for (int i = 0; i < lof.size(); i++)
@@ -471,11 +501,18 @@ void Menu::setting() {
                 cout << "Enter: SELECT";
 
                 Textcolor(15);
-                gotoxy(x + 7, y); cout << "NEW GAME";
+                if (isSubMenu) {
+                    gotoxy(x + 8, y); cout << " SAVE ";
+                }
+                else {
+                    gotoxy(x + 7, y); cout << "NEW GAME";
+                }
                 gotoxy(x + 9, y + 2); cout << "LOAD";
 
                 Textcolor(12);
-                gotoxy(x + 6, y + 4); cout << " SETTINGS ";
+                gotoxy(x + 6, y + 4); 
+                if (isSubMenu) cout << "  RESUME ";
+                else cout << " SETTINGS ";
                 Textcolor(15);
                 gotoxy(x + 9, y + 6); cout << "EXIT";
                 return;
@@ -596,4 +633,125 @@ void Menu::loadingScreen() {
     }
 
     Textcolor(7);
+}
+
+void Menu::levelLogo(int x, int y, int color) {
+    Textcolor(color);
+    gotoxy(x, y++); cout << R"( _    _____  __   _______  _     )";
+    gotoxy(x, y++); cout << R"(/\\  /\  __\/\ \ / /\  __\/\\    )";
+    gotoxy(x, y++); cout << R"(\ \\_\ \  _\\ \ \'/\ \  _\\ \\__ )";
+    gotoxy(x, y++); cout << R"( \ \__\ \____\ \__| \ \____\ \__\)";
+    gotoxy(x, y++); cout << R"(  \/__/\/____/\/_/   \/____/\/__/)";
+}
+
+void Menu::levelupLogo(int x, int y, int color) {
+    Textcolor(color);
+    gotoxy(x, y++); cout << R"( __       ______   __   __ ______   __           __  __   ______ )";
+    gotoxy(x, y++); cout << R"(/\ \     /\  ___\ /\ \ / //\  ___\ /\ \         /\ \/\ \ /\  == \)";
+    gotoxy(x, y++); cout << R"(\ \ \____\ \  __\ \ \ \'/ \ \  __\ \ \ \____    \ \ \_\ \\ \  _-/)";
+    gotoxy(x, y++); cout << R"( \ \_____\\ \_____\\ \__|  \ \_____\\ \_____\    \ \_____\\ \_\  )";
+    gotoxy(x, y++); cout << R"(  \/_____/ \/_____/ \/_/    \/_____/ \/_____/     \/_____/ \/_/  )";
+}
+
+void Menu::oneLogo(int x, int y, int color) {
+    Textcolor(color);
+    gotoxy(x, y++); cout << R"( _____        )";
+    gotoxy(x, y++); cout << R"(/\__  \       )";
+    gotoxy(x, y++); cout << R"(\/_/\  \      )";
+    gotoxy(x, y++); cout << R"(   \ \  \     )";
+    gotoxy(x, y++); cout << R"(   _\_\  \___ )";
+    gotoxy(x, y++); cout << R"( /\__________\)";
+    gotoxy(x, y++); cout << R"( \/__________/)";
+}
+
+void Menu::twoLogo(int x, int y, int color) {
+    Textcolor(color);
+    gotoxy(x, y++); cout << R"( __________     )";
+    gotoxy(x, y++); cout << R"(/\______   \    )";
+    gotoxy(x, y++); cout << R"(\/_____ \   \   )";
+    gotoxy(x, y++); cout << R"(    ___\/    \  )";
+    gotoxy(x, y++); cout << R"(   /     ____/  )";
+    gotoxy(x, y++); cout << R"(  /\    /___/__ )";
+    gotoxy(x, y++); cout << R"(  \ \__________\)";
+    gotoxy(x, y++); cout << R"(   \/__________/)";
+}
+
+void Menu::threeLogo(int x, int y, int color) {
+    Textcolor(color);
+    gotoxy(x, y++); cout << R"( __________      )";
+    gotoxy(x, y++); cout << R"(/\______   \     )";
+    gotoxy(x, y++); cout << R"(\/______\   \    )";
+    gotoxy(x, y++); cout << R"(     /\___   \   )";
+    gotoxy(x, y++); cout << R"(     \/__/\   \  )";
+    gotoxy(x, y++); cout << R"(    _____\_\   \ )";
+    gotoxy(x, y++); cout << R"(   /\___________\)";
+    gotoxy(x, y++); cout << R"(   \/___________/)";
+}
+
+void Menu::fourLogo(int x, int y, int color) {
+    Textcolor(color);
+    gotoxy(x, y++); cout << R"( ___    ___      )";
+    gotoxy(x, y++); cout << R"(/\  \  /\  \     )";
+    gotoxy(x, y++); cout << R"(\ \  \ \ \  \    )";
+    gotoxy(x, y++); cout << R"( \ \  \_\_\  \__ )";
+    gotoxy(x, y++); cout << R"(  \ \____    ___\)";
+    gotoxy(x, y++); cout << R"(   \/___/\   \__/)";
+    gotoxy(x, y++); cout << R"(        \ \___\  )";
+    gotoxy(x, y++); cout << R"(         \/___/  )";
+}
+
+void Menu::HP(int x, int y, int color) {
+    Textcolor(color);
+    gotoxy(x, y++); cout << R"( _  _  ___  _ )";
+    gotoxy(x, y++); cout << R"(| || || _ \(_))";
+    gotoxy(x, y++); cout << R"(| __ ||  _/ _ )";
+    gotoxy(x, y++); cout << R"(|_||_||_|  (_))";
+}
+
+
+
+void Menu::info(CGame& cg) {
+    int a = 93, b = 7;
+    levelLogo(a, b, 6);
+
+    a += 11, b += 6;
+
+    switch (cg.getLevel()) {
+    case 1: 
+        oneLogo(a, b, 3);
+        break;
+    case 2:
+        twoLogo(a - 1, b, 11);
+        break;
+    case 3:
+        threeLogo(a - 1, b, 13);
+        break;
+    case 4:
+        fourLogo(a - 1, b, 12);
+        break;
+    }
+
+    // oneLogo(a, b, 3);
+
+    // twoLogo(a - 1, b, 11);
+    // threeLogo(a - 1, b, 13);
+
+    /*fourLogo(a - 1, b, 12);*/
+
+    a -= 10, b += 11;
+
+    HP(a, b, 3);
+
+    b += 7; a += 12;
+
+    Textcolor(DarkYellow);
+    gotoxy(a, b);
+    cout << "P: Pause";
+    gotoxy(a, b + 2);
+    cout << "T: Load";
+    gotoxy(a, b + 4);
+    cout << "L: Save";
+
+
+    gotoxy(1, 2);
 }

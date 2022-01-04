@@ -10,6 +10,7 @@
 #include "Obstacle.h"
 #include "CLane.h"
 
+
 class CGame
 {
 	public:
@@ -21,6 +22,7 @@ class CGame
 		void startGame(); 
 		void updatePosCLane();
 		void drawGame();
+		void levelTransfer();
 		void drawBoard(int color);
 		void drawTrafficLight(int color);
 		void updatePosPeople(char); 
@@ -41,6 +43,7 @@ class CGame
 		bool loadGame(string fn); 
 		
 		void saveGame(string fn); 
+
 	private:	
 		Human human;
 		vector<CLane*> listCLane;

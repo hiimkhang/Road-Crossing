@@ -1,10 +1,9 @@
 
 #include "Figure.h"
 
-Figure::Figure()
-{
-
-}
+Figure::Figure() :
+	sizeX(0),
+	sizeY(0) {}
 
 Figure::Figure(std::string dir)
 {

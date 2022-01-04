@@ -8,7 +8,7 @@ const int height = 5;
 class Human
 {
 private:
-	int curX, curY, preX = -1, preY = -1, life;
+	int curX, curY, preX = -1, preY = -1;
 	bool isDead;
 	Figure fig;
 public:
@@ -28,5 +28,7 @@ public:
 	void setHumanPosition(int* cur);
 	void reset();
 	void setFigDir(string dir);
+
+	int life;
 };
 #endif

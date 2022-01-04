@@ -61,9 +61,10 @@ void SubThread() {
                 int x = 54;
                 int y = 22;
 
-                gotoxy(x + 9, y + 1); cout << "------------YOU WIN-------------";
-                gotoxy(x + 9, y + 3); cout << "------------NEW LEVEL-----------";
-                
+               /* gotoxy(x + 9, y + 1); cout << "------------YOU WIN-------------";
+                gotoxy(x + 9, y + 3); cout << "------------NEW LEVEL-----------";*/
+                /*Menu::levelTransfer();*/
+
                 Sleep(1000);
                 // we reset the human state (curX, curY = 0), isFinish = false, isCollide = false;
                 // also reset the game
@@ -72,18 +73,37 @@ void SubThread() {
                 if (cg.getLevel() <= 3) {
                     cg.resetGame();
                     cg.levelUp();
+                    cg.levelTransfer();
                     cg.startGame();
+                    
                 }
                 else {
-                    gotoxy(x + 9, y + 1); cout << "---------FINISH ALL LEVEL----------";
-                    gotoxy(x + 9, y + 3); cout << "----------CONGRATULATIONS----------";
-                    IN_THREAD = false;
-                    system("cls");
-                    // win animation
-                    Sleep(400);
-                    system("cls");
-                    gotoxy(x + 9, y + 3);
-                    cout << "Press any key to return to menu\n";
+                    clrscr();
+                    Menu::logoWin();
+                     /*Display win logo*/
+                    for (int i = 0; i < 15; ++i) {
+                        ShowConsoleCursor(0);
+                        clrscr();
+                        Menu::logoWin();
+                        Sleep(100);
+                    }
+                    while (_kbhit())
+                        (void)_getch();
+                    Textcolor(White);
+                    gotoxy(54, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
+                    Textcolor(15);
+                    (void)_getch();
+                    break;
+
+                    //gotoxy(x + 9, y + 1); cout << "---------FINISH ALL LEVEL----------";
+                    //gotoxy(x + 9, y + 3); cout << "----------CONGRATULATIONS----------";
+                    //IN_THREAD = false;
+                    //system("cls");
+                    //// win animation
+                    //Sleep(400);
+                    //system("cls");
+                    //gotoxy(x + 9, y + 3);
+                    //cout << "Press any key to return to menu\n";
                 }
             }
             Sleep(100);
@@ -213,15 +233,42 @@ int main() {
                     // ask user to enter file dir to save game
                     // ask them want to continue or not
                     cg.pauseGame(t1.native_handle());
-                    system("cls");
+                    clrscr();
                     string dir = "";
-                    int x = 40;
-                    int y = 15;
-                    gotoxy(x + 9, y + 1); cout << "Enter name of file to save";
+                    int x = 38;
+                    int y = 17;
+
+                    Textcolor(DarkYellow);
+                    gotoxy(x + 5, y + 9);
+                    cout << "Example: save1";
+                    gotoxy(x + 3, y + 7);
+                    cout << (char)175 << " The directory will become: Save/save1.dat";
+
+                    Textcolor(8);
+                    gotoxy(x, y);
+                    for (int i = 0; i < 50; ++i)
+                        cout << UP_BLACK_PIECE;
+
+                    gotoxy(x, y + 2);
+                    for (int i = 0; i < 50; ++i)
+                        cout << DOWN_BLACK_PIECE;
+
+                    for (int i = 0; i < 3; ++i) {
+                        gotoxy(x - 1, y + i);
+                        cout << VERTICAL_BLACK_PIECE;
+                    }
+                    for (int i = 0; i < 3; ++i) {
+                        gotoxy(x + 50, y + i);
+                        cout << VERTICAL_BLACK_PIECE;
+                    }
+
+                    gotoxy(x - 1, y - 2); cout << "Enter name of file to save";
+                    gotoxy(x + 2, y + 1);
                     getline(cin, dir);
                     cg.saveGame(dir + ".dat");
-                    gotoxy(x + 9, y + 3); cout << "Saving...";
-                    system("cls");
+                    gotoxy(x + 14, y + 5); cout << "Saving...";
+                    Sleep(2000);
+                    clrscr();
                     cg.drawGame();
                     cg.resumeGame((HANDLE)t1.native_handle());
                 }
