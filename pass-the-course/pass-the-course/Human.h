@@ -18,6 +18,7 @@ public:
 	void moveLeft();
 	void moveRight();
 	virtual void move();
+	virtual void resetFig();
 	virtual void initial();
 	bool getIsDead();
 	void setIsDead(bool nIsDead);

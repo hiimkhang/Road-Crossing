@@ -321,11 +321,23 @@ bool CGame::isCollided() {
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
 				if (obstacle->getID() == 3) { // Potion 
-					human.life++;
-					human.setIsDead(false);
+					if (human.life != 3)
+						human.life++;
+					return false;
 				}
-				human.setIsDead(true);
-				return true;
+				else {
+					if (human.life <= 0) {
+						human.setIsDead(true);
+						return true;
+					}
+					else {
+						int temp = --human.life;
+						human.reset();
+						human.life = temp;
+						human.resetFig();
+						return false;
+					}
+				}
 			}
 		}
 	}
@@ -402,7 +414,7 @@ bool CGame::loadGame(string fn)
 				obs = new Cop(tX, tY);
 				break;
 			case 4:
-				obs = new WSpider(tX, tY);
+				//obs = new WSpider(tX, tY);
 				break;
 			case 5:
 				obs = new Devil(tX, tY);

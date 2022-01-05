@@ -1,6 +1,6 @@
 #include "Human.h"
 
-Human::Human(int x, int y) : isDead(false)
+Human::Human(int x, int y) : isDead(false), life(3)
 {
     //fig = Figure(".//Figure//Human//human-test.txt");
     fig = Figure(".//Figure//Human//player.txt");
@@ -49,7 +49,15 @@ void Human::move()
     fig.deleteFootprint(preX, preY);
     fig.print(curX, curY);
 }
-
+void Human::resetFig()
+{
+    fig.deleteFootprint(preX, preY);
+    fig.deleteFootprint(preX - 2, preY - 2);
+    fig.deleteFootprint(preX + 2, preY - 2);
+    fig.deleteFootprint(preX + 2, preY + 1);
+    fig.deleteFootprint(preX - 2, preY + 1);
+    fig.print(curX, curY);
+}
 void Human::initial()
 {
     fig.print(curX, curY);
@@ -118,6 +126,7 @@ void Human::setHumanPosition(int* cur)
 
 void Human::reset() {
     isDead = false;
+    life = 3;
     curX = 36;
     curY = 33;
     --preY;
