@@ -249,4 +249,122 @@ public:
     }
 };
 
+
+class WSpider : public Obstacle {
+private:
+public:
+    WSpider() : Obstacle() {
+        fig.setDir(".//Figure/Obstacle//spider-white.txt");
+        setSize(5, 5);
+    }
+
+    // Init location
+    WSpider(int x, int y) : Obstacle(x, y) {
+        fig.setDir(".//Figure/Obstacle//spider-white.txt");
+        setSize(5, 5);
+    }
+
+    // Override 
+    void move(int speedX, int speedY) {
+        prevX = curX;
+        prevY = curY;
+        curX += speedX;
+        curY += speedY;
+        if (speedX >= 0) {
+            if (curX >= MAX_WIDTH)
+                curX = 6;
+        }
+        else {
+            if (curX <= 6)
+                curX = MAX_WIDTH - 1;
+        }
+
+        
+    }
+    int getID()
+    {
+        return 4;
+    }
+    void print() {
+        int x = getCurX(), y = getCurY();
+        ShowConsoleCursor(false);
+        fig.print(x, y);
+
+        Textcolor(7);
+    }
+
+    void unPrint() {
+        int x = getCurX(), y = getCurY();
+
+        for (int i = 0; i < 5; ++i) {
+            gotoxy(x, y + i);
+            cout << "     ";
+        }
+    }
+
+    void collisonSound() {
+        // Ae kiếm sound bỏ vào chứ mình chịu                  
+    }
+};
+
+
+class Devil : public Obstacle {
+private:
+public:
+    Devil() : Obstacle() {
+        fig.setDir(".//Figure/Obstacle//devil.txt");
+        setSize(5, 5);
+    }
+
+    // Init location
+    Devil (int x, int y) : Obstacle(x, y) {
+        fig.setDir(".//Figure/Obstacle//devil.txt");
+        setSize(5, 5);
+    }
+
+    // Override 
+    void move(int speedX, int speedY) {
+        prevX = curX;
+        prevY = curY;
+        curX += speedX;
+        curY += speedY;
+        if (speedX >= 0) {
+            if (curX >= MAX_WIDTH)
+                curX = 6;
+        }
+        else {
+            if (curX <= 6)
+                curX = MAX_WIDTH - 1;
+        }
+
+
+    }
+    int getID()
+    {
+        return 5;
+    }
+    void print() {
+        int x = getCurX(), y = getCurY();
+        ShowConsoleCursor(false);
+        fig.print(x, y);
+
+        Textcolor(7);
+    }
+
+    void unPrint() {
+        int x = getCurX(), y = getCurY();
+
+        for (int i = 0; i < 5; ++i) {
+            gotoxy(x, y + i);
+            cout << "     ";
+        }
+    }
+
+    void collisonSound() {
+        // Ae kiếm sound bỏ vào chứ mình chịu                  
+    }
+};
+
+
+
 #endif

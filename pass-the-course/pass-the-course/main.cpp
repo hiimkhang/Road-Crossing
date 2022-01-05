@@ -144,166 +144,167 @@ void SubThread() {
 //    return 0;
 //}
 
-////Dang
-//int main()
-//{
-//    Menu m;
-//    m.loadGame();
-//    
-//}
+//Dang
+int main()
+{
+    Figure f(".//Figure/Obstacle//devil.txt");
+    f.print(50, 10);
+    
+}
+
 
 
  //Tri
- 
-int main() {
-    int temp;
-    resizeConsole(1000, 700);
-    fixConsoleWindow();
-
-    while (IN_GAME) {
-        Menu m;
-        string lg;
-        lg = m.menu();
-        //cout << "Type something and enter to start\n";
-        //cin.get();
-        
-        if (lg != "")
-            cg.loadGame(lg);
-        else {
-            cg.resetGame();
-            cg.resetLevel();
-        }
-        t_start = std::chrono::high_resolution_clock::now();
-        cg.startGame();
-        IS_RUNNING = true;
-        thread t1(SubThread);
-        int i = 0;
-        //cout << "\n\n\n Use WASD to move your character\n";
-        while (1) {
-            ++i;
-            temp = toupper(_getch());
-            if (cg.isFinish() && cg.getLevel() >= 4) {
-                
-                //cg.exitGame(t1.native_handle());
-                cg.exitThread(&t1, IS_RUNNING);
-                IS_RUNNING = false;
-                IN_THREAD = true;
-                break;
-            }
-            if (!cg.getPeople().getIsDead()) {
-                if (temp == 27) {   // Esc = Exit
-                    cg.exitThread(&t1, IS_RUNNING);
-                    return 0;
-                }
-                else if (temp == 'P' ) { // pause game
-                    // pause menu
-                    // save game
-                    // on off sound
-                    // exit
-
-                    cg.pauseGame(t1.native_handle());
-                    m.subMenu(cg);
-                    cg.drawGame();
-                    cg.resumeGame((HANDLE)t1.native_handle());
-
-                    //cg.saveGame("new3.dat");
-                }
-                else if (temp == 'T') { // load game
-                    // ask user to enter the file dir have been save to load game from it
-                    cg.pauseGame(t1.native_handle());
-                    system("cls");
-
-                    cout << "Loading game\n";
-                    string dir = "";
-                    dir = m.loadGame();
-                    if (dir != "") {
-                        if (cg.loadGame(dir)) {
-                            t_start = std::chrono::high_resolution_clock::now();
-                        }
-                        else {
-                            cg.resetGame();
-                        }
-                    }
-                    //Sleep(1000);
-                    system("cls");
-                    cg.drawGame();
-                    cg.resumeGame((HANDLE)t1.native_handle());
-                }
-                else if (temp == 'L') { // save game
-                    // ask user to enter file dir to save game
-                    // ask them want to continue or not
-                    cg.pauseGame(t1.native_handle());
-                    clrscr();
-                    string dir = "";
-                    int x = 38;
-                    int y = 17;
-
-                    Textcolor(DarkYellow);
-                    gotoxy(x + 5, y + 9);
-                    cout << "Example: save1";
-                    gotoxy(x + 3, y + 7);
-                    cout << (char)175 << " The directory will become: Save/save1.dat";
-
-                    Textcolor(8);
-                    gotoxy(x, y);
-                    for (int i = 0; i < 50; ++i)
-                        cout << UP_BLACK_PIECE;
-
-                    gotoxy(x, y + 2);
-                    for (int i = 0; i < 50; ++i)
-                        cout << DOWN_BLACK_PIECE;
-
-                    for (int i = 0; i < 3; ++i) {
-                        gotoxy(x - 1, y + i);
-                        cout << VERTICAL_BLACK_PIECE;
-                    }
-                    for (int i = 0; i < 3; ++i) {
-                        gotoxy(x + 50, y + i);
-                        cout << VERTICAL_BLACK_PIECE;
-                    }
-
-                    gotoxy(x - 1, y - 2); cout << "Enter name of file to save";
-                    gotoxy(x + 2, y + 1);
-                    getline(cin, dir);
-                    cg.saveGame(dir + ".dat");
-                    gotoxy(x + 14, y + 5); cout << "Saving...";
-                    Sleep(2000);
-                    clrscr();
-                    cg.drawGame();
-                    cg.resumeGame((HANDLE)t1.native_handle());
-                }
-                else {  // continue / resume
-                    IS_RUNNING = true;
-                    cg.resumeGame((HANDLE)t1.native_handle());
-                    MOVING = temp;
-                }
-            }
-            else {
-                if (temp == 'Y') {
-                    cg.pauseGame(t1.native_handle());
-                    cout << "reset game\n";
-                    Sleep(400);
-                    cg.resetGame();
-                    cg.resetLevel();
-                    system("cls");
-                    t_start = std::chrono::high_resolution_clock::now();
-                    cg.startGame();
-                    cg.resumeGame((HANDLE)t1.native_handle());
-                }
-                else {
-                    system("cls");
-                    //cg.exitGame(t1.native_handle());
-                    cg.exitThread(&t1, IS_RUNNING);
-                    IS_RUNNING = false;
-                    IN_THREAD = true;
-                    break;
-                }
-            }
-            IN_THREAD = true;
-        }
-        //t1.join();
-    }
-    
-    return 0;
-}
+// 
+//int main() {
+//    int temp;
+//    resizeConsole(1000, 700);
+//    fixConsoleWindow();
+//
+//    while (IN_GAME) {
+//        Menu m;
+//        string lg;
+//        lg = m.menu();
+//        //cout << "Type something and enter to start\n";
+//        //cin.get();
+//        
+//        if (lg != "")
+//            cg.loadGame(lg);
+//        else {
+//            cg.resetGame();
+//            cg.resetLevel();
+//        }
+//        t_start = std::chrono::high_resolution_clock::now();
+//        cg.startGame();
+//        IS_RUNNING = true;
+//        thread t1(SubThread);
+//        int i = 0;
+//        //cout << "\n\n\n Use WASD to move your character\n";
+//        while (1) {
+//            ++i;
+//            temp = toupper(_getch());
+//            if (cg.isFinish() && cg.getLevel() >= 4) {
+//                
+//                //cg.exitGame(t1.native_handle());
+//                cg.exitThread(&t1, IS_RUNNING);
+//                IS_RUNNING = false;
+//                IN_THREAD = true;
+//                break;
+//            }
+//            if (!cg.getPeople().getIsDead()) {
+//                if (temp == 27) {   // Esc = Exit
+//                    cg.exitThread(&t1, IS_RUNNING);
+//                    return 0;
+//                }
+//                else if (temp == 'P' ) { // pause game
+//                    // pause menu
+//                    // save game
+//                    // on off sound
+//                    // exit
+//
+//                    cg.pauseGame(t1.native_handle());
+//                    m.subMenu(cg);
+//                    cg.drawGame();
+//                    cg.resumeGame((HANDLE)t1.native_handle());
+//
+//                    //cg.saveGame("new3.dat");
+//                }
+//                else if (temp == 'T') { // load game
+//                    // ask user to enter the file dir have been save to load game from it
+//                    cg.pauseGame(t1.native_handle());
+//                    system("cls");
+//
+//                    cout << "Loading game\n";
+//                    string dir = "";
+//                    dir = m.loadGame();
+//                    if (dir != "") {
+//                        if (cg.loadGame(dir)) {
+//                            t_start = std::chrono::high_resolution_clock::now();
+//                        }
+//                        else {
+//                            cg.resetGame();
+//                        }
+//                    }
+//                    //Sleep(1000);
+//                    system("cls");
+//                    cg.drawGame();
+//                    cg.resumeGame((HANDLE)t1.native_handle());
+//                }
+//                else if (temp == 'L') { // save game
+//                    // ask user to enter file dir to save game
+//                    // ask them want to continue or not
+//                    cg.pauseGame(t1.native_handle());
+//                    clrscr();
+//                    string dir = "";
+//                    int x = 38;
+//                    int y = 17;
+//
+//                    Textcolor(DarkYellow);
+//                    gotoxy(x + 5, y + 9);
+//                    cout << "Example: save1";
+//                    gotoxy(x + 3, y + 7);
+//                    cout << (char)175 << " The directory will become: Save/save1.dat";
+//
+//                    Textcolor(8);
+//                    gotoxy(x, y);
+//                    for (int i = 0; i < 50; ++i)
+//                        cout << UP_BLACK_PIECE;
+//
+//                    gotoxy(x, y + 2);
+//                    for (int i = 0; i < 50; ++i)
+//                        cout << DOWN_BLACK_PIECE;
+//
+//                    for (int i = 0; i < 3; ++i) {
+//                        gotoxy(x - 1, y + i);
+//                        cout << VERTICAL_BLACK_PIECE;
+//                    }
+//                    for (int i = 0; i < 3; ++i) {
+//                        gotoxy(x + 50, y + i);
+//                        cout << VERTICAL_BLACK_PIECE;
+//                    }
+//
+//                    gotoxy(x - 1, y - 2); cout << "Enter name of file to save";
+//                    gotoxy(x + 2, y + 1);
+//                    getline(cin, dir);
+//                    cg.saveGame(dir + ".dat");
+//                    gotoxy(x + 14, y + 5); cout << "Saving...";
+//                    Sleep(2000);
+//                    clrscr();
+//                    cg.drawGame();
+//                    cg.resumeGame((HANDLE)t1.native_handle());
+//                }
+//                else {  // continue / resume
+//                    IS_RUNNING = true;
+//                    cg.resumeGame((HANDLE)t1.native_handle());
+//                    MOVING = temp;
+//                }
+//            }
+//            else {
+//                if (temp == 'Y') {
+//                    cg.pauseGame(t1.native_handle());
+//                    cout << "reset game\n";
+//                    Sleep(400);
+//                    cg.resetGame();
+//                    cg.resetLevel();
+//                    system("cls");
+//                    t_start = std::chrono::high_resolution_clock::now();
+//                    cg.startGame();
+//                    cg.resumeGame((HANDLE)t1.native_handle());
+//                }
+//                else {
+//                    system("cls");
+//                    //cg.exitGame(t1.native_handle());
+//                    cg.exitThread(&t1, IS_RUNNING);
+//                    IS_RUNNING = false;
+//                    IN_THREAD = true;
+//                    break;
+//                }
+//            }
+//            IN_THREAD = true;
+//        }
+//        //t1.join();
+//    }
+//    
+//    return 0;
+//}
 

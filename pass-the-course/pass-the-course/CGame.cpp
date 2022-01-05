@@ -401,6 +401,12 @@ bool CGame::loadGame(string fn)
 			case 2: 
 				obs = new Cop(tX, tY);
 				break;
+			case 4:
+				obs = new WSpider(tX, tY);
+				break;
+			case 5:
+				obs = new Devil(tX, tY);
+				break;
 			default:
 				obs = new Cop(tX, tY);
 				break;
