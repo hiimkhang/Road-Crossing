@@ -18,6 +18,7 @@ public:
 	void moveLeft();
 	void moveRight();
 	virtual void move();
+	virtual void resetFig();
 	virtual void initial();
 	bool getIsDead();
 	void setIsDead(bool nIsDead);
@@ -25,6 +26,8 @@ public:
 	bool isFinish();
 	string getFigDir();
 	int* getHumanPosition();
+	int X() { return curX; }
+	int Y() { return curY; }
 	void setHumanPosition(int* cur);
 	void reset();
 	void setFigDir(string dir);

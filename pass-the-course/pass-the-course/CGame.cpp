@@ -172,21 +172,33 @@ void CGame::updateRedLight() {
 	}
 }
 
-void CGame::updatePosPeople(char MOVING) {
+void CGame::updatePosPeople(char MOVING,bool soundON) {
 
 	int x = toupper(MOVING);
 	switch (x)
 	{
 		case 'W':
+			if (soundON) {
+				PlaySound(TEXT("Sound\\test.wav"), NULL, SND_FILENAME | SND_ASYNC );
+			}
 			human.moveUp();
 			break;
 		case 'D':
+			if (soundON) {
+				PlaySound(TEXT("Sound\\test.wav"), NULL, SND_FILENAME | SND_ASYNC );
+			}
 			human.moveRight();
 			break;
 		case 'S':
+			if (soundON) {
+				PlaySound(TEXT("Sound\\test.wav"), NULL, SND_FILENAME | SND_ASYNC );
+			}
 			human.moveDown();
 			break;
 		case 'A':
+			if (soundON) {
+				PlaySound(TEXT("Sound\\test.wav"), NULL, SND_FILENAME | SND_ASYNC );
+			}
 			human.moveLeft();
 			break;
 		default:
@@ -321,11 +333,23 @@ bool CGame::isCollided() {
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
 				if (obstacle->getID() == 3) { // Potion 
-					human.life++;
-					human.setIsDead(false);
+					if (human.life != 3)
+						human.life++;
+					return false;
 				}
-				human.setIsDead(true);
-				return true;
+				else {
+					if (human.life <= 0) {
+						human.setIsDead(true);
+						return true;
+					}
+					else {
+						int temp = --human.life;
+						human.reset();
+						human.life = temp;
+						human.resetFig();
+						return false;
+					}
+				}
 			}
 		}
 	}
@@ -486,4 +510,91 @@ void CGame::levelTransfer() {
 	while (_kbhit())
 		if (_getch() == 32 || _getch() == 13) 
 			return;
+}
+
+//EXPLODE
+
+
+void draw(int x, int y, int restore[][5], int colors[][5]) {
+	int j;
+	for (int i = 0; i < 5; ++i) {
+		gotoxy(x - 1, y - 1 + i);
+		for (j = 0; j < 5; ++j) {
+			Textcolor(colors[i][j]);
+			cout << char(restore[i][j]);
+		}
+	}
+}
+
+void copyScene(int copy[][5], int copyColors[][5], int paste[][5], int pasteColors[][5]) {
+	for (int i = 0; i < 5; ++i)
+		for (int j = 0; j < 5; ++j) {
+			paste[i][j] = copy[i][j];
+			pasteColors[i][j] = copyColors[i][j];
+		}
+}
+
+void prepareScene1(int scene1[][5], int colors1[][5], int shape, int color) {
+	scene1[0][2] = shape;
+	colors1[0][2] = color;
+	scene1[2][0] = shape;
+	colors1[2][0] = color;
+	scene1[2][2] = shape;
+	colors1[2][2] = color;
+	scene1[2][4] = shape;
+	colors1[2][4] = color;
+	scene1[4][2] = shape;
+	colors1[4][2] = color;
+}
+
+void prepareScene2(int scene2[][5], int colors2[][5], int shape, int color) {
+	scene2[0][0] = shape;
+	colors2[0][0] = color;
+	scene2[0][4] = shape;
+	colors2[0][4] = color;
+	scene2[1][1] = shape;
+	colors2[1][1] = color;
+	scene2[1][3] = shape;
+	colors2[1][3] = color;
+	scene2[3][1] = shape;
+	colors2[3][1] = color;
+	scene2[3][3] = shape;
+	colors2[3][3] = color;
+	scene2[4][0] = shape;
+	colors2[4][0] = color;
+	scene2[4][4] = shape;
+	colors2[4][4] = color;
+}
+
+
+void CGame::explode( bool soundON) {
+	
+		int x = human.X();
+		int y = human.Y();
+		/*int restore[5][5], colors[5][5];
+		for (int i = 0; i < 5; ++i)
+			for (int j = 0; j < 5; ++j) {
+				restore[i][j] =  char(0);
+				colors[i][j] = char(0);
+
+			}*/
+
+		int scene1[5][5], colors1[5][5];
+		//copyScene(restore, colors, scene1, colors1);
+		prepareScene1(scene1, colors1, 42, 14);
+
+		int scene2[5][5], colors2[5][5];
+		//copyScene(restore, colors, scene2, colors2);
+		prepareScene2(scene2, colors2, 42, 14);
+
+	
+		if (soundON)
+			PlaySound(TEXT("Sound\\explode.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		for (int i = 0; i < 4; ++i) {
+			draw(x, y, scene2, colors2);
+			Sleep(400);
+			draw(x, y, scene1, colors1);
+			Sleep(400);
+		}
+		
 }

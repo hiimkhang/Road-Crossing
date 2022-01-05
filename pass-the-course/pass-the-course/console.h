@@ -60,4 +60,7 @@ void clrscr();
 void drawBoard(int color);
 
 void ShowConsoleCursor(bool showFlag);
+
+
+
 #endif // !_console_h_
