@@ -1,5 +1,7 @@
 #include "CGame.h"
 #include "Menu.h"
+
+extern bool soundON;
 #pragma warning(disable : 4700)
 CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
@@ -51,6 +53,9 @@ void CGame::startGame() {
 void CGame::drawGame() {
 	drawBoard(8);
 	drawTrafficLight(8);
+	//for (int i = 109; i <= 121; i=i+6) {
+	//	drawHeart(i, 24, 4);
+	//}
 	Menu::info(*this);
 	human.initial();
 	size_t n = listCLane.size();
@@ -118,6 +123,28 @@ void CGame::drawBoard(int color)
 	cout << char(223);
 
 }
+void CGame::drawLane(int color)
+{
+	int a = 5;
+	int b = 2;
+	gotoxy(a, b);
+	Textcolor(color);
+	for (int i = 1; i <= 30; i++) {
+		gotoxy(a, b + i);
+
+		if ((i) % 6 == 0 && (i) != 0) {
+			gotoxy(a + 1, b + i);
+			for (int k = 1; k <= 84; k++) {
+				if (k % 2 == 0 && k != 0) {
+					cout << " ";
+				}
+				else
+					cout << char(205);
+			}
+		}
+	}
+
+}
 void CGame::drawTrafficLight(int color) {
 	int a = 86;
 	int b = 9;
@@ -135,6 +162,20 @@ void CGame::drawTrafficLight(int color) {
 	}
 
 }
+void CGame::drawHeart(int a,int b,int color) {
+
+	gotoxy(a, b);
+	Textcolor(color);
+	cout << " " << char(3) << " " << char(3) << " " << endl;
+	gotoxy(a, b + 1);
+	cout << char(3) << char(3) << char(3) << char(3) << char(3) << endl;
+	gotoxy(a, b + 2);
+	cout << " " << char(3) << char(3) << char(3) << " " << endl;
+	gotoxy(a, b + 3);
+	cout << "  " << char(3) << "  " << endl;
+
+}
+
 void CGame::updatePosCLane() {
 	if (!isPause) {
 		for (auto& clane : listCLane)
@@ -228,8 +269,10 @@ void CGame::updatePosPeople(char MOVING,bool soundON) {
 			human.moveLeft();
 			break;
 		default:
+			human.move();
 			return;
 	}
+	drawLane(8);
 	human.move();
 }
 
@@ -246,6 +289,10 @@ void CGame::resetGame() {
 	}
 	listCLane.clear();
 
+}
+
+void CGame::resetHumanStat() {
+	human.life = 2;
 }
 void CGame::resetLevel() {
 	level = 1;
@@ -358,6 +405,9 @@ bool CGame::isCollided() {
 		vector<Obstacle*>& listObstacle = clane->getListObstacle();
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
+				drawBoard(8);
+				if (soundON)
+					PlaySound(TEXT("Sound\\explode.wav"), NULL, SND_FILENAME | SND_ASYNC);
 				if (obstacle->getID() == 3) { // Potion 
 					if (human.life != 3)
 						human.life++;
@@ -373,6 +423,9 @@ bool CGame::isCollided() {
 						human.reset();
 						human.life = temp;
 						human.resetFig();
+						drawLane(8);
+						Menu::info(*this);
+						Sleep(200);
 						return false;
 					}
 				}
@@ -391,12 +444,12 @@ void CGame::resumeGame(HANDLE h) {
 }
 //void CGame::exitGame(HANDLE h) {
 //	TerminateThread(h, 0);
-//	system("cls");
+//	clrscr();
 //	cout << "Thanks for playing the game\n";
 //	cout << "Good bye\n";
 //}
 void CGame::exitThread(thread* t, bool& IS_RUNNING) {
-	system("cls");
+	clrscr();
 	IS_RUNNING = false;
 	t->join();
 	//cout << "\nEXIT game\n";
@@ -452,7 +505,7 @@ bool CGame::loadGame(string fn)
 				obs = new Cop(tX, tY);
 				break;
 			case 4:
-				//obs = new WSpider(tX, tY);
+				obs = new WSpider(tX, tY);
 				break;
 			case 5:
 				obs = new Devil(tX, tY);
@@ -527,11 +580,14 @@ void CGame::saveGame(string fn)
 }
 
 void CGame::levelTransfer() {
+	if (soundON)
+		PlaySound(TEXT("Sound\\levelUp.wav"), NULL, SND_FILENAME | SND_ASYNC);
+
 	Menu::levelupLogo(30, 17, 11);
 	
 	Textcolor(DarkYellow);
 	gotoxy(50, 25);
-	cout << "Press Space/Enter to continue...";
+	cout << "Press any key to continue...";
 
 	while (_kbhit())
 		if (_getch() == 32 || _getch() == 13) 
@@ -593,7 +649,7 @@ void prepareScene2(int scene2[][5], int colors2[][5], int shape, int color) {
 }
 
 
-void CGame::explode( bool soundON) {
+void CGame::explode(bool soundON) {
 	
 		int x = human.X();
 		int y = human.Y();
@@ -618,20 +674,14 @@ void CGame::explode( bool soundON) {
 			PlaySound(TEXT("Sound\\explode.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		for (int i = 0; i < 4; ++i) {
 			draw(x, y, scene2, colors2);
-			Sleep(400);
+			Sleep(200);
 			draw(x, y, scene1, colors1);
-			Sleep(400);
+			Sleep(200);
 		}
-		Textcolor(0);
-
-		clrscr();
-		x = 40;
-		y = 15;
-
-		gotoxy(x + 9, y + 1); cout << "------------OH NO---------------";
-		gotoxy(x + 9, y + 3); cout << "------------YOU LOSE------------";
-		// collide animation
-		gotoxy(x + 9, y + 7); cout << "Do you want to new game with the same level?";
-		gotoxy(x + 9, y + 9); cout << "Enter Y(Yes) or other to return to menu";
-
+		Textcolor(Black);
+		for (int i = 0; i < 8; ++i) {
+			gotoxy(x - 3, y + i - 2);
+			cout << "                ";
+		}
+		
 }

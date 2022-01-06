@@ -24,6 +24,7 @@ class CGame
 		void drawGame();
 		void levelTransfer();
 		void drawBoard(int color);
+		void drawLane(int color);
 		void drawTrafficLight(int color);
 		void updatePosPeople(char, bool soundON ); 
 		void updateRedLightEven();
@@ -32,6 +33,7 @@ class CGame
 		bool isFinish();
 		void levelUp();
 		void resetGame(); 
+		void resetHumanStat();
 		void resetLevel();
 		void setupLevel1();
 		void setupLevel2();
@@ -44,8 +46,9 @@ class CGame
 		bool loadGame(string fn); 
 		
 		void saveGame(string fn); 
-		void explode( bool soundON);
+		void explode(bool soundON);
 
+		void drawHeart(int a,int b,int color);
 
 	private:	
 		Human human;

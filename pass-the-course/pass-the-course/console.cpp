@@ -47,13 +47,8 @@ void drawBoard(int color)
 		}
 		if ((i) % 6 == 0 && (i) != 0) {
 			gotoxy(a + 1, b + i);
-			for (int k = 1; k <= 84; k++) {
-				if (k % 2 == 0 && k != 0) {
-					cout << " ";
-				}
-				else
-					cout << char(205);
-			}
+			for (int k = 1; k <= 42; k++) 
+				cout << char(205) << " ";
 		}
 	}
 	// ve canh day
@@ -65,6 +60,19 @@ void drawBoard(int color)
 	}
 	cout << char(223);
 
+}
+
+void drawLane() {
+	Textcolor(8);
+	int a = 5, b = 2;
+	for (int i = 1; i <= 36; i++) {
+		if ((i) % 6 == 0 && (i) != 0) {
+			gotoxy(a + 1, b + i);
+			for (int k = 1; k <= 84; k++) {
+				cout << char(205) << " ";
+			}
+		}
+	}
 }
 
 void clrscr()
@@ -105,4 +113,16 @@ void ShowConsoleCursor(bool showFlag)
     GetConsoleCursorInfo(out, &cursorInfo);
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
+}
+void clearHeart(int a, int b) {
+
+	gotoxy(a, b);
+	cout << "     "  << endl;
+	gotoxy(a, b + 1);
+	cout << "     " << endl;
+	gotoxy(a, b + 2);
+	cout << "     " << endl;
+	gotoxy(a, b + 3);
+	cout << "     " << endl;
+
 }

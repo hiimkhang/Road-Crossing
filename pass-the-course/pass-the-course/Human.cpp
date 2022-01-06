@@ -53,8 +53,8 @@ void Human::resetFig()
 {
     fig.deleteFootprint(preX, preY);
     fig.deleteFootprint(preX - 2, preY - 2);
-    fig.deleteFootprint(preX + 2, preY - 2);
-    fig.deleteFootprint(preX + 2, preY + 1);
+    fig.deleteFootprint(preX + 1, preY - 2);
+    fig.deleteFootprint(preX + 1, preY + 1);
     fig.deleteFootprint(preX - 2, preY + 1);
     fig.print(curX, curY);
 }

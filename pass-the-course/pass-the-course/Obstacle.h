@@ -93,7 +93,8 @@ public:
 
     }
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        // Ae kiếm sound bỏ vào chứ mình chịu   
+        PlaySound(TEXT("Sound\\moveSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 
@@ -208,7 +209,8 @@ public:
     }
 
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        // Ae kiếm sound bỏ vào chứ mình chịu     
+        PlaySound(TEXT("Sound\\ouch.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 
@@ -233,11 +235,13 @@ public:
     void print() {
         int x = getCurX(), y = getCurY();
 
-        for (int i = 0; i < getSizeX(); ++i) {
+        /*for (int i = 0; i < getSizeX(); ++i) {
             Textcolor(Red);
             gotoxy(x + i, y);
             cout << char(3);
-        }
+        }*/
+        Textcolor(Red);
+        gotoxy(x, y); cout << char(3);
         Textcolor(7);
     }
     void unPrint()
@@ -303,7 +307,8 @@ public:
     }
 
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        // Ae kiếm sound bỏ vào chứ mình chịu 
+        PlaySound(TEXT("Sound\\Spider .wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 
@@ -361,7 +366,8 @@ public:
     }
 
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        // Ae kiếm sound bỏ vào chứ mình chịu  
+        PlaySound(TEXT("Sound\\ac quy cuoi.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 

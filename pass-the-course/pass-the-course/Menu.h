@@ -7,6 +7,7 @@
 #include <string>
 #include <filesystem>
 
+extern bool soundON;
 
 class Menu {
 private:
@@ -21,7 +22,7 @@ private:
 public:
     string menu();
     void setting();
-    string loadGame();
+    string loadGame(int status); // status = 1: load while in gameplay, status = 0: load in menu
 
     // clear Menu instead of clear screen, for optimizing
     void clearMenu();
@@ -39,6 +40,8 @@ public:
     static void info(CGame& cg);
 
     void loadingScreen();
+    static void printWin();
+    static void printLose();
 
     void subMenu(CGame& cg);
 };

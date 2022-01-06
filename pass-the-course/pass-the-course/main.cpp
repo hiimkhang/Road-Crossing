@@ -16,10 +16,12 @@ char MOVING;
 bool IS_RUNNING = true;
 bool IN_GAME = true;
 bool IN_THREAD = true;
-bool soundON = false;
+bool soundON = true;
+
 CGame cg;
 
 auto t_start = std::chrono::high_resolution_clock::now();
+auto t_start2 = std::chrono::high_resolution_clock::now();
 
 void SubThread() {
     int i = 15;
@@ -28,13 +30,14 @@ void SubThread() {
         if (IN_THREAD) {
             auto t_now = std::chrono::high_resolution_clock::now();
             double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_now - t_start).count();
+            double elapsed_time_ms2 = std::chrono::duration<double, std::milli>(t_now - t_start2).count();
             if (elapsed_time_ms > 3000) {   // every 3 second light will change
                 t_start = t_now;
                 //cout << "elapsed_time_ms: " << elapsed_time_ms << endl;
                 cg.updateRedLightEven();
             }
-            if (elapsed_time_ms > 2000) {   // every 2 second light will change
-                t_start = t_now;
+            if (elapsed_time_ms2 > 2000) {   // every 2 second light will change
+                t_start2 = t_now;
                 //cout << "elapsed_time_ms: " << elapsed_time_ms << endl;
                 cg.updateRedLightOdd();
             }
@@ -45,21 +48,30 @@ void SubThread() {
             MOVING = ' ';                       // reset the moving, stop the human, if user dont input -> the humam still stop
             cg.updatePosCLane();                // update the position of each obstacle in the list (move the clane)
 
-            //cg.drawBoard(8);                    // draw ?
+            //cg.drawLane(8);                    // draw ?
 
             if (cg.isCollided()) {              // human collide with obstacle
-                IN_THREAD = false;
                 cg.explode(soundON);
-                //Textcolor(0);
-                //system("cls");
-                int x = 40;
-                int y = 15;
+                Textcolor(0);
 
-                gotoxy(x + 9, y + 1); cout << "------------OH NO---------------";
-                gotoxy(x + 9, y + 3); cout << "------------YOU LOSE------------";
-                // collide animation
-                gotoxy(x + 9, y + 7); cout << "Do you want to new game with the same level?";
-                gotoxy(x + 9, y + 9); cout << "Enter Y(Yes) or other to return to menu";
+                // this for loop is to solve the red screen error after cg.explode();
+                for (int i = 0; i <= 36; ++i)
+                    cout << "                                                                                                ";
+
+                IN_THREAD = false;
+                clrscr();
+
+                Menu::printLose();
+                //Menu m;
+                //m.loadingScreen();
+                //int x = 40;
+                //int y = 15;
+
+                //gotoxy(x + 9, y + 1); cout << "------------OH NO---------------";
+                //gotoxy(x + 9, y + 3); cout << "------------YOU LOSE------------";
+                //// collide animation
+                //gotoxy(x + 9, y + 7); cout << "Do you want to new game with the same level?";
+                //gotoxy(x + 9, y + 9); cout << "Enter Y(Yes) or other to return to menu";
                 /*cg.getPeople().setIsDead(true);
                 cout << "deeeeeeeeeeeee" << cg.getPeople().getIsDead();*/
                 //char temp = toupper(_getch()); // can not use getch here, because the getch in main always call first, so just hanlde value pass in getch in main
@@ -82,34 +94,21 @@ void SubThread() {
                     cg.resetGame();
                     cg.levelUp();
                     cg.levelTransfer();
-                    cg.startGame();
-                    
+                    cg.startGame();               
                 }
                 else {
-                    clrscr();
-                    Menu::logoWin();
-                     /*Display win logo*/
-                    for (int i = 0; i < 15; ++i) {
-                        ShowConsoleCursor(0);
-                        clrscr();
-                        Menu::logoWin();
-                        Sleep(100);
-                    }
-                    while (_kbhit())
-                        (void)_getch();
-                    Textcolor(White);
-                    gotoxy(54, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
-                    Textcolor(15);
-                    (void)_getch();
+                    Menu::printWin();
+                    Menu m;
+                    m.loadingScreen();
                     break;
 
                     //gotoxy(x + 9, y + 1); cout << "---------FINISH ALL LEVEL----------";
                     //gotoxy(x + 9, y + 3); cout << "----------CONGRATULATIONS----------";
                     //IN_THREAD = false;
-                    //system("cls");
+                    //clrscr();
                     //// win animation
                     //Sleep(400);
-                    //system("cls");
+                    //clrscr();
                     //gotoxy(x + 9, y + 3);
                     //cout << "Press any key to return to menu\n";
                 }
@@ -173,7 +172,9 @@ int main() {
         Menu m;
         string lg;
         lg = m.menu();
+        /*m.loadingScreen();*/
         soundON = m.getSound();
+
         //cout << "Type something and enter to start\n";
         //cin.get();
         
@@ -181,10 +182,13 @@ int main() {
             cg.loadGame(lg);
         else {
             cg.resetGame();
+            cg.resetHumanStat();
             cg.resetLevel();
         }
         t_start = std::chrono::high_resolution_clock::now();
+        t_start2 = std::chrono::high_resolution_clock::now();
         cg.startGame();
+        Sleep(200);
         IS_RUNNING = true;
         thread t1(SubThread);
         int i = 0;
@@ -201,9 +205,13 @@ int main() {
                 break;
             }
             if (!cg.getPeople().getIsDead()) {
+
                 if (temp == 27) {   // Esc = Exit
+                    /*cg.exitThread(&t1, IS_RUNNING);*/
                     cg.exitThread(&t1, IS_RUNNING);
-                    return 0;
+                    IS_RUNNING = false;
+                    IN_THREAD = true;
+                    break;
                 }
                 else if (temp == 'P' ) { // pause game
                     // pause menu
@@ -221,21 +229,22 @@ int main() {
                 else if (temp == 'T') { // load game
                     // ask user to enter the file dir have been save to load game from it
                     cg.pauseGame(t1.native_handle());
-                    system("cls");
+                    clrscr();
 
-                    cout << "Loading game\n";
+
                     string dir = "";
-                    dir = m.loadGame();
+                    dir = m.loadGame(1);
                     if (dir != "") {
                         if (cg.loadGame(dir)) {
                             t_start = std::chrono::high_resolution_clock::now();
+                            t_start2 = std::chrono::high_resolution_clock::now();
                         }
                         else {
                             cg.resetGame();
                         }
                     }
                     //Sleep(1000);
-                    system("cls");
+                    clrscr();
                     cg.drawGame();
                     cg.resumeGame((HANDLE)t1.native_handle());
                 }
@@ -282,6 +291,9 @@ int main() {
                     cg.drawGame();
                     cg.resumeGame((HANDLE)t1.native_handle());
                 }
+                else if (temp == 'M') {
+                    soundON = !soundON;
+                }
                 else {  // continue / resume
                     IS_RUNNING = true;
                     cg.resumeGame((HANDLE)t1.native_handle());
@@ -295,13 +307,14 @@ int main() {
                     Sleep(400);
                     cg.resetGame();
                     cg.resetLevel();
-                    system("cls");
+                    clrscr();
                     t_start = std::chrono::high_resolution_clock::now();
+                    t_start2 = std::chrono::high_resolution_clock::now();
                     cg.startGame();
                     cg.resumeGame((HANDLE)t1.native_handle());
                 }
                 else {
-                    system("cls");
+                    clrscr();
                     //cg.exitGame(t1.native_handle());
                     cg.exitThread(&t1, IS_RUNNING);
                     IS_RUNNING = false;
