@@ -172,7 +172,7 @@ int main() {
         Menu m;
         string lg;
         lg = m.menu();
-        /*m.loadingScreen();*/
+        m.loadingScreen();
         soundON = m.getSound();
 
         //cout << "Type something and enter to start\n";
