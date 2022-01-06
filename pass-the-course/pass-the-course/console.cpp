@@ -114,3 +114,15 @@ void ShowConsoleCursor(bool showFlag)
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
 }
+void clearHeart(int a, int b) {
+
+	gotoxy(a, b);
+	cout << "     "  << endl;
+	gotoxy(a, b + 1);
+	cout << "     " << endl;
+	gotoxy(a, b + 2);
+	cout << "     " << endl;
+	gotoxy(a, b + 3);
+	cout << "     " << endl;
+
+}

@@ -63,6 +63,7 @@ void drawLane();
 
 void ShowConsoleCursor(bool showFlag);
 
+void clearHeart(int a, int b);
 
 
 #endif // !_console_h_
