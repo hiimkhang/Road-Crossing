@@ -11,7 +11,7 @@
 class Menu {
 private:
     int mode = 0; // 0: easy, 1: hard
-    bool soundStatus = 1; // 0: off, 1: on
+    bool soundStatus = 0; // 0: off, 1: on
     bool isLoad = 0;
     bool isSave = 0;
 
@@ -25,7 +25,7 @@ public:
 
     // clear Menu instead of clear screen, for optimizing
     void clearMenu();
-
+    int getSound() { return soundStatus; }
     void logoMenu();
     static void logoWin();
     static void logoLose();

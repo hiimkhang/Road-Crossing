@@ -25,8 +25,9 @@ class CGame
 		void levelTransfer();
 		void drawBoard(int color);
 		void drawTrafficLight(int color);
-		void updatePosPeople(char); 
-		void updateRedLight();
+		void updatePosPeople(char, bool soundON ); 
+		void updateRedLightEven();
+		void updateRedLightOdd();
 		bool isCollided();
 		bool isFinish();
 		void levelUp();
@@ -43,14 +44,18 @@ class CGame
 		bool loadGame(string fn); 
 		
 		void saveGame(string fn); 
+		void explode( bool soundON);
+
 
 	private:	
 		Human human;
+		
 		vector<CLane*> listCLane;
 		vector<string> saveFile;
 		bool isPause;
 		bool isCollised;
 		int level;
+
 };
 
 #endif // !_cgame_h_

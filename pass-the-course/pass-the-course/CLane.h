@@ -21,7 +21,7 @@ public:
 	void print();
 	void add(Obstacle* ob);
 	void set(int y, int x, bool rl);
-	CLane(int numOfCop = 0, int newY = 0);
+	CLane(int id = 2, int numOfCop = 0, int newY = 0);
 	~CLane();
 };
 

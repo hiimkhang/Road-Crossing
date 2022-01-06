@@ -1,6 +1,6 @@
 #include "Human.h"
 
-Human::Human(int x, int y) : isDead(false), life(3)
+Human::Human(int x, int y) : isDead(false), life(1)
 {
     //fig = Figure(".//Figure//Human//human-test.txt");
     fig = Figure(".//Figure//Human//player.txt");

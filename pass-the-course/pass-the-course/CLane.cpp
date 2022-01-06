@@ -1,13 +1,53 @@
 #include "CLane.h"
 
-CLane::CLane(int numOfCop, int newY) : speedX(1), curY(newY), redLight(false)
+CLane::CLane(int id, int numOfCop, int newY) : speedX(1), curY(newY), redLight(false)
 {
 	Obstacle* temp1 = nullptr;
-	for (int i = 1; i <= numOfCop; ++i) {
-		temp1 = new Cop(i*13, curY);
-		//temp1->print();
-		list.push_back(temp1);
+	
+	switch (id) {
+		case 1: // Rock
+			for (int i = 1; i <= numOfCop; ++i) {
+				temp1 = new Rock(i * 13, curY);
+				//temp1->print();
+				list.push_back(temp1);
+			}
+			break;
+		case 2:	// Cop
+			for (int i = 1; i <= numOfCop; ++i) {
+				temp1 = new Cop(i * 13, curY);
+				//temp1->print();
+				list.push_back(temp1);
+			}
+			break;
+		case 3:	// Potion
+			for (int i = 1; i <= numOfCop; ++i) {
+				temp1 = new Potion(i * 13, curY);
+				//temp1->print();
+				list.push_back(temp1);
+			}
+			break;
+		case 4:	// WSpider
+			for (int i = 1; i <= numOfCop; ++i) {
+				temp1 = new WSpider(i * 13, curY);
+				//temp1->print();
+				list.push_back(temp1);
+			}
+			break;
+		case 5:	// Devil
+			for (int i = 1; i <= numOfCop; ++i) {
+				temp1 = new Devil(i * 13, curY);
+				//temp1->print();
+				list.push_back(temp1);
+			}
+			break;
+		default:// Cop
+			for (int i = 1; i <= numOfCop; ++i) {
+				temp1 = new Cop(i * 13, curY);
+				//temp1->print();
+				list.push_back(temp1);
+			}
 	}
+	
 }
 CLane::~CLane() {
 	for (auto& obs : list)

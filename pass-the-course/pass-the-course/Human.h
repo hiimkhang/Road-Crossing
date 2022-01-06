@@ -26,6 +26,8 @@ public:
 	bool isFinish();
 	string getFigDir();
 	int* getHumanPosition();
+	int X() { return curX; }
+	int Y() { return curY; }
 	void setHumanPosition(int* cur);
 	void reset();
 	void setFigDir(string dir);

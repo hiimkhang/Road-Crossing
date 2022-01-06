@@ -16,6 +16,7 @@ char MOVING;
 bool IS_RUNNING = true;
 bool IN_GAME = true;
 bool IN_THREAD = true;
+bool soundON = false;
 CGame cg;
 
 auto t_start = std::chrono::high_resolution_clock::now();
@@ -30,20 +31,27 @@ void SubThread() {
             if (elapsed_time_ms > 3000) {   // every 3 second light will change
                 t_start = t_now;
                 //cout << "elapsed_time_ms: " << elapsed_time_ms << endl;
-                cg.updateRedLight();
+                cg.updateRedLightEven();
+            }
+            if (elapsed_time_ms > 2000) {   // every 2 second light will change
+                t_start = t_now;
+                //cout << "elapsed_time_ms: " << elapsed_time_ms << endl;
+                cg.updateRedLightOdd();
             }
 
             if (!cg.getPeople().getIsDead()) {
-                cg.updatePosPeople(MOVING);     // take the input form user -> assign to MOVING = temp -> update position
+                cg.updatePosPeople(MOVING, soundON);     // take the input form user -> assign to MOVING = temp -> update position
             }
             MOVING = ' ';                       // reset the moving, stop the human, if user dont input -> the humam still stop
             cg.updatePosCLane();                // update the position of each obstacle in the list (move the clane)
 
-            //cg.drawGame();                    // draw ?
+            //cg.drawBoard(8);                    // draw ?
 
             if (cg.isCollided()) {              // human collide with obstacle
                 IN_THREAD = false;
-                system("cls");
+                cg.explode(soundON);
+                //Textcolor(0);
+                //system("cls");
                 int x = 40;
                 int y = 15;
 
@@ -165,6 +173,7 @@ int main() {
         Menu m;
         string lg;
         lg = m.menu();
+        soundON = m.getSound();
         //cout << "Type something and enter to start\n";
         //cin.get();
         
@@ -307,4 +316,5 @@ int main() {
     
     return 0;
 }
+
 
