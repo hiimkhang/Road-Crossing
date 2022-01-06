@@ -812,12 +812,12 @@ void Menu::info(CGame& cg) {
 
     HP(a, b, 3);
 
-    gotoxy(a + 15, b + 2);
-    cout << "               ";
-    for (int i = 0; i <= cg.getPeople().life; ++i) {
-        Potion p(a + 18 + i*3, b + 2);
-        p.print();
+    for (int i = 0; i < 5; ++i) {
+        gotoxy(a + 15 + i, b);
+        cout << "               ";
     }
+    for (int i = 0; i <= cg.getPeople().life; ++i) 
+        cg.drawHeart(a + 15 + i*6, b, 12);
 
     b += 7; a += 4;
 

@@ -53,9 +53,9 @@ void CGame::startGame() {
 void CGame::drawGame() {
 	drawBoard(8);
 	drawTrafficLight(8);
-	for (int i = 109; i <= 121; i=i+6) {
-		drawHeart(i, 24, 4);
-	}
+	//for (int i = 109; i <= 121; i=i+6) {
+	//	drawHeart(i, 24, 4);
+	//}
 	Menu::info(*this);
 	human.initial();
 	size_t n = listCLane.size();
