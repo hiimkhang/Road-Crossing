@@ -1,6 +1,6 @@
 #include "Human.h"
 
-Human::Human(int x, int y) : isDead(false), life(1)
+Human::Human(int x, int y) : isDead(false), life(2)
 {
     //fig = Figure(".//Figure//Human//human-test.txt");
     fig = Figure(".//Figure//Human//player.txt");
@@ -126,7 +126,7 @@ void Human::setHumanPosition(int* cur)
 
 void Human::reset() {
     isDead = false;
-    life = 3;
+    //life = 2;
     curX = 36;
     curY = 33;
     --preY;

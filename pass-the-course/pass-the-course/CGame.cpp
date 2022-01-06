@@ -293,6 +293,7 @@ void CGame::resetGame() {
 
 void CGame::resetHumanStat() {
 	human.life = 2;
+	//human.reset();
 }
 void CGame::resetLevel() {
 	level = 1;
