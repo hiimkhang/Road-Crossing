@@ -51,6 +51,9 @@ void CGame::startGame() {
 void CGame::drawGame() {
 	drawBoard(8);
 	drawTrafficLight(8);
+	for (int i = 109; i <= 121; i=i+6) {
+		drawHeart(i, 24, 4);
+	}
 	Menu::info(*this);
 	human.initial();
 	size_t n = listCLane.size();
@@ -135,6 +138,20 @@ void CGame::drawTrafficLight(int color) {
 	}
 
 }
+void CGame::drawHeart(int a,int b,int color) {
+
+	gotoxy(a, b);
+	Textcolor(color);
+	cout << " " << char(3) << " " << char(3) << " " << endl;
+	gotoxy(a, b + 1);
+	cout << char(3) << char(3) << char(3) << char(3) << char(3) << endl;
+	gotoxy(a, b + 2);
+	cout << " " << char(3) << char(3) << char(3) << " " << endl;
+	gotoxy(a, b + 3);
+	cout << "  " << char(3) << "  " << endl;
+
+}
+
 void CGame::updatePosCLane() {
 	if (!isPause) {
 		for (auto& clane : listCLane)

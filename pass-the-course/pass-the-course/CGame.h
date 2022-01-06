@@ -45,6 +45,7 @@ class CGame
 		void saveGame(string fn); 
 		void explode( bool soundON);
 
+		void drawHeart(int a,int b,int color);
 
 	private:	
 		Human human;

@@ -49,7 +49,7 @@ void SubThread() {
                 system("cls");
                 int x = 40;
                 int y = 15;
-
+                Textcolor(12);
                 gotoxy(x + 9, y + 1); cout << "------------OH NO---------------";
                 gotoxy(x + 9, y + 3); cout << "------------YOU LOSE------------";
                 // collide animation
