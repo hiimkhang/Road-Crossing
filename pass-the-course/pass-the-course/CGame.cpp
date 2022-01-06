@@ -407,8 +407,10 @@ bool CGame::isCollided() {
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
 				drawBoard(8);
-				if (soundON)
-					PlaySound(TEXT("Sound\\explode.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				if (soundON) {
+					PlaySound(TEXT("Sound\\bi_dam.wav"), NULL, SND_FILENAME | SND_ASYNC);
+					obstacle->collisonSound();
+				}
 				if (obstacle->getID() == 3) { // Potion 
 					if (human.life != 3)
 						human.life++;
