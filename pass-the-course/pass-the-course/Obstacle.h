@@ -93,7 +93,8 @@ public:
 
     }
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        // Ae kiếm sound bỏ vào chứ mình chịu   
+        PlaySound(TEXT("Sound\\moveSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 
@@ -208,7 +209,8 @@ public:
     }
 
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        // Ae kiếm sound bỏ vào chứ mình chịu     
+        PlaySound(TEXT("Sound\\ouch.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 
@@ -303,7 +305,8 @@ public:
     }
 
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        // Ae kiếm sound bỏ vào chứ mình chịu 
+        PlaySound(TEXT("Sound\\Spider .wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 
@@ -361,7 +364,8 @@ public:
     }
 
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        // Ae kiếm sound bỏ vào chứ mình chịu  
+        PlaySound(TEXT("Sound\\ac quy cuoi.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 
