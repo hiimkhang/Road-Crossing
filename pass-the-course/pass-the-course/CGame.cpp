@@ -121,7 +121,7 @@ void CGame::drawBoard(int color)
 		cout << char(223);
 	}
 	cout << char(223);
-
+	drawTrafficLight(8);
 }
 void CGame::drawLane(int color)
 {
@@ -269,7 +269,7 @@ void CGame::updatePosPeople(char MOVING,bool soundON) {
 			human.moveLeft();
 			break;
 		default:
-			human.move();
+			//human.move();
 			return;
 	}
 	drawLane(8);
@@ -421,7 +421,7 @@ bool CGame::isCollided() {
 				drawBoard(8);
 				drawTrafficLight(8);
 				if (soundON) {
-					PlaySound(TEXT("Sound\\bi_dam.wav"), NULL, SND_FILENAME | SND_ASYNC);
+					//PlaySound(TEXT("Sound\\bi_dam.wav"), NULL, SND_FILENAME | SND_ASYNC);
 					obstacle->collisonSound();
 				}
 				if (obstacle->getID() == 3) { // Potion 

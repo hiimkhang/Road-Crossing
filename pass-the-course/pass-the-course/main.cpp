@@ -56,7 +56,7 @@ void SubThread() {
 
                 // this for loop is to solve the red screen error after cg.explode();
                 for (int i = 0; i <= 36; ++i)
-                    cout << "                                                                                                ";
+                    cout << "                                                                                               ";
 
                 IN_THREAD = false;
                 clrscr();
