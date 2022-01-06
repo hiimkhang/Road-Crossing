@@ -303,10 +303,13 @@ int main() {
             else {
                 if (temp == 'Y') {
                     cg.pauseGame(t1.native_handle());
-                    cout << "reset game\n";
-                    Sleep(400);
+                    Textcolor(DarkYellow);
+                    gotoxy(49, 33);
+                    cout << "Continue where you have dead...\n";
+                    Sleep(2000);
+                    cg.resetHumanStat();
                     cg.resetGame();
-                    cg.resetLevel();
+                    cg.setupLevel();
                     clrscr();
                     t_start = std::chrono::high_resolution_clock::now();
                     t_start2 = std::chrono::high_resolution_clock::now();

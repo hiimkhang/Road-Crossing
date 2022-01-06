@@ -314,6 +314,18 @@ void CGame::resetLevel() {
 		setupLevel1();
 	}
 }
+
+void CGame::setupLevel() {
+	if (level == 1)
+		setupLevel1();
+	else if (level == 2)
+		setupLevel2();
+	else if (level == 3)
+		setupLevel3();
+	else if (level == 4)
+		setupLevel4();
+}
+
 void CGame::setupLevel1() {
 	CLane* pC = nullptr;
 	pC = new CLane(2, 2, 9);			// clane 2 with 2 cop, y-coordinate is 8
@@ -407,6 +419,7 @@ bool CGame::isCollided() {
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
 				drawBoard(8);
+				drawTrafficLight(8);
 				if (soundON) {
 					PlaySound(TEXT("Sound\\bi_dam.wav"), NULL, SND_FILENAME | SND_ASYNC);
 					obstacle->collisonSound();

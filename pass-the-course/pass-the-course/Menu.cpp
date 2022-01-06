@@ -89,8 +89,7 @@ string Menu::menu() {
                     Textcolor(15);
                     outMenu = false;
                     result = loadGame(0);
-                    if (result != "")
-                        return result;
+                    return result;
                 }
             }
             if (cnt == 3) {
@@ -332,10 +331,12 @@ string Menu::loadGame(int status) {
         }
         if (int(choice) == 27) {
             isLoad = false;
-            if (status == 0)
+            if (status == 0) {
                 menu();
+                return "";
+            }
             else if (status == 1)
-                break;
+                return "";
             break;
         }
         Textcolor(White);
@@ -620,7 +621,7 @@ void Menu::printWin() {
         Sleep(100);
     }
     Textcolor(DarkYellow);
-    gotoxy(54, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
+    gotoxy(50, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
     Textcolor(15);
     while (_kbhit())
         if (_getch() == 32 || _getch() == 13)
@@ -660,16 +661,14 @@ void Menu::printLose() {
     }
     
     Textcolor(DarkYellow);
-    clrscr();
     //gotoxy(54, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
     int x = 40;
-    int y = 15;
+    int y = 20;
 
-    gotoxy(40 + 9, 15 + 1); cout << "------------OH NO---------------";
-    gotoxy(40 + 9, 15 + 3); cout << "------------YOU LOSE------------";
     // collide animation
-    gotoxy(40 + 9, 15 + 7); cout << "Do you want to new game with the same level?";
-    gotoxy(40 + 9, 15 + 9); cout << "Enter Y(Yes) or other to return to menu";
+    gotoxy(x + 5, y + 7); cout << "Do you want to continue where you have dead?";
+    gotoxy(x + 23, y + 9); cout << "Y: Yes";
+    gotoxy(x + 17, y + 11); cout << "Any other key: Return";
     Textcolor(15);
     while (_kbhit())
         if (_getch() == 32 || _getch() == 13)

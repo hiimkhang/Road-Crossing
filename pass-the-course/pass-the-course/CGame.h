@@ -35,6 +35,7 @@ class CGame
 		void resetGame(); 
 		void resetHumanStat();
 		void resetLevel();
+		void setupLevel();
 		void setupLevel1();
 		void setupLevel2();
 		void setupLevel3();
