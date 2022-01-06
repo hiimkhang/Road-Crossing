@@ -1,5 +1,5 @@
 #include "Menu.h"
-
+#pragma warning(disable : 4267)
 string Menu::menu() {
     bool stayinMenu = true;
     isSubMenu = 0;
@@ -7,7 +7,7 @@ string Menu::menu() {
     while (stayinMenu) {
         clrscr();
         logoMenu(); //tam thoi thoi
-        soundStatus = 0;
+        soundStatus = soundON;
         if (soundStatus == 1 && outMenu == true)
             PlaySound(TEXT("Sound\\Undertale.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
@@ -88,7 +88,7 @@ string Menu::menu() {
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
                     outMenu = false;
-                    result = loadGame();
+                    result = loadGame(0);
                     if (result != "")
                         return result;
                 }
@@ -122,7 +122,7 @@ void Menu::subMenu(CGame& cg) {
     isSubMenu = 1;
     while (stayinMenu) {
         clrscr();
-        soundStatus = 0;
+        soundStatus = soundON;
         if (soundStatus == 1 && outMenu == true)
             PlaySound(TEXT("Sound\\Undertale.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
@@ -238,7 +238,7 @@ void Menu::subMenu(CGame& cg) {
                 if (choice == KEY_ENTER) {
                     Textcolor(15);
                     stayinMenu = false;
-                    result = loadGame();
+                    result = loadGame(0);
                     if (result != "") {
                         cg.loadGame(result);
                     }
@@ -267,10 +267,10 @@ void Menu::subMenu(CGame& cg) {
         }
     }
 }
-string Menu::loadGame() {
+string Menu::loadGame(int status) {
     clearMenu();
-    int x = 38;
-    int y = 17;
+    int x = 58;
+    int y = 20;
     Textcolor(White);
     vector<string> lof;
     int c1 = 0;
@@ -280,11 +280,43 @@ string Menu::loadGame() {
         lof.push_back(file.path().filename().string());
     }
 
+    int a = 12, b = 23;
+    Textcolor(DarkYellow);
+    gotoxy(a, b++); cout << R"( __       ______   ______   _____    )";
+    gotoxy(a, b++); cout << R"(/\ \     /\  __ \ /\  __ \ /\  __-\. )";
+    gotoxy(a, b++); cout << R"(\ \ \____\ \ \/\ \\ \  __ \\ \ \/\ \ )";
+    gotoxy(a, b++); cout << R"( \ \_____\\ \_____\\ \_\ \_\\ \____/.)";
+    gotoxy(a, b++); cout << R"(  \/_____/ \/_____/ \/_/\/_/ \/____/ )";
+
+    gotoxy(61, 37);
+    cout << "ESC: Exit";
+
+    Textcolor(8);
+
+    gotoxy(x - 3, y - 1);
+    for (int i = 0; i < 23; ++i) {
+        cout << UP_BLACK_PIECE;
+    }
+    gotoxy(x - 4, y - 1); cout << VERTICAL_BLACK_PIECE;
+    gotoxy(x + 20, y - 1); cout << VERTICAL_BLACK_PIECE;
+
     for (int i = 0; i < lof.size(); i++)
     {
+        gotoxy(x - 4, y + i);
+        cout << VERTICAL_BLACK_PIECE;
+        gotoxy(x + 20, y + i);
+        cout << VERTICAL_BLACK_PIECE;
         gotoxy(x, y + i);
         cout << lof[i];
     }
+    gotoxy(x - 4, y + lof.size()); cout << VERTICAL_BLACK_PIECE;
+    gotoxy(x + 20, y + lof.size()); cout << VERTICAL_BLACK_PIECE;
+    gotoxy(x - 3, y + lof.size());
+    for (int i = 0; i < 23; ++i) {
+        cout << DOWN_BLACK_PIECE;
+    }
+    Textcolor(7);
+
     char choice = '0';
     do
     {
@@ -297,6 +329,14 @@ string Menu::loadGame() {
             c1--;
             if (c1 < 0)
                 c1 = (int)lof.size()-1;
+        }
+        if (int(choice) == 27) {
+            isLoad = false;
+            if (status == 0)
+                menu();
+            else if (status == 1)
+                break;
+            break;
         }
         Textcolor(White);
         for (int i = 0; i < lof.size(); i++)
@@ -567,6 +607,26 @@ void Menu::logoWin() {
     else throw "Can't open file logoWin.txt\n";
 }
 
+void Menu::printWin() {
+    clrscr();
+    if (soundON)
+        PlaySound(TEXT("Sound\\gta.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    Menu::logoWin();
+    /*Display win logo*/
+    for (int i = 0; i < 15; ++i) {
+        ShowConsoleCursor(0);
+        clrscr();
+        Menu::logoWin();
+        Sleep(100);
+    }
+    Textcolor(DarkYellow);
+    gotoxy(54, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
+    Textcolor(15);
+    while (_kbhit())
+        if (_getch() == 32 || _getch() == 13)
+            return;
+}
+
 void Menu::logoLose() {
     ifstream in;
     char g;
@@ -586,18 +646,36 @@ void Menu::logoLose() {
     else throw "Can't open file logoLose.txt\n";
 }
 
+void Menu::printLose() {
+    clrscr();
+    if (soundON)
+        PlaySound(TEXT("Sound\\lose.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    Menu::logoLose();
+    /*Display win logo*/
+    for (int i = 0; i < 15; ++i) {
+        ShowConsoleCursor(0);
+        clrscr();
+        Menu::logoLose();
+        Sleep(100);
+    }
+    
+    Textcolor(DarkYellow);
+    gotoxy(54, 30);		cout << " PRESS ANY KEY TO CONTINUE... ";
+    Textcolor(15);
+    while (_kbhit())
+        if (_getch() == 32 || _getch() == 13)
+            return;
+}
+
 void Menu::loadingScreen() {
     int x = 50;
     int y = 19;
 
-    clearMenu();
-
-    gotoxy(x + 4, y);
-
+    clrscr();
     Textcolor(8);
+    gotoxy(x + 4, y);
     cout << "Cho mot xiu nhaa...";
 
-    ShowConsoleCursor(0);
     unsigned char a = 177, b = 219;
 
     // Darker progess bar
@@ -730,28 +808,28 @@ void Menu::info(CGame& cg) {
         fourLogo(a - 1, b, 12);
         break;
     }
-
-    // oneLogo(a, b, 3);
-
-    // twoLogo(a - 1, b, 11);
-    // threeLogo(a - 1, b, 13);
-
-    /*fourLogo(a - 1, b, 12);*/
-
     a -= 10, b += 11;
 
     HP(a, b, 3);
 
-    b += 7; a += 12;
+    gotoxy(a + 15, b + 2);
+    cout << "               ";
+    for (int i = 0; i <= cg.getPeople().life; ++i) {
+        Potion p(a + 18 + i*3, b + 2);
+        p.print();
+    }
+
+    b += 7; a += 4;
 
     Textcolor(DarkYellow);
     gotoxy(a, b);
     cout << "P: Pause";
+    gotoxy(a + 12, b);
+    cout << "ESC: Menu";
     gotoxy(a, b + 2);
     cout << "T: Load";
-    gotoxy(a, b + 4);
+    gotoxy(a + 12, b + 2);
     cout << "L: Save";
-
-
-    gotoxy(1, 2);
+    gotoxy(a, b + 4);
+    cout << "M: Sound On/Off";
 }

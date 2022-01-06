@@ -59,6 +59,8 @@ void clrscr();
 
 void drawBoard(int color);
 
+void drawLane();
+
 void ShowConsoleCursor(bool showFlag);
 
 

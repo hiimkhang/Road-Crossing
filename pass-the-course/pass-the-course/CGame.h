@@ -31,6 +31,7 @@ class CGame
 		bool isFinish();
 		void levelUp();
 		void resetGame(); 
+		void resetHumanStat();
 		void resetLevel();
 		void setupLevel1();
 		void setupLevel2();
@@ -43,7 +44,7 @@ class CGame
 		bool loadGame(string fn); 
 		
 		void saveGame(string fn); 
-		void explode( bool soundON);
+		void explode(bool soundON);
 
 
 	private:	

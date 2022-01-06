@@ -1,5 +1,7 @@
 #include "CGame.h"
 #include "Menu.h"
+
+extern bool soundON;
 #pragma warning(disable : 4700)
 CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
@@ -221,6 +223,10 @@ void CGame::resetGame() {
 	listCLane.clear();
 
 }
+
+void CGame::resetHumanStat() {
+	human.life = 2;
+}
 void CGame::resetLevel() {
 	level = 1;
 	switch (level) {
@@ -332,6 +338,9 @@ bool CGame::isCollided() {
 		vector<Obstacle*>& listObstacle = clane->getListObstacle();
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
+				drawBoard(8);
+				if (soundON)
+					PlaySound(TEXT("Sound\\explode.wav"), NULL, SND_FILENAME | SND_ASYNC);
 				if (obstacle->getID() == 3) { // Potion 
 					if (human.life != 3)
 						human.life++;
@@ -347,6 +356,8 @@ bool CGame::isCollided() {
 						human.reset();
 						human.life = temp;
 						human.resetFig();
+						Menu::info(*this);
+						Sleep(200);
 						return false;
 					}
 				}
@@ -365,12 +376,12 @@ void CGame::resumeGame(HANDLE h) {
 }
 //void CGame::exitGame(HANDLE h) {
 //	TerminateThread(h, 0);
-//	system("cls");
+//	clrscr();
 //	cout << "Thanks for playing the game\n";
 //	cout << "Good bye\n";
 //}
 void CGame::exitThread(thread* t, bool& IS_RUNNING) {
-	system("cls");
+	clrscr();
 	IS_RUNNING = false;
 	t->join();
 	//cout << "\nEXIT game\n";
@@ -501,11 +512,14 @@ void CGame::saveGame(string fn)
 }
 
 void CGame::levelTransfer() {
+	if (soundON)
+		PlaySound(TEXT("Sound\\levelUp.wav"), NULL, SND_FILENAME | SND_ASYNC);
+
 	Menu::levelupLogo(30, 17, 11);
 	
 	Textcolor(DarkYellow);
 	gotoxy(50, 25);
-	cout << "Press Space/Enter to continue...";
+	cout << "Press any key to continue...";
 
 	while (_kbhit())
 		if (_getch() == 32 || _getch() == 13) 
@@ -567,7 +581,7 @@ void prepareScene2(int scene2[][5], int colors2[][5], int shape, int color) {
 }
 
 
-void CGame::explode( bool soundON) {
+void CGame::explode(bool soundON) {
 	
 		int x = human.X();
 		int y = human.Y();
@@ -592,9 +606,14 @@ void CGame::explode( bool soundON) {
 			PlaySound(TEXT("Sound\\explode.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		for (int i = 0; i < 4; ++i) {
 			draw(x, y, scene2, colors2);
-			Sleep(400);
+			Sleep(200);
 			draw(x, y, scene1, colors1);
-			Sleep(400);
+			Sleep(200);
 		}
-		
+		Textcolor(Black);
+		for (int i = 0; i < 8; ++i) {
+			gotoxy(x - 3, y + i - 2);
+			cout << "                ";
+		}
+		clrscr();
 }

@@ -233,11 +233,13 @@ public:
     void print() {
         int x = getCurX(), y = getCurY();
 
-        for (int i = 0; i < getSizeX(); ++i) {
+        /*for (int i = 0; i < getSizeX(); ++i) {
             Textcolor(Red);
             gotoxy(x + i, y);
             cout << char(3);
-        }
+        }*/
+        Textcolor(Red);
+        gotoxy(x, y); cout << char(3);
         Textcolor(7);
     }
     void unPrint()
