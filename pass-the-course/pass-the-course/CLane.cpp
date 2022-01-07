@@ -3,7 +3,7 @@
 CLane::CLane(int id, int numOfCop, int newY) : speedX(1), curY(newY), redLight(false)
 {
 	Obstacle* temp1 = nullptr;
-	
+	auto it = find(list.begin(), list.end(), temp1);
 	switch (id) {
 		case 1: // Rock
 			for (int i = 1; i <= numOfCop; ++i) {
@@ -21,10 +21,11 @@ CLane::CLane(int id, int numOfCop, int newY) : speedX(1), curY(newY), redLight(f
 			break;
 		case 3:	// Potion
 			for (int i = 1; i <= numOfCop; ++i) {
-				temp1 = new Potion(i * 13, curY);
+				temp1 = new Potion(i * 13 + 45, curY + 1);
 				//temp1->print();
 				list.push_back(temp1);
 			}
+			
 			break;
 		case 4:	// WSpider
 			for (int i = 1; i <= numOfCop; ++i) {

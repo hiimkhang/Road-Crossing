@@ -58,6 +58,7 @@ public:
     virtual void collisonSound() = 0;  
     virtual void print() = 0;
     virtual void unPrint() = 0;
+    bool isCol = 0;
     
 };
 
@@ -233,23 +234,35 @@ public:
         return 3;
     }
     void print() {
-        int x = getCurX(), y = getCurY();
+        //int x = getCurX(), y = getCurY();
 
-        /*for (int i = 0; i < getSizeX(); ++i) {
-            Textcolor(Red);
-            gotoxy(x + i, y);
-            cout << char(3);
-        }*/
-        Textcolor(Red);
-        gotoxy(x, y); cout << char(3);
-        Textcolor(7);
+        ///*for (int i = 0; i < getSizeX(); ++i) {
+        //    Textcolor(Red);
+        //    gotoxy(x + i, y);
+        //    cout << char(3);
+        //}*/
+        //Textcolor(Red);
+        //gotoxy(x, y); cout << char(3);
+        //Textcolor(7);
+        if (!isCol) {
+            int a = getCurX(), b = getCurY();
+            gotoxy(a, b);
+            Textcolor(12);
+            cout << " " << char(3) << " " << char(3) << " " << endl;
+            gotoxy(a, b + 1);
+            cout << char(3) << char(3) << char(3) << char(3) << char(3) << endl;
+            gotoxy(a, b + 2);
+            cout << " " << char(3) << char(3) << char(3) << " " << endl;
+            gotoxy(a, b + 3);
+            cout << "  " << char(3) << "  " << endl;
+        }
     }
     void unPrint()
     {
 
     }
     void collisonSound() {
-        // Ae kiếm sound bỏ vào chứ mình chịu                  
+        PlaySound(TEXT("Sound\\healing.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 };
 

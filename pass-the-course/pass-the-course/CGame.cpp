@@ -59,7 +59,10 @@ void CGame::drawGame() {
 	//}
 	Menu::info(*this);
 	human.initial();
+	
 	size_t n = listCLane.size();
+	if (getLevel() != 3)
+		n--;
 	for (int i = 0; i < n; ++i) {
 		
 		if (listCLane[i]->getRedLight()) {
@@ -190,6 +193,8 @@ void CGame::updatePosCLane() {
 }
 void CGame::updateRedLightEven() {
 	size_t n = listCLane.size();
+	if (getLevel() != 3)
+		n--;
 	for (int i = 0; i < n; ++i) {
 		if (i % 2 == 0) {
 			listCLane[i]->changeLight();
@@ -216,6 +221,8 @@ void CGame::updateRedLightEven() {
 
 void CGame::updateRedLightOdd() {
 	size_t n = listCLane.size();
+	if (getLevel() != 3)
+		n--;
 	for (int i = 0; i < n; ++i) {
 		if (i % 2 == 1) {
 			listCLane[i]->changeLight();
@@ -337,6 +344,8 @@ void CGame::setupLevel1() {
 	pC = new CLane(4, 1, 15);			// clane 3 with 1 cop, y-coordinate is 16
 	pC->updateSpeed(-1);				// speed -1 < 0 -> move to the left
 	listCLane.push_back(pC);
+	pC = new CLane(3, 1, 15);
+	listCLane.push_back(pC);
 	pC = new CLane(2, 1, 21);
 	listCLane.push_back(pC);
 	pC = new CLane(4, 2, 27);
@@ -350,6 +359,8 @@ void CGame::setupLevel2() {
 	pC->updateSpeed(-1);				// speed -1
 	listCLane.push_back(pC);
 	pC = new CLane(4, 4, 21);
+	listCLane.push_back(pC);
+	pC = new CLane(3, 1, 15);
 	listCLane.push_back(pC);
 	pC = new CLane(5, 4, 27);
 	pC->updateSpeed(-1);				// speed -1
@@ -375,6 +386,8 @@ void CGame::setupLevel4() {
 	listCLane.push_back(pC);
 	pC = new CLane(2, 4, 15);			// clane 3 with 1 cop, y-coordinate is 16
 	pC->updateSpeed(-2);				// speed -1
+	listCLane.push_back(pC);
+	pC = new CLane(3, 1, 21);
 	listCLane.push_back(pC);
 	pC = new CLane(5, 3, 21);
 	pC->updateSpeed(3);				// speed -1
@@ -422,15 +435,22 @@ bool CGame::isCollided() {
 		vector<Obstacle*>& listObstacle = clane->getListObstacle();
 		for (auto& obstacle : listObstacle) {
 			if (human.isCollided(obstacle)) {
-				drawBoard(8);
-				drawTrafficLight(8);
 				if (soundON) {
 					//PlaySound(TEXT("Sound\\bi_dam.wav"), NULL, SND_FILENAME | SND_ASYNC);
 					obstacle->collisonSound();
 				}
+				drawBoard(8);
+				drawTrafficLight(8);
+				
 				if (obstacle->getID() == 3) { // Potion 
-					if (human.life != 3)
+					if (human.life < 2) 
 						human.life++;
+					obstacle->isCol = true;
+					human.reset();
+					human.resetFig();
+					drawLane(8);
+					Menu::info(*this);
+					Sleep(200);
 					return false;
 				}
 				else {
