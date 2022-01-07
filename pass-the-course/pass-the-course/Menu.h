@@ -8,10 +8,10 @@
 #include <filesystem>
 
 extern bool soundON;
-
+extern bool mode;          // 0: easy, 1: hard
 class Menu {
 private:
-    int mode = 0; // 0: easy, 1: hard
+    
     bool soundStatus = 0; // 0: off, 1: on
     bool isLoad = 0;
     bool isSave = 0;
@@ -20,6 +20,7 @@ private:
     bool isSubMenu = 0;
 
 public:
+
     string menu();
     void setting();
     string loadGame(int status); // status = 1: load while in gameplay, status = 0: load in menu

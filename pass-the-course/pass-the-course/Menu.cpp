@@ -1,5 +1,6 @@
 #include "Menu.h"
 #pragma warning(disable : 4267)
+extern bool mode;
 string Menu::menu() {
     bool stayinMenu = true;
     isSubMenu = 0;

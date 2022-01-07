@@ -17,7 +17,7 @@ bool IS_RUNNING = true;
 bool IN_GAME = true;
 bool IN_THREAD = true;
 bool soundON = true;
-
+bool mode = 0;
 CGame cg;
 
 auto t_start = std::chrono::high_resolution_clock::now();

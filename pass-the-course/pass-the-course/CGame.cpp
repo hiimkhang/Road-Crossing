@@ -2,6 +2,7 @@
 #include "Menu.h"
 
 extern bool soundON;
+extern bool mode;
 #pragma warning(disable : 4700)
 CGame::CGame(int newLevel) :  level(1), isPause(false), isCollised(false)
 {
@@ -292,7 +293,10 @@ void CGame::resetGame() {
 }
 
 void CGame::resetHumanStat() {
-	human.life = 2;
+	if(mode ==0 )
+		human.life = 2;
+	else if(mode ==1)
+		human.life = 0;
 	//human.reset();
 }
 void CGame::resetLevel() {
