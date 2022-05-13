@@ -1,5 +1,9 @@
 # pass-the-course-cs202
 
+Update 13/05:
+I clone this file to my own repositories.
+The 4 original contributors: heeyoung-choi, me, tthkai, minhtriis
+
 A game coded in C++, works well on Windows terminal made by Group 1 - APCS 2 - Programming Systems Course - 2022.
 
 Features:
